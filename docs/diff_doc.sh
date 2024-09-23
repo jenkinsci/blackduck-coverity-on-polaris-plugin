@@ -26,8 +26,8 @@ echo "echo \"=====================================================\"" >> ${diffO
 echo "echo \"\$2 vs. \$1\"" >> ${diffOneScript}
 echo "echo \"(old lines are preceded by '<'; new lines by '>')\"" >> ${diffOneScript}
 echo "echo \"-----------------------------------------------------\"" >> ${diffOneScript}
-echo "if test -f \"../../../../\$1/synopsys-polaris-plugin/docs/generated/\$2\" ; then" >> ${diffOneScript}
-echo "    diff \"../../../../\$1/synopsys-polaris-plugin/docs/generated/\$2\" \"\$2\"" >> ${diffOneScript}
+echo "if test -f \"../../../../\$1/blackduck-coverity-on-polaris-plugin/docs/generated/\$2\" ; then" >> ${diffOneScript}
+echo "    diff \"../../../../\$1/blackduck-coverity-on-polaris-plugin/docs/generated/\$2\" \"\$2\"" >> ${diffOneScript}
 echo "else" >> ${diffOneScript}
 echo "    echo \"************ \$2\" is NEW" >> ${diffOneScript}
 echo "fi" >> ${diffOneScript}
@@ -37,8 +37,8 @@ chmod +x ${diffOneScript}
 
 mkdir ${oldVersion}
 cd ${oldVersion}
-git clone https://github.com/jenkinsci/synopsys-polaris-plugin.git
-cd synopsys-polaris-plugin
+git clone https://github.com/jenkinsci/blackduck-coverity-on-polaris-plugin.git
+cd blackduck-coverity-on-polaris-plugin
 git checkout tags/${oldVersion}
 
 # Write the header
@@ -47,13 +47,13 @@ git status >> ${intermediateOutputFilePath}
 git show >>${intermediateOutputFilePath}
 echo "" >> ${intermediateOutputFilePath}
 
-./gradlew docs -x test
+./mvnw docs -x test
 
 cd "${workingDir}"
 mkdir ${newVersion}
 cd ${newVersion}
-git clone https://github.com/jenkinsci/synopsys-polaris-plugin.git
-cd synopsys-polaris-plugin
+git clone https://github.com/jenkinsci/blackduck-coverity-on-polaris-plugin.git
+cd blackduck-coverity-on-polaris-plugin
 git checkout tags/${newVersion}
 
 # Write the header
@@ -62,7 +62,7 @@ git status >> ${intermediateOutputFilePath}
 git show >>${intermediateOutputFilePath}
 echo "" >> ${intermediateOutputFilePath}
 
-./gradlew docs -x test
+./mvnw docs -x test
 cd docs/generated
 
 # Do the diffing

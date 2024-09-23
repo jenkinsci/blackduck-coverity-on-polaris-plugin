@@ -12,7 +12,7 @@ out/
 target/
 
 # build tool
-.gradle/
+.mvn/
 build/
 work/
 
