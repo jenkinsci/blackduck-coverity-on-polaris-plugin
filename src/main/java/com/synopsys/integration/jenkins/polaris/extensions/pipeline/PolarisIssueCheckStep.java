@@ -9,6 +9,7 @@ package com.synopsys.integration.jenkins.polaris.extensions.pipeline;
 
 import com.synopsys.integration.jenkins.annotations.HelpMarkdown;
 import com.synopsys.integration.jenkins.polaris.service.PolarisCommandsFactory;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.FilePath;
@@ -111,9 +112,16 @@ public class PolarisIssueCheckStep extends Step implements Serializable {
 
     public class Execution extends SynchronousNonBlockingStepExecution<Integer> {
         private static final long serialVersionUID = -3799159740768688972L;
+
+        @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
         private final transient TaskListener listener;
+
+        @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
         private final transient EnvVars envVars;
+
+        @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
         private final transient FilePath workspace;
+
         private final transient Launcher launcher;
         private final transient Node node;
         private final transient Run<?, ?> run;

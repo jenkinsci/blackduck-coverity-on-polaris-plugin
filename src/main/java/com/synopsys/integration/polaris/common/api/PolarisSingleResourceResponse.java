@@ -24,4 +24,14 @@ public class PolarisSingleResourceResponse<R extends PolarisResource> extends Po
     public void setData(R data) {
         this.data = data;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

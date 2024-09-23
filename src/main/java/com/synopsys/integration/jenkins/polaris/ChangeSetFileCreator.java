@@ -96,7 +96,13 @@ public class ChangeSetFileCreator {
                         .resolve("polaris")
                         .resolve("changeSetFiles.txt");
             }
-            Files.createDirectories(changeSetFile.getParent());
+
+            Path parentDir = changeSetFile.getParent();
+            if (parentDir != null) {
+                Files.createDirectories(parentDir);
+            } else {
+                throw new IOException("The change set file has no parent directory: " + changeSetFile);
+            }
             Files.write(changeSetFile, changedFiles);
 
             return changeSetFile.toRealPath().toString();

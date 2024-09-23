@@ -55,4 +55,14 @@ public class PolarisPaginationMeta extends PolarisResponse {
     public void setTotal(BigDecimal total) {
         this.total = total;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

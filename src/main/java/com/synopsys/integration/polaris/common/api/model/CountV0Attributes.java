@@ -22,4 +22,14 @@ public class CountV0Attributes extends PolarisResponse implements PolarisAttribu
     public void setValue(Integer value) {
         this.value = value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

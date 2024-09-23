@@ -44,4 +44,14 @@ public class PolarisResource<A extends PolarisAttributes> extends PolarisRespons
     public void setAttributes(A attributes) {
         this.attributes = attributes;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

@@ -32,4 +32,14 @@ public class PolarisPagedResourceResponse<R extends PolarisResource> extends Pol
     public void setMeta(PolarisPaginationMeta meta) {
         this.meta = meta;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

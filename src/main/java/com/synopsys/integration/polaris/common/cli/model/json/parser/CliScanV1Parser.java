@@ -15,6 +15,7 @@ import com.synopsys.integration.polaris.common.cli.model.CliCommonResponseModel;
 import com.synopsys.integration.polaris.common.cli.model.CommonToolInfo;
 import com.synopsys.integration.polaris.common.cli.model.json.v1.CliScanV1;
 import com.synopsys.integration.polaris.common.cli.model.json.v1.ToolInfoV1;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -30,6 +31,7 @@ public class CliScanV1Parser extends CliScanParser<CliScanV1> {
     }
 
     @Override
+    @SuppressFBWarnings(value = "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD")
     public CliCommonResponseModel fromCliScan(JsonObject versionlessModel) throws IntegrationException {
         CliScanV1 cliScanV1 = fromJson(versionlessModel);
         CliCommonResponseModel cliCommonResponseModel =

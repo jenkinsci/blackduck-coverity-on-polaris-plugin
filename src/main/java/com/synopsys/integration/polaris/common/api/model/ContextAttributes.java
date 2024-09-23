@@ -36,4 +36,14 @@ public class ContextAttributes extends PolarisResponse implements PolarisAttribu
     public void setOrganizationname(String organizationname) {
         this.organizationname = organizationname;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

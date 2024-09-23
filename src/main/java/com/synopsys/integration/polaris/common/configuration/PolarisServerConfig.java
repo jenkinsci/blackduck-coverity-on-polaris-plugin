@@ -103,4 +103,14 @@ public class PolarisServerConfig extends Stringable implements Buildable {
     public AuthenticationSupport getAuthenticationSupport() {
         return authenticationSupport;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

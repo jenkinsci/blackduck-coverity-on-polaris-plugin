@@ -35,4 +35,14 @@ public class JobAttributes extends PolarisResponse implements PolarisAttributes 
     public void setStatus(JobStatus status) {
         this.status = status;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

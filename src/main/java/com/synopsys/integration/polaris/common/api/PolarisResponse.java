@@ -29,4 +29,14 @@ public class PolarisResponse extends Stringable implements Serializable {
     public void setJson(String json) {
         this.json = json;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

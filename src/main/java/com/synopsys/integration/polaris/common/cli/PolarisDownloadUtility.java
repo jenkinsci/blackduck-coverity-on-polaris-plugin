@@ -61,7 +61,12 @@ public class PolarisDownloadUtility {
         this.polarisServerUrl = polarisServerUrl;
         installDirectory = new File(downloadTargetDirectory, PolarisDownloadUtility.POLARIS_CLI_INSTALL_DIRECTORY);
 
-        installDirectory.mkdirs();
+        boolean dirCreated = installDirectory.mkdirs();
+        if (!dirCreated && !installDirectory.exists()) {
+            throw new IllegalArgumentException(
+                    "Failed to create the install directory: " + installDirectory.getAbsolutePath());
+        }
+
         if (!installDirectory.exists() || !installDirectory.isDirectory() || !installDirectory.canWrite()) {
             throw new IllegalArgumentException("The provided directory must exist and be writable.");
         }
@@ -152,8 +157,16 @@ public class PolarisDownloadUtility {
         File versionFile = new File(installDirectory, PolarisDownloadUtility.VERSION_FILENAME);
         if (!versionFile.exists()) {
             logger.info("The version file has not been created yet so creating it now.");
-            versionFile.createNewFile();
-            versionFile.setLastModified(0L);
+
+            boolean fileCreated = versionFile.createNewFile();
+            if (!fileCreated) {
+                throw new IOException("Failed to create the version file: " + versionFile.getAbsolutePath());
+            }
+
+            boolean lastModified = versionFile.setLastModified(0L);
+            if (!lastModified) {
+                throw new IOException("Failed to set last modified: " + versionFile.getAbsolutePath());
+            }
         }
 
         return versionFile;
@@ -230,7 +243,11 @@ public class PolarisDownloadUtility {
             try (InputStream responseStream = response.getContent()) {
                 cleanupZipExpander.expand(responseStream, installDirectory);
             }
-            versionFile.setLastModified(lastModifiedOnServer);
+
+            boolean lastModified = versionFile.setLastModified(lastModifiedOnServer);
+            if (!lastModified) {
+                throw new IOException("Failed to set last modified: " + versionFile.getAbsolutePath());
+            }
 
             File binDirectory = getBinDirectory();
             makeBinFilesExecutable(binDirectory);

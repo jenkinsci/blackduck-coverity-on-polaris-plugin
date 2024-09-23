@@ -27,4 +27,14 @@ public class FailureInfo extends Stringable implements Serializable {
     public String getException() {
         return exception;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }
