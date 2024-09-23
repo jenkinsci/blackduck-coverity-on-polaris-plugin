@@ -5,23 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.ArgumentMatcher;
-import org.mockito.Mockito;
-import org.opentest4j.AssertionFailedError;
-
 import com.google.gson.Gson;
 import com.synopsys.integration.exception.IntegrationException;
 import com.synopsys.integration.log.IntLogger;
@@ -39,6 +22,21 @@ import com.synopsys.integration.rest.proxy.ProxyInfo;
 import com.synopsys.integration.rest.request.Request;
 import com.synopsys.integration.rest.response.Response;
 import com.synopsys.integration.rest.support.AuthenticationSupport;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.ArgumentMatcher;
+import org.mockito.Mockito;
+import org.opentest4j.AssertionFailedError;
 
 public class PolarisServiceTest {
     public static String PAGE_ONE_OFFSET = "0";
@@ -48,8 +46,7 @@ public class PolarisServiceTest {
 
     private final HttpUrl BASE_URL = new HttpUrl("https://google.com");
 
-    public PolarisServiceTest() throws IntegrationException {
-    }
+    public PolarisServiceTest() throws IntegrationException {}
 
     private static Stream<Arguments> createGetAllMockData() {
         Map<String, String> getAllOnOnePageMap = new HashMap<>();
@@ -72,12 +69,11 @@ public class PolarisServiceTest {
         duplicatedDataMap.put(PAGE_TWO_OFFSET, "jobs_page_1_of_3.json");
 
         return Stream.of(
-            Arguments.of(getAllOnOnePageMap, 3, 3),
-            Arguments.of(getAllMultiPageMap, 1, 3),
-            Arguments.of(lessThanExpectedMap, 1, 2),
-            Arguments.of(moreThanExpectedMap, 1, 3),
-            Arguments.of(duplicatedDataMap, 1, 3)
-        );
+                Arguments.of(getAllOnOnePageMap, 3, 3),
+                Arguments.of(getAllMultiPageMap, 1, 3),
+                Arguments.of(lessThanExpectedMap, 1, 2),
+                Arguments.of(moreThanExpectedMap, 1, 3),
+                Arguments.of(duplicatedDataMap, 1, 3));
     }
 
     @Test
@@ -97,13 +93,22 @@ public class PolarisServiceTest {
         HttpUrl testPolarisHttpUrl = new HttpUrl(testPolarisUrl);
         Gson gson = new Gson();
         IntLogger logger = new PrintStreamIntLogger(System.out, LogLevel.INFO);
-        AccessTokenPolarisHttpClient httpClient = new AccessTokenPolarisHttpClient(logger, 100, ProxyInfo.NO_PROXY_INFO, new HttpUrl(testPolarisUrl), accessToken, gson, new AuthenticationSupport());
+        AccessTokenPolarisHttpClient httpClient = new AccessTokenPolarisHttpClient(
+                logger,
+                100,
+                ProxyInfo.NO_PROXY_INFO,
+                new HttpUrl(testPolarisUrl),
+                accessToken,
+                gson,
+                new AuthenticationSupport());
 
-        PolarisService polarisService = new PolarisService(httpClient, new PolarisJsonTransformer(gson, logger), PolarisRequestFactory.DEFAULT_LIMIT);
+        PolarisService polarisService = new PolarisService(
+                httpClient, new PolarisJsonTransformer(gson, logger), PolarisRequestFactory.DEFAULT_LIMIT);
 
         HttpUrl apiHttpUrl = testPolarisHttpUrl.appendRelativeUrl("/api/jobs/jobs");
 
-        PolarisPagedResourceResponse<PolarisResource<JobAttributes>> jobsResponse = polarisService.executePagedRequest(apiHttpUrl, JobAttributes.class, 0, 1);
+        PolarisPagedResourceResponse<PolarisResource<JobAttributes>> jobsResponse =
+                polarisService.executePagedRequest(apiHttpUrl, JobAttributes.class, 0, 1);
         List<PolarisResource<JobAttributes>> jobsList = jobsResponse.getData();
         assertNotNull(jobsList);
         PolarisPaginationMeta meta = jobsResponse.getMeta();
@@ -112,65 +117,77 @@ public class PolarisServiceTest {
 
     @ParameterizedTest
     @MethodSource("createGetAllMockData")
-    public void testGetAll(Map<String, String> offsetsToResults, int pageSize, int expectedTotal) throws IntegrationException {
+    public void testGetAll(Map<String, String> offsetsToResults, int pageSize, int expectedTotal)
+            throws IntegrationException {
         HttpUrl apiHttpUrl = BASE_URL.appendRelativeUrl("/api/jobs/jobs");
 
         AccessTokenPolarisHttpClient polarisHttpClient = Mockito.mock(AccessTokenPolarisHttpClient.class);
         mockClientBehavior(polarisHttpClient, apiHttpUrl, offsetsToResults, "jobs_no_more_results.json");
 
-        PolarisJsonTransformer polarisJsonTransformer = new PolarisJsonTransformer(new Gson(), new PrintStreamIntLogger(System.out, LogLevel.INFO));
+        PolarisJsonTransformer polarisJsonTransformer =
+                new PolarisJsonTransformer(new Gson(), new PrintStreamIntLogger(System.out, LogLevel.INFO));
         PolarisService polarisService = new PolarisService(polarisHttpClient, polarisJsonTransformer, pageSize);
         try {
-            List<PolarisResource<JobAttributes>> allPagesResponse = polarisService.getAll(apiHttpUrl, JobAttributes.class);
+            List<PolarisResource<JobAttributes>> allPagesResponse =
+                    polarisService.getAll(apiHttpUrl, JobAttributes.class);
             assertEquals(expectedTotal, allPagesResponse.size());
         } catch (IntegrationException e) {
-            fail("Mocked response caused PolarisService::GetAllResponses to throw an unexpected IntegrationException, which should never happen in this test.", e);
+            fail(
+                    "Mocked response caused PolarisService::GetAllResponses to throw an unexpected IntegrationException, which should never happen in this test.",
+                    e);
         }
     }
 
-    private void mockClientBehavior(AccessTokenPolarisHttpClient polarisHttpClient, HttpUrl url, Map<String, String> offsetsToResults, String emptyResultsPage) {
+    private void mockClientBehavior(
+            AccessTokenPolarisHttpClient polarisHttpClient,
+            HttpUrl url,
+            Map<String, String> offsetsToResults,
+            String emptyResultsPage) {
         try {
             for (Map.Entry<String, String> entry : offsetsToResults.entrySet()) {
                 Response response = Mockito.mock(Response.class);
                 Mockito.when(response.getContentString()).thenReturn(getPreparedContentStringFrom(entry.getValue()));
 
                 ArgumentMatcher<Request> isMockedRequest = request -> requestMatches(request, url, entry.getKey());
-                Mockito.when(polarisHttpClient.execute(Mockito.argThat(isMockedRequest))).thenReturn(response);
+                Mockito.when(polarisHttpClient.execute(Mockito.argThat(isMockedRequest)))
+                        .thenReturn(response);
             }
 
             Response emptyResponse = Mockito.mock(Response.class);
             Mockito.when(emptyResponse.getContentString()).thenReturn(getPreparedContentStringFrom(emptyResultsPage));
-            ArgumentMatcher<Request> isOutOfBounds = request -> requestOffsetOutOfBounds(request, url, offsetsToResults);
+            ArgumentMatcher<Request> isOutOfBounds =
+                    request -> requestOffsetOutOfBounds(request, url, offsetsToResults);
 
-            Mockito.when(polarisHttpClient.execute(Mockito.argThat(isOutOfBounds))).thenReturn(emptyResponse)
-                .thenThrow(new AssertionFailedError("Client requested more pages after getting back a page of empty results."));
+            Mockito.when(polarisHttpClient.execute(Mockito.argThat(isOutOfBounds)))
+                    .thenReturn(emptyResponse)
+                    .thenThrow(new AssertionFailedError(
+                            "Client requested more pages after getting back a page of empty results."));
         } catch (IOException | IntegrationException e) {
-            fail("Unexpected " + e.getClass() + " was thrown while mocking client behavior. Please check the test for errors.", e);
+            fail(
+                    "Unexpected " + e.getClass()
+                            + " was thrown while mocking client behavior. Please check the test for errors.",
+                    e);
         }
     }
 
     private Boolean requestMatches(Request request, HttpUrl url, String offset) {
         if (null != request && request.getUrl().equals(url)) {
-            return request.getQueryParameters()
-                       .get(PolarisRequestFactory.OFFSET_PARAMETER)
-                       .stream()
-                       .allMatch(requestOffset -> requestOffset.equals(offset));
+            return request.getQueryParameters().get(PolarisRequestFactory.OFFSET_PARAMETER).stream()
+                    .allMatch(requestOffset -> requestOffset.equals(offset));
         }
         return false;
     }
 
     private Boolean requestOffsetOutOfBounds(Request request, HttpUrl url, Map<String, String> offsetsToResults) {
         if (null != request && request.getUrl().equals(url)) {
-            return request.getQueryParameters()
-                       .get(PolarisRequestFactory.OFFSET_PARAMETER)
-                       .stream()
-                       .noneMatch(offsetsToResults::containsKey);
+            return request.getQueryParameters().get(PolarisRequestFactory.OFFSET_PARAMETER).stream()
+                    .noneMatch(offsetsToResults::containsKey);
         }
         return false;
     }
 
     private String getPreparedContentStringFrom(String resourceName) throws IOException {
-        return IOUtils.toString(getClass().getResourceAsStream("/PolarisService/" + resourceName), StandardCharsets.UTF_8);
+        return IOUtils.toString(
+                getClass().getResourceAsStream("/PolarisService/" + resourceName), StandardCharsets.UTF_8);
     }
-
 }

@@ -9,9 +9,8 @@ package com.synopsys.integration.polaris.common.configuration;
 
 import hudson.FilePath;
 import hudson.remoting.VirtualChannel;
-import jenkins.MasterToSlaveFileCallable;
-
 import java.io.File;
+import jenkins.MasterToSlaveFileCallable;
 
 public class OSArchTask extends MasterToSlaveFileCallable<String> implements FilePath.FileCallable<String> {
     @Override

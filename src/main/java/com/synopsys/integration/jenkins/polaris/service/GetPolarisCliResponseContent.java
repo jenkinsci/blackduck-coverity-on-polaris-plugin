@@ -7,12 +7,10 @@
  */
 package com.synopsys.integration.jenkins.polaris.service;
 
-import java.io.IOException;
-import java.nio.file.Files;
-
 import com.synopsys.integration.polaris.common.cli.PolarisCliResponseUtility;
 import com.synopsys.integration.polaris.common.exception.PolarisIntegrationException;
-
+import java.io.IOException;
+import java.nio.file.Files;
 import jenkins.security.MasterToSlaveCallable;
 
 public class GetPolarisCliResponseContent extends MasterToSlaveCallable<String, PolarisIntegrationException> {
@@ -31,5 +29,4 @@ public class GetPolarisCliResponseContent extends MasterToSlaveCallable<String, 
             throw new PolarisIntegrationException("There was an error getting the Polaris CLI response.", e);
         }
     }
-
 }

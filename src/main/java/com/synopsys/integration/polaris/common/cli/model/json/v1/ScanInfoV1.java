@@ -11,5 +11,4 @@ public class ScanInfoV1 {
     public String cliVersion;
     public String scanTime;
     public String issueApiUrl;
-
 }

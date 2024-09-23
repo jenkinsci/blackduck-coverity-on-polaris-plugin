@@ -7,11 +7,10 @@
  */
 package com.synopsys.integration.jenkins.polaris.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.synopsys.integration.log.IntLogger;
 import com.synopsys.integration.util.OperatingSystemType;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PolarisCliArgumentService {
     private final IntLogger logger;
@@ -20,7 +19,10 @@ public class PolarisCliArgumentService {
         this.logger = logger;
     }
 
-    public List<String> finalizePolarisCliArguments(OperatingSystemType operatingSystemType, String pathToPolarisCli, List<String> tokenizedPolarisArgumentString) {
+    public List<String> finalizePolarisCliArguments(
+            OperatingSystemType operatingSystemType,
+            String pathToPolarisCli,
+            List<String> tokenizedPolarisArgumentString) {
         List<String> escapedArguments = new ArrayList<>();
         escapedArguments.add(pathToPolarisCli);
 

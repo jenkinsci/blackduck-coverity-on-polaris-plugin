@@ -7,14 +7,6 @@
  */
 package com.synopsys.integration.polaris.common.service;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
 import com.google.gson.reflect.TypeToken;
 import com.synopsys.integration.exception.IntegrationException;
 import com.synopsys.integration.polaris.common.api.PolarisAttributes;
@@ -28,13 +20,23 @@ import com.synopsys.integration.polaris.common.rest.AccessTokenPolarisHttpClient
 import com.synopsys.integration.rest.HttpUrl;
 import com.synopsys.integration.rest.request.Request;
 import com.synopsys.integration.rest.response.Response;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 public class PolarisService {
     private final AccessTokenPolarisHttpClient polarisHttpClient;
     private final PolarisJsonTransformer polarisJsonTransformer;
     private final int defaultPageSize;
 
-    public PolarisService(AccessTokenPolarisHttpClient polarisHttpClient, PolarisJsonTransformer polarisJsonTransformer, int defaultPageSize) {
+    public PolarisService(
+            AccessTokenPolarisHttpClient polarisHttpClient,
+            PolarisJsonTransformer polarisJsonTransformer,
+            int defaultPageSize) {
         this.polarisHttpClient = polarisHttpClient;
         this.polarisJsonTransformer = polarisJsonTransformer;
         this.defaultPageSize = defaultPageSize;
@@ -50,24 +52,30 @@ public class PolarisService {
         }
     }
 
-    public <A extends PolarisAttributes> PolarisResource<A> get(HttpUrl apiUrl, Class<A> attributeType) throws IntegrationException {
-        Type resourceType = TypeToken.getParameterized(PolarisResource.class, attributeType).getType();
-        Type responseType = TypeToken.getParameterized(PolarisSingleResourceResponse.class, resourceType).getType();
+    public <A extends PolarisAttributes> PolarisResource<A> get(HttpUrl apiUrl, Class<A> attributeType)
+            throws IntegrationException {
+        Type resourceType =
+                TypeToken.getParameterized(PolarisResource.class, attributeType).getType();
+        Type responseType = TypeToken.getParameterized(PolarisSingleResourceResponse.class, resourceType)
+                .getType();
 
         Request request = PolarisRequestFactory.createDefaultGetRequest(apiUrl);
         PolarisSingleResourceResponse<PolarisResource<A>> polarisSingleResourceResponse = get(request, responseType);
         return polarisSingleResourceResponse.getData();
     }
 
-    public <A extends PolarisAttributes> List<PolarisResource<A>> getAll(HttpUrl apiUrl, Class<A> attributeType) throws IntegrationException {
+    public <A extends PolarisAttributes> List<PolarisResource<A>> getAll(HttpUrl apiUrl, Class<A> attributeType)
+            throws IntegrationException {
         return getAll(apiUrl, attributeType, defaultPageSize);
     }
 
-    public <A extends PolarisAttributes> List<PolarisResource<A>> getAll(HttpUrl apiUrl, Class<A> attributeType, int pageSize) throws IntegrationException {
+    public <A extends PolarisAttributes> List<PolarisResource<A>> getAll(
+            HttpUrl apiUrl, Class<A> attributeType, int pageSize) throws IntegrationException {
         return collectAllResources(apiUrl, attributeType, pageSize);
     }
 
-    public <A extends PolarisAttributes> List<PolarisResource<A>> collectAllResources(HttpUrl apiUrl, Class<A> attributeType, int pageSize) throws IntegrationException {
+    public <A extends PolarisAttributes> List<PolarisResource<A>> collectAllResources(
+            HttpUrl apiUrl, Class<A> attributeType, int pageSize) throws IntegrationException {
         List<PolarisResource<A>> allResources = new ArrayList<>();
 
         Integer totalExpected = null;
@@ -76,7 +84,8 @@ public class PolarisService {
         boolean thisPageHadData;
         boolean isMoreData;
         do {
-            PolarisPagedResourceResponse<PolarisResource<A>> pageOfResources = executePagedRequest(apiUrl, attributeType, offset, pageSize);
+            PolarisPagedResourceResponse<PolarisResource<A>> pageOfResources =
+                    executePagedRequest(apiUrl, attributeType, offset, pageSize);
             if (pageOfResources == null) {
                 break;
             }
@@ -84,13 +93,14 @@ public class PolarisService {
             if (totalExpectedHasNotBeenSet) {
                 PolarisPaginationMeta meta = pageOfResources.getMeta();
                 totalExpected = Optional.ofNullable(meta)
-                                    .map(PolarisPaginationMeta::getTotal)
-                                    .map(BigDecimal::intValue)
-                                    .orElse(null);
+                        .map(PolarisPaginationMeta::getTotal)
+                        .map(BigDecimal::intValue)
+                        .orElse(null);
                 totalExpectedHasNotBeenSet = false;
             }
 
-            List<PolarisResource<A>> pageResources = Optional.ofNullable(pageOfResources.getData()).orElse(Collections.emptyList());
+            List<PolarisResource<A>> pageResources =
+                    Optional.ofNullable(pageOfResources.getData()).orElse(Collections.emptyList());
             allResources.addAll(pageResources);
 
             // Pagination meta does not include a total if it only has one page of results to give. -- rotte SEP 2020
@@ -102,9 +112,12 @@ public class PolarisService {
         return allResources;
     }
 
-    protected <A extends PolarisAttributes> PolarisPagedResourceResponse<PolarisResource<A>> executePagedRequest(HttpUrl apiUrl, Class<A> attributeType, int offset, int limit) throws IntegrationException {
-        Type resourceType = TypeToken.getParameterized(PolarisResource.class, attributeType).getType();
-        Type responseType = TypeToken.getParameterized(PolarisPagedResourceResponse.class, resourceType).getType();
+    protected <A extends PolarisAttributes> PolarisPagedResourceResponse<PolarisResource<A>> executePagedRequest(
+            HttpUrl apiUrl, Class<A> attributeType, int offset, int limit) throws IntegrationException {
+        Type resourceType =
+                TypeToken.getParameterized(PolarisResource.class, attributeType).getType();
+        Type responseType = TypeToken.getParameterized(PolarisPagedResourceResponse.class, resourceType)
+                .getType();
 
         Request pagedRequest = PolarisRequestFactory.createDefaultPagedGetRequest(apiUrl, limit, offset);
         try (Response response = polarisHttpClient.execute(pagedRequest)) {
@@ -114,5 +127,4 @@ public class PolarisService {
             throw new IntegrationException("Problem handling request", e);
         }
     }
-
 }

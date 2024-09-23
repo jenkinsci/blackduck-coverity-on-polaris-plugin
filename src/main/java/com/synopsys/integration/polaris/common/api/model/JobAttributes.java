@@ -13,6 +13,7 @@ import com.synopsys.integration.polaris.common.api.PolarisResponse;
 
 public class JobAttributes extends PolarisResponse implements PolarisAttributes {
     private static final long serialVersionUID = 2618385287180907810L;
+
     @SerializedName("failureInfo")
     private FailureInfo failureInfo = null;
 
@@ -34,5 +35,4 @@ public class JobAttributes extends PolarisResponse implements PolarisAttributes 
     public void setStatus(JobStatus status) {
         this.status = status;
     }
-
 }

@@ -9,5 +9,4 @@ package com.synopsys.integration.polaris.common.api;
 
 import java.io.Serializable;
 
-public interface PolarisAttributes extends Serializable {
-}
+public interface PolarisAttributes extends Serializable {}

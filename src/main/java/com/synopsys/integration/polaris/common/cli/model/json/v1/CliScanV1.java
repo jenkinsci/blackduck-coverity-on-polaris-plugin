@@ -21,5 +21,4 @@ public class CliScanV1 implements CliScanResponse {
 
     @SerializedName("sca")
     public ToolInfoV1 blackDuckScaToolInfo;
-
 }

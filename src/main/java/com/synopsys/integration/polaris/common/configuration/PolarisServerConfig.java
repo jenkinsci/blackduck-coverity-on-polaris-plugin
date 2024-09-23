@@ -5,7 +5,8 @@
  *
  * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
-package com.synopsys.integration.polaris.common.configuration; /**
+package com.synopsys.integration.polaris.common.configuration;
+/**
  * polaris-common
  *
  * Copyright (c) 2020 Synopsys, Inc.
@@ -27,9 +28,6 @@ package com.synopsys.integration.polaris.common.configuration; /**
  * specific language governing permissions and limitations
  * under the License.
  */
-
-import java.util.function.BiConsumer;
-
 import com.google.gson.Gson;
 import com.synopsys.integration.builder.Buildable;
 import com.synopsys.integration.log.IntLogger;
@@ -39,6 +37,7 @@ import com.synopsys.integration.rest.HttpUrl;
 import com.synopsys.integration.rest.proxy.ProxyInfo;
 import com.synopsys.integration.rest.support.AuthenticationSupport;
 import com.synopsys.integration.util.Stringable;
+import java.util.function.BiConsumer;
 
 public class PolarisServerConfig extends Stringable implements Buildable {
     private final HttpUrl polarisUrl;
@@ -48,7 +47,13 @@ public class PolarisServerConfig extends Stringable implements Buildable {
     private final Gson gson;
     private final AuthenticationSupport authenticationSupport;
 
-    public PolarisServerConfig(HttpUrl polarisUrl, int timeoutSeconds, String accessToken, ProxyInfo proxyInfo, Gson gson, AuthenticationSupport authenticationSupport) {
+    public PolarisServerConfig(
+            HttpUrl polarisUrl,
+            int timeoutSeconds,
+            String accessToken,
+            ProxyInfo proxyInfo,
+            Gson gson,
+            AuthenticationSupport authenticationSupport) {
         this.polarisUrl = polarisUrl;
         this.timeoutSeconds = timeoutSeconds;
         this.accessToken = accessToken;
@@ -62,7 +67,8 @@ public class PolarisServerConfig extends Stringable implements Buildable {
     }
 
     public AccessTokenPolarisHttpClient createPolarisHttpClient(IntLogger logger) {
-        return new AccessTokenPolarisHttpClient(logger, timeoutSeconds, proxyInfo, polarisUrl, accessToken, gson, authenticationSupport);
+        return new AccessTokenPolarisHttpClient(
+                logger, timeoutSeconds, proxyInfo, polarisUrl, accessToken, gson, authenticationSupport);
     }
 
     public PolarisServicesFactory createPolarisServicesFactory(IntLogger logger) {
@@ -97,5 +103,4 @@ public class PolarisServerConfig extends Stringable implements Buildable {
     public AuthenticationSupport getAuthenticationSupport() {
         return authenticationSupport;
     }
-
 }

@@ -7,8 +7,6 @@
  */
 package com.synopsys.integration.polaris.common.cli.model.json.parser;
 
-import java.util.function.Consumer;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -24,6 +22,7 @@ import com.synopsys.integration.polaris.common.cli.model.json.v1.ProjectInfoV1;
 import com.synopsys.integration.polaris.common.cli.model.json.v1.ScanInfoV1;
 import com.synopsys.integration.polaris.common.cli.model.json.v1.ToolInfoV1;
 import com.synopsys.integration.rest.HttpUrl;
+import java.util.function.Consumer;
 
 public abstract class CliScanParser<T extends CliScanResponse> {
     private final Gson gson;
@@ -40,7 +39,8 @@ public abstract class CliScanParser<T extends CliScanResponse> {
         return gson.fromJson(jsonObject, getTypeToken().getType());
     }
 
-    protected CliCommonResponseModel createResponseModel(IssueSummaryV1 issueSummary, ProjectInfoV1 projectInfo, ScanInfoV1 scanInfo) throws IntegrationException {
+    protected CliCommonResponseModel createResponseModel(
+            IssueSummaryV1 issueSummary, ProjectInfoV1 projectInfo, ScanInfoV1 scanInfo) throws IntegrationException {
         CliCommonResponseModel cliCommonResponseModel = new CliCommonResponseModel();
 
         populateIssueSummary(issueSummary, cliCommonResponseModel::setIssueSummary);
@@ -49,7 +49,8 @@ public abstract class CliScanParser<T extends CliScanResponse> {
         return cliCommonResponseModel;
     }
 
-    protected void populateScanInfo(ScanInfoV1 scanInfoV1, Consumer<CommonScanInfo> consumer) throws IntegrationException {
+    protected void populateScanInfo(ScanInfoV1 scanInfoV1, Consumer<CommonScanInfo> consumer)
+            throws IntegrationException {
         CommonScanInfo commonScanInfo = new CommonScanInfo();
         commonScanInfo.setCliVersion(scanInfoV1.cliVersion);
         commonScanInfo.setIssueApiUrl(new HttpUrl(scanInfoV1.issueApiUrl));
@@ -67,7 +68,8 @@ public abstract class CliScanParser<T extends CliScanResponse> {
         consumer.accept(commonProjectInfo);
     }
 
-    protected void populateIssueSummary(IssueSummaryV1 issueSummaryV1, Consumer<CommonIssueSummary> consumer) throws IntegrationException {
+    protected void populateIssueSummary(IssueSummaryV1 issueSummaryV1, Consumer<CommonIssueSummary> consumer)
+            throws IntegrationException {
         if (null != issueSummaryV1) {
             CommonIssueSummary commonIssueSummary = new CommonIssueSummary();
             commonIssueSummary.setIssuesBySeverity(issueSummaryV1.issuesBySeverity);
@@ -86,5 +88,4 @@ public abstract class CliScanParser<T extends CliScanResponse> {
         commonToolInfo.setToolVersion(toolInfoV1.toolVersion);
         return commonToolInfo;
     }
-
 }

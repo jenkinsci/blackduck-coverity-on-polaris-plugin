@@ -12,5 +12,4 @@ public class ToolInfoV1 {
     public String jobId;
     public String jobStatusUrl;
     public String jobStatus;
-
 }

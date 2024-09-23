@@ -24,7 +24,9 @@ public class CliCommonResponseAdapter {
         this.gson = gson;
     }
 
-    public CliCommonResponseModel fromJson(String versionString, PolarisCliResponseVersion polarisCliResponseVersion, JsonObject versionlessModel) throws IntegrationException {
+    public CliCommonResponseModel fromJson(
+            String versionString, PolarisCliResponseVersion polarisCliResponseVersion, JsonObject versionlessModel)
+            throws IntegrationException {
         CliScanParser<? extends CliScanResponse> cliScanParser = new CliScanUnsupportedParser(gson, versionString);
 
         int majorVersion = polarisCliResponseVersion.getMajor();
@@ -36,5 +38,4 @@ public class CliCommonResponseAdapter {
 
         return cliScanParser.fromCliScan(versionlessModel);
     }
-
 }

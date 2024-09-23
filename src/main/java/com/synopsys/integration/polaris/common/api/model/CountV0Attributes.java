@@ -22,6 +22,4 @@ public class CountV0Attributes extends PolarisResponse implements PolarisAttribu
     public void setValue(Integer value) {
         this.value = value;
     }
-
 }
-

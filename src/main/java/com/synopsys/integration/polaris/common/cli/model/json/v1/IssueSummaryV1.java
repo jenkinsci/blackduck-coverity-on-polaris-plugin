@@ -13,5 +13,4 @@ public class IssueSummaryV1 {
     public Map<String, Integer> issuesBySeverity;
     public String summaryUrl;
     public int total;
-
 }

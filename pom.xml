@@ -1,362 +1,363 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.jenkins-ci.plugins</groupId>
-        <artifactId>plugin</artifactId>
-        <version>4.73</version>
-        <relativePath />
-    </parent>
-    <groupId>io.jenkins.plugins</groupId>
-    <artifactId>blackduck-coverity-on-polaris</artifactId>
-    <version>${revision}${changelist}</version>
-    <packaging>hpi</packaging>
-    <name>Black Duck Coverity on Polaris</name>
-    <description>Allows users to run Coverity on Polaris static analysis in their builds</description>
-    <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
-    <licenses>
-        <license>
-            <name>Apache License</name>
-            <url>http://www.apache.org/licenses/</url>
-        </license>
-    </licenses>
-    <scm child.scm.connection.inherit.append.path="false" child.scm.developerConnection.inherit.append.path="false" child.scm.url.inherit.append.path="false">
-        <connection>scm:git:https://github.com/${gitHubRepo}</connection>
-        <developerConnection>scm:git:https://github.com/${gitHubRepo}</developerConnection>
-        <tag>${scmTag}</tag>
-        <url>https://github.com/${gitHubRepo}</url>
-    </scm>
-    <properties>
-        <!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
-        <revision>1.0.0</revision>
-        <changelist>-SNAPSHOT</changelist>
-        <jenkins.version>2.401.3</jenkins.version>
-        <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
-    </properties>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.jenkins-ci.plugins</groupId>
+    <artifactId>plugin</artifactId>
+    <version>4.73</version>
+    <relativePath />
+  </parent>
+  <groupId>io.jenkins.plugins</groupId>
+  <artifactId>blackduck-coverity-on-polaris</artifactId>
+  <version>${revision}${changelist}</version>
+  <packaging>hpi</packaging>
+  <name>Black Duck Coverity on Polaris</name>
+  <description>Allows users to run Coverity on Polaris static analysis in their builds</description>
+  <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
+  <licenses>
+    <license>
+      <name>Apache License</name>
+      <url>http://www.apache.org/licenses/</url>
+    </license>
+  </licenses>
+  <scm child.scm.connection.inherit.append.path="false" child.scm.developerConnection.inherit.append.path="false" child.scm.url.inherit.append.path="false">
+    <connection>scm:git:https://github.com/${gitHubRepo}</connection>
+    <developerConnection>scm:git:https://github.com/${gitHubRepo}</developerConnection>
+    <tag>${scmTag}</tag>
+    <url>https://github.com/${gitHubRepo}</url>
+  </scm>
+  <properties>
+    <!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
+    <revision>1.0.0</revision>
+    <changelist>-SNAPSHOT</changelist>
+    <jenkins.version>2.401.3</jenkins.version>
+    <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
+    <spotless.check.skip>false</spotless.check.skip>
+  </properties>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>repo.jenkins-ci.org</id>
-            <url>https://repo.jenkins-ci.org/public/</url>
-        </pluginRepository>
-    </pluginRepositories>
-
-    <repositories>
-        <repository>
-            <id>synopsys-artifactory-snapshot</id>
-            <url>https://sig-artifactory.internal.synopsys.com/artifactory/ngp-snapshot-local</url>
-        </repository>
-        <repository>
-            <id>synopsys-artifactory-releases</id>
-            <url>https://sig-artifactory.internal.synopsys.com/artifactory/plugins-releases</url>
-        </repository>
-        <repository>
-            <id>talend-repo</id>
-            <url>https://artifacts-oss.talend.com/nexus/content/repositories/TalendOpenSourceRelease/</url>
-        </repository>
-        <repository>
-            <id>mulesoft-repo</id>
-            <url>https://repository.mulesoft.org/nexus/content/repositories/public/</url>
-        </repository>
-        <repository>
-            <id>repo.jenkins-ci.org</id>
-            <url>https://repo.jenkins-ci.org/public/</url>
-        </repository>
-        <repository>
-            <id>blackduck-release</id>
-            <url>https://repo.blackduck.com/bds-integrations-release</url>
-        </repository>
-        <repository>
-            <id>jfrog-jars</id>
-            <url>https://jfrog.bintray.com/jfrog-jars</url>
-        </repository>
-        <repository>
-            <id>bds-artifactory</id>
-            <url>${repoReleaseArtifactoryUrl}</url>
-        </repository>
-    </repositories>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <!-- Pick up common dependencies for the selected LTS line: https://github.com/jenkinsci/bom#usage -->
-                <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.401.x</artifactId>
-                <version>2496.vddfca_753db_80</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-core</artifactId>
-                <version>5.8.5</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-crypto</artifactId>
-                <version>5.8.5</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-web</artifactId>
-                <version>5.8.5</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
+  <dependencyManagement>
     <dependencies>
-        <dependency>
-            <groupId>com.synopsys.integration</groupId>
-            <artifactId>jenkins-common</artifactId>
-            <version>0.3.4</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.jenkins-ci.main</groupId>
-                    <artifactId>jenkins-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.jenkins-ci.plugins</groupId>
-                    <artifactId>credentials</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.jenkins-ci.plugins</groupId>
-                    <artifactId>plain-credentials</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.jenkins-ci.plugins.workflow</groupId>
-                    <artifactId>workflow-support</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.jenkins-ci.plugins.workflow</groupId>
-                    <artifactId>workflow-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>commons-text</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-databind</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>net.minidev</groupId>
-                    <artifactId>json-smart</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>javax.servlet-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.synopsys.integration</groupId>
-            <artifactId>jenkins-annotation-processor</artifactId>
-            <version>0.0.7</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-text</artifactId>
-            <version>1.10.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.thoughtworks.xstream</groupId>
-            <artifactId>xstream</artifactId>
-            <version>1.4.20</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jvnet.localizer</groupId>
-            <artifactId>localizer</artifactId>
-            <version>1.31</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>credentials</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>plain-credentials</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>structs</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-step-api</artifactId>
-        </dependency>
-        <!-- Test Dependencies -->
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-basic-steps</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-cps</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-durable-task-step</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-job</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.6.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>5.6.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>2.23.4</version>
-            <scope>test</scope>
-        </dependency>
+      <dependency>
+        <!-- Pick up common dependencies for the selected LTS line: https://github.com/jenkinsci/bom#usage -->
+        <groupId>io.jenkins.tools.bom</groupId>
+        <artifactId>bom-2.401.x</artifactId>
+        <version>2496.vddfca_753db_80</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-core</artifactId>
+        <version>5.8.5</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-crypto</artifactId>
+        <version>5.8.5</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-web</artifactId>
+        <version>5.8.5</version>
+      </dependency>
     </dependencies>
+  </dependencyManagement>
 
-    <build>
-        <finalName>${project.artifactId}-${project.version}</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.10</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                        <phase>test</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- Plugin for generating docs -->
-<!--            <plugin>-->
-<!--                <groupId>org.codehaus.mojo</groupId>-->
-<!--                <artifactId>exec-maven-plugin</artifactId>-->
-<!--                <version>3.0.0</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>generate-docs</id>-->
-<!--                        <phase>compile</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>java</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <mainClass>com.synopsys.integration.jenkins.polaris.docs.GenerateDocsTask</mainClass>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                    <execution>-->
-<!--                        <id>build-mkdocs</id>-->
-<!--                        <phase>prepare-package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>exec</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <executable>mkdocs</executable>-->
-<!--                            <arguments>-->
-<!--                                <argument>build</argument>-->
-<!--                            </arguments>-->
-<!--                            <workingDirectory>${project.basedir}/docs</workingDirectory>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                    <execution>-->
-<!--                        <id>serve-mkdocs</id>-->
-<!--                        <phase>pre-integration-test</phase> &lt;!&ndash; you can bind to a phase where you want to serve the docs &ndash;&gt;-->
-<!--                        <goals>-->
-<!--                            <goal>exec</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <executable>mkdocs</executable>-->
-<!--                            <arguments>-->
-<!--                                <argument>serve</argument>-->
-<!--                            </arguments>-->
-<!--                            <workingDirectory>${project.basedir}/docs</workingDirectory>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>com.synopsys.integration</groupId>
-                            <artifactId>jenkins-annotation-processor</artifactId>
-                            <version>0.0.7</version>
-                        </path>
-                    </annotationProcessorPaths>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+  <dependencies>
+    <dependency>
+      <groupId>com.synopsys.integration</groupId>
+      <artifactId>jenkins-common</artifactId>
+      <version>0.3.4</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.servlet</groupId>
+          <artifactId>javax.servlet-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>net.minidev</groupId>
+          <artifactId>json-smart</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-text</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jenkins-ci.main</groupId>
+          <artifactId>jenkins-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jenkins-ci.plugins</groupId>
+          <artifactId>credentials</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jenkins-ci.plugins</groupId>
+          <artifactId>plain-credentials</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jenkins-ci.plugins.workflow</groupId>
+          <artifactId>workflow-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jenkins-ci.plugins.workflow</groupId>
+          <artifactId>workflow-support</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.4.20</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-text</artifactId>
+      <version>1.10.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>credentials</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>plain-credentials</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>structs</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-step-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jvnet.localizer</groupId>
+      <artifactId>localizer</artifactId>
+      <version>1.31</version>
+    </dependency>
+    <dependency>
+      <groupId>com.synopsys.integration</groupId>
+      <artifactId>jenkins-annotation-processor</artifactId>
+      <version>0.0.7</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- Test Dependencies -->
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-basic-steps</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-cps</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-durable-task-step</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-job</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.6.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>5.6.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>2.23.4</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
-    <profiles>
-        <profile>
-            <id>snapshot-deployment</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>bds-artifactory</id>
-                    <url>${snapshotArtifactoryUrl}</url>
-                </snapshotRepository>
-            </distributionManagement>
-        </profile>
-        <profile>
-            <id>deployment</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <distributionManagement>
-                <repository>
-                    <id>bds-artifactory</id>
-                    <url>${releaseArtifactoryUrl}</url>
-                </repository>
-            </distributionManagement>
-        </profile>
-        <profile>
-            <id>qa-deployment</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <distributionManagement>
-                <repository>
-                    <id>bds-artifactory</id>
-                    <url>${qaArtifactoryUrl}</url>
-                </repository>
-                <snapshotRepository>
-                    <id>bds-artifactory</id>
-                    <url>${snapshotArtifactoryUrl}</url>
-                </snapshotRepository>
-            </distributionManagement>
-        </profile>
-    </profiles>
+  <repositories>
+    <repository>
+      <id>synopsys-artifactory-snapshot</id>
+      <url>https://sig-artifactory.internal.synopsys.com/artifactory/ngp-snapshot-local</url>
+    </repository>
+    <repository>
+      <id>synopsys-artifactory-releases</id>
+      <url>https://sig-artifactory.internal.synopsys.com/artifactory/plugins-releases</url>
+    </repository>
+    <repository>
+      <id>talend-repo</id>
+      <url>https://artifacts-oss.talend.com/nexus/content/repositories/TalendOpenSourceRelease/</url>
+    </repository>
+    <repository>
+      <id>mulesoft-repo</id>
+      <url>https://repository.mulesoft.org/nexus/content/repositories/public/</url>
+    </repository>
+    <repository>
+      <id>repo.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </repository>
+    <repository>
+      <id>blackduck-release</id>
+      <url>https://repo.blackduck.com/bds-integrations-release</url>
+    </repository>
+    <repository>
+      <id>jfrog-jars</id>
+      <url>https://jfrog.bintray.com/jfrog-jars</url>
+    </repository>
+    <repository>
+      <id>bds-artifactory</id>
+      <url>${repoReleaseArtifactoryUrl}</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>repo.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <build>
+    <finalName>${project.artifactId}-${project.version}</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.10</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <goals>
+              <goal>report</goal>
+            </goals>
+            <phase>test</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Plugin for generating docs -->
+      <!--            <plugin>-->
+      <!--                <groupId>org.codehaus.mojo</groupId>-->
+      <!--                <artifactId>exec-maven-plugin</artifactId>-->
+      <!--                <version>3.0.0</version>-->
+      <!--                <executions>-->
+      <!--                    <execution>-->
+      <!--                        <id>generate-docs</id>-->
+      <!--                        <phase>compile</phase>-->
+      <!--                        <goals>-->
+      <!--                            <goal>java</goal>-->
+      <!--                        </goals>-->
+      <!--                        <configuration>-->
+      <!--                            <mainClass>com.synopsys.integration.jenkins.polaris.docs.GenerateDocsTask</mainClass>-->
+      <!--                        </configuration>-->
+      <!--                    </execution>-->
+      <!--                    <execution>-->
+      <!--                        <id>build-mkdocs</id>-->
+      <!--                        <phase>prepare-package</phase>-->
+      <!--                        <goals>-->
+      <!--                            <goal>exec</goal>-->
+      <!--                        </goals>-->
+      <!--                        <configuration>-->
+      <!--                            <executable>mkdocs</executable>-->
+      <!--                            <arguments>-->
+      <!--                                <argument>build</argument>-->
+      <!--                            </arguments>-->
+      <!--                            <workingDirectory>${project.basedir}/docs</workingDirectory>-->
+      <!--                        </configuration>-->
+      <!--                    </execution>-->
+      <!--                    <execution>-->
+      <!--                        <id>serve-mkdocs</id>-->
+      <!--                        <phase>pre-integration-test</phase> &lt;!&ndash; you can bind to a phase where you want to serve the docs &ndash;&gt;-->
+      <!--                        <goals>-->
+      <!--                            <goal>exec</goal>-->
+      <!--                        </goals>-->
+      <!--                        <configuration>-->
+      <!--                            <executable>mkdocs</executable>-->
+      <!--                            <arguments>-->
+      <!--                                <argument>serve</argument>-->
+      <!--                            </arguments>-->
+      <!--                            <workingDirectory>${project.basedir}/docs</workingDirectory>-->
+      <!--                        </configuration>-->
+      <!--                    </execution>-->
+      <!--                </executions>-->
+      <!--            </plugin>-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>com.synopsys.integration</groupId>
+              <artifactId>jenkins-annotation-processor</artifactId>
+              <version>0.0.7</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>snapshot-deployment</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>bds-artifactory</id>
+          <url>${snapshotArtifactoryUrl}</url>
+        </snapshotRepository>
+      </distributionManagement>
+    </profile>
+    <profile>
+      <id>deployment</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <distributionManagement>
+        <repository>
+          <id>bds-artifactory</id>
+          <url>${releaseArtifactoryUrl}</url>
+        </repository>
+      </distributionManagement>
+    </profile>
+    <profile>
+      <id>qa-deployment</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <distributionManagement>
+        <repository>
+          <id>bds-artifactory</id>
+          <url>${qaArtifactoryUrl}</url>
+        </repository>
+        <snapshotRepository>
+          <id>bds-artifactory</id>
+          <url>${snapshotArtifactoryUrl}</url>
+        </snapshotRepository>
+      </distributionManagement>
+    </profile>
+  </profiles>
 </project>

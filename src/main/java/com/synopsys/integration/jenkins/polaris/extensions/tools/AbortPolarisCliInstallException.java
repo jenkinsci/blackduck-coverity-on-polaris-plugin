@@ -14,5 +14,4 @@ public class AbortPolarisCliInstallException extends AbortException {
     public AbortPolarisCliInstallException(ToolInstallation toolInstallation, String reason) {
         super("Cannot install Polaris CLI Installation " + toolInstallation.getName() + " because: " + reason);
     }
-
 }

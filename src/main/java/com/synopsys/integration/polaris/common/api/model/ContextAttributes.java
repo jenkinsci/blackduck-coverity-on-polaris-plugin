@@ -11,7 +11,8 @@ import com.google.gson.annotations.SerializedName;
 import com.synopsys.integration.polaris.common.api.PolarisAttributes;
 import com.synopsys.integration.polaris.common.api.PolarisResponse;
 
-// this file should not be edited - if changes are necessary, the generator should be updated, then this file should be re-created
+// this file should not be edited - if changes are necessary, the generator should be updated, then this file should be
+// re-created
 
 public class ContextAttributes extends PolarisResponse implements PolarisAttributes {
     @SerializedName("current")
@@ -35,6 +36,4 @@ public class ContextAttributes extends PolarisResponse implements PolarisAttribu
     public void setOrganizationname(String organizationname) {
         this.organizationname = organizationname;
     }
-
 }
-

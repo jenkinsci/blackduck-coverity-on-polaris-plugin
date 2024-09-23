@@ -7,15 +7,13 @@
  */
 package com.synopsys.integration.jenkins.polaris.service;
 
+import com.synopsys.integration.jenkins.exception.JenkinsUserFriendlyException;
+import com.synopsys.integration.util.OperatingSystemType;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
-
-import com.synopsys.integration.jenkins.exception.JenkinsUserFriendlyException;
-import com.synopsys.integration.util.OperatingSystemType;
-
 import jenkins.security.MasterToSlaveCallable;
 
 public class GetPathToPolarisCli extends MasterToSlaveCallable<String, JenkinsUserFriendlyException> {
@@ -42,7 +40,8 @@ public class GetPathToPolarisCli extends MasterToSlaveCallable<String, JenkinsUs
             return swipCli.get();
         }
 
-        throw new JenkinsUserFriendlyException("The Polaris CLI could not be found in " + binPath.toString() + " on this node. Please verify the cli exists there and is executable.");
+        throw new JenkinsUserFriendlyException("The Polaris CLI could not be found in " + binPath.toString()
+                + " on this node. Please verify the cli exists there and is executable.");
     }
 
     private Optional<String> checkFile(OperatingSystemType operatingSystemType, Path binPath, String filePrefix) {

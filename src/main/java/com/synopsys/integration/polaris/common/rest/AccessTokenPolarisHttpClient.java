@@ -7,16 +7,6 @@
  */
 package com.synopsys.integration.polaris.common.rest;
 
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.entity.StringEntity;
-
 import com.google.gson.Gson;
 import com.synopsys.integration.exception.IntegrationException;
 import com.synopsys.integration.log.IntLogger;
@@ -26,6 +16,14 @@ import com.synopsys.integration.rest.client.AuthenticatingIntHttpClient;
 import com.synopsys.integration.rest.proxy.ProxyInfo;
 import com.synopsys.integration.rest.response.Response;
 import com.synopsys.integration.rest.support.AuthenticationSupport;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.entity.StringEntity;
 
 public class AccessTokenPolarisHttpClient extends AuthenticatingIntHttpClient {
     private static final String AUTHENTICATION_SPEC = "api/auth/authenticate";
@@ -39,7 +37,14 @@ public class AccessTokenPolarisHttpClient extends AuthenticatingIntHttpClient {
     private final HttpUrl baseUrl;
     private final String accessToken;
 
-    public AccessTokenPolarisHttpClient(IntLogger logger, int timeout, ProxyInfo proxyInfo, HttpUrl baseUrl, String accessToken, Gson gson, AuthenticationSupport authenticationSupport) {
+    public AccessTokenPolarisHttpClient(
+            IntLogger logger,
+            int timeout,
+            ProxyInfo proxyInfo,
+            HttpUrl baseUrl,
+            String accessToken,
+            Gson gson,
+            AuthenticationSupport authenticationSupport) {
         super(logger, timeout, false, proxyInfo);
         this.baseUrl = baseUrl;
         this.accessToken = accessToken;
@@ -65,7 +70,8 @@ public class AccessTokenPolarisHttpClient extends AuthenticatingIntHttpClient {
 
     @Override
     protected void completeAuthenticationRequest(HttpUriRequest request, Response response) {
-        authenticationSupport.completeTokenAuthenticationRequest(request, response, logger, gson, this, AccessTokenPolarisHttpClient.AUTHENTICATION_RESPONSE_KEY);
+        authenticationSupport.completeTokenAuthenticationRequest(
+                request, response, logger, gson, this, AccessTokenPolarisHttpClient.AUTHENTICATION_RESPONSE_KEY);
     }
 
     @Override
@@ -86,5 +92,4 @@ public class AccessTokenPolarisHttpClient extends AuthenticatingIntHttpClient {
     public HttpUrl getPolarisServerUrl() {
         return baseUrl;
     }
-
 }

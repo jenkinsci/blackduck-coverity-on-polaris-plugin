@@ -7,15 +7,22 @@
  */
 package com.synopsys.integration.jenkins.polaris.extensions.pipeline;
 
+import com.synopsys.integration.jenkins.annotations.HelpMarkdown;
+import com.synopsys.integration.jenkins.polaris.service.PolarisCommandsFactory;
+import hudson.EnvVars;
+import hudson.Extension;
+import hudson.FilePath;
+import hudson.Launcher;
+import hudson.model.Node;
+import hudson.model.Run;
+import hudson.model.TaskListener;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import org.jenkinsci.Symbol;
 import org.jenkinsci.plugins.workflow.steps.Step;
 import org.jenkinsci.plugins.workflow.steps.StepContext;
@@ -25,19 +32,9 @@ import org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
-import com.synopsys.integration.jenkins.annotations.HelpMarkdown;
-import com.synopsys.integration.jenkins.polaris.service.PolarisCommandsFactory;
-
-import hudson.EnvVars;
-import hudson.Extension;
-import hudson.FilePath;
-import hudson.Launcher;
-import hudson.model.Node;
-import hudson.model.Run;
-import hudson.model.TaskListener;
-
 public class PolarisIssueCheckStep extends Step implements Serializable {
-    public static final String DISPLAY_NAME = "Check for issues in the Coverity on Polaris found by a previous execution of the CLI";
+    public static final String DISPLAY_NAME =
+            "Check for issues in the Coverity on Polaris found by a previous execution of the CLI";
     public static final String PIPELINE_NAME = "polarisIssueCheck";
     private static final long serialVersionUID = -2698425344634481146L;
 
@@ -46,12 +43,14 @@ public class PolarisIssueCheckStep extends Step implements Serializable {
     private Boolean returnIssueCount;
 
     @Nullable
-    @HelpMarkdown("The maximum number of minutes to wait for jobs started by the Coverity on Polaris CLI to complete when executed without -w (nonblocking mode). Must be a positive integer, defaults to 30 minutes.")
+    @HelpMarkdown(
+            "The maximum number of minutes to wait for jobs started by the Coverity on Polaris CLI to complete when executed without -w (nonblocking mode). Must be a positive integer, defaults to 30 minutes.")
     private Integer jobTimeoutInMinutes;
 
     @DataBoundConstructor
     public PolarisIssueCheckStep() {
-        // Nothing to do-- we generally want to only use DataBoundSetters if we can, but having no DataBoundConstructor can cause issues.
+        // Nothing to do-- we generally want to only use DataBoundSetters if we can, but having no DataBoundConstructor
+        // can cause issues.
         // -- rotte FEB 2020
     }
 
@@ -87,13 +86,15 @@ public class PolarisIssueCheckStep extends Step implements Serializable {
     @Extension(optional = true)
     public static final class DescriptorImpl extends StepDescriptor {
         public DescriptorImpl() {
-            // Nothing to do here, but we must provide an explicit default constructor or else some versions of the Pipeline syntax generator will break
+            // Nothing to do here, but we must provide an explicit default constructor or else some versions of the
+            // Pipeline syntax generator will break
             // -rotte FEB 2020
         }
 
         @Override
         public Set<? extends Class<?>> getRequiredContext() {
-            return new HashSet<>(Arrays.asList(TaskListener.class, EnvVars.class, FilePath.class, Launcher.class, Run.class, Node.class));
+            return new HashSet<>(Arrays.asList(
+                    TaskListener.class, EnvVars.class, FilePath.class, Launcher.class, Run.class, Node.class));
         }
 
         @Override
@@ -106,7 +107,6 @@ public class PolarisIssueCheckStep extends Step implements Serializable {
         public String getDisplayName() {
             return DISPLAY_NAME;
         }
-
     }
 
     public class Execution extends SynchronousNonBlockingStepExecution<Integer> {
@@ -131,7 +131,7 @@ public class PolarisIssueCheckStep extends Step implements Serializable {
         @Override
         protected Integer run() throws Exception {
             return PolarisCommandsFactory.fromPipeline(listener, envVars, launcher, node, run, workspace)
-                       .checkForIssues(jobTimeoutInMinutes, returnIssueCount);
+                    .checkForIssues(jobTimeoutInMinutes, returnIssueCount);
         }
     }
 }

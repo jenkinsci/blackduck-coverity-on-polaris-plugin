@@ -7,11 +7,6 @@
  */
 package com.synopsys.integration.polaris.common.service;
 
-import java.util.Optional;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DurationFormatUtils;
-
 import com.synopsys.integration.exception.IntegrationException;
 import com.synopsys.integration.log.IntLogger;
 import com.synopsys.integration.polaris.common.api.PolarisResource;
@@ -21,6 +16,9 @@ import com.synopsys.integration.polaris.common.api.model.JobStatus;
 import com.synopsys.integration.polaris.common.exception.PolarisIntegrationException;
 import com.synopsys.integration.rest.HttpUrl;
 import com.synopsys.integration.wait.WaitJob;
+import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 
 public class JobService {
     public static final long DEFAULT_TIMEOUT = 30 * 60L;
@@ -38,31 +36,40 @@ public class JobService {
         return polarisService.get(jobApiUrl, JobAttributes.class);
     }
 
-    public void waitForJobStateIsCompletedOrDieByUrl(HttpUrl jobApiUrl, long timeoutInSeconds, int waitIntervalInSeconds) throws IntegrationException, InterruptedException {
-        WaitJob waitJob = WaitJob.createUsingSystemTimeWhenInvoked(logger, timeoutInSeconds, waitIntervalInSeconds, () -> hasJobEnded(jobApiUrl));
+    public void waitForJobStateIsCompletedOrDieByUrl(
+            HttpUrl jobApiUrl, long timeoutInSeconds, int waitIntervalInSeconds)
+            throws IntegrationException, InterruptedException {
+        WaitJob waitJob = WaitJob.createUsingSystemTimeWhenInvoked(
+                logger, timeoutInSeconds, waitIntervalInSeconds, () -> hasJobEnded(jobApiUrl));
         if (!waitJob.waitFor()) {
             String maximumDurationString = DurationFormatUtils.formatDurationHMS(timeoutInSeconds * 1000);
-            throw new PolarisIntegrationException(String.format("Job at url %s did not end in the provided timeout of %s", jobApiUrl, maximumDurationString));
+            throw new PolarisIntegrationException(String.format(
+                    "Job at url %s did not end in the provided timeout of %s", jobApiUrl, maximumDurationString));
         }
 
         PolarisResource<JobAttributes> jobResource = this.getJobByUrl(jobApiUrl);
         JobStatus.StateEnum jobState = Optional.ofNullable(jobResource)
-                                           .map(PolarisResource::getAttributes)
-                                           .map(JobAttributes::getStatus)
-                                           .map(JobStatus::getState)
-                                           .orElseThrow(() -> new PolarisIntegrationException(String.format("Job at url %s ended but its state cannot be determined.", jobApiUrl)));
+                .map(PolarisResource::getAttributes)
+                .map(JobAttributes::getStatus)
+                .map(JobStatus::getState)
+                .orElseThrow(() -> new PolarisIntegrationException(
+                        String.format("Job at url %s ended but its state cannot be determined.", jobApiUrl)));
 
         if (!JobStatus.StateEnum.COMPLETED.equals(jobState)) {
             StringBuilder errorMessageBuilder = new StringBuilder();
-            errorMessageBuilder.append(String.format("Job at url %s ended with state %s instead of %s", jobApiUrl, jobState, JobStatus.StateEnum.COMPLETED));
+            errorMessageBuilder.append(String.format(
+                    "Job at url %s ended with state %s instead of %s",
+                    jobApiUrl, jobState, JobStatus.StateEnum.COMPLETED));
             if (JobStatus.StateEnum.FAILED.equals(jobState)) {
                 // Niether Data nor Attributes can be null because they were validated above -- rotte MAR 2020
                 FailureInfo failureInfo = jobResource.getAttributes().getFailureInfo();
                 if (failureInfo != null && StringUtils.isNotBlank(failureInfo.getUserFriendlyFailureReason())) {
-                    errorMessageBuilder.append(String.format(" because: %s", failureInfo.getUserFriendlyFailureReason()));
+                    errorMessageBuilder.append(
+                            String.format(" because: %s", failureInfo.getUserFriendlyFailureReason()));
                 }
             }
-            errorMessageBuilder.append("\r\nCheck the job status in the Polaris Software Integrity Platform for more details.");
+            errorMessageBuilder.append(
+                    "\r\nCheck the job status in the Polaris Software Integrity Platform for more details.");
 
             throw new PolarisIntegrationException(errorMessageBuilder.toString());
         }
@@ -73,8 +80,8 @@ public class JobService {
 
         try {
             Optional<JobStatus> optionalJobStatus = Optional.ofNullable(getJobByUrl(jobApiUrl))
-                                                        .map(PolarisResource::getAttributes)
-                                                        .map(JobAttributes::getStatus);
+                    .map(PolarisResource::getAttributes)
+                    .map(JobAttributes::getStatus);
 
             if (!optionalJobStatus.isPresent()) {
                 logger.info(jobStatusPrefix + " was found but the job status could not be determined.");
@@ -83,8 +90,11 @@ public class JobService {
 
             JobStatus jobStatus = optionalJobStatus.get();
             JobStatus.StateEnum stateEnum = jobStatus.getState();
-            if (JobStatus.StateEnum.QUEUED.equals(stateEnum) || JobStatus.StateEnum.RUNNING.equals(stateEnum) || JobStatus.StateEnum.DISPATCHED.equals(stateEnum)) {
-                logger.info(jobStatusPrefix + " was found with status " + stateEnum.toString() + ". Progress: " + jobStatus.getProgress());
+            if (JobStatus.StateEnum.QUEUED.equals(stateEnum)
+                    || JobStatus.StateEnum.RUNNING.equals(stateEnum)
+                    || JobStatus.StateEnum.DISPATCHED.equals(stateEnum)) {
+                logger.info(jobStatusPrefix + " was found with status " + stateEnum.toString() + ". Progress: "
+                        + jobStatus.getProgress());
                 return false;
             }
 
@@ -98,5 +108,4 @@ public class JobService {
 
         return true;
     }
-
 }

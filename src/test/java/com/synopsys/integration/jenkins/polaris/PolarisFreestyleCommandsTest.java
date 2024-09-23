@@ -2,18 +2,16 @@ package com.synopsys.integration.jenkins.polaris;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.IOException;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
 import com.synopsys.integration.exception.IntegrationException;
 import com.synopsys.integration.jenkins.extensions.ChangeBuildStatusTo;
 import com.synopsys.integration.jenkins.extensions.JenkinsIntLogger;
 import com.synopsys.integration.jenkins.polaris.extensions.freestyle.FreestyleCreateChangeSetFile;
 import com.synopsys.integration.jenkins.polaris.extensions.freestyle.WaitForIssues;
 import com.synopsys.integration.jenkins.service.JenkinsBuildService;
+import java.io.IOException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 public class PolarisFreestyleCommandsTest {
     private static final String POLARIS_CLI_NAME = "polarisCliName";
@@ -56,16 +54,22 @@ public class PolarisFreestyleCommandsTest {
     @Test
     public void testPreserveNullTimeout() throws Throwable {
         try {
-            Mockito.when(mockedCliRunner.runPolarisCli(POLARIS_CLI_NAME, CHANGE_SET_FILE_PATH, POLARIS_ARGUMENTS)).thenReturn(STATUS_CODE_SUCCESS);
-            Mockito.when(mockedChangeSetFileCreator.createChangeSetFile(EXCLUSION_PATTERNS, INCLUSION_PATTERNS)).thenReturn(CHANGE_SET_FILE_PATH);
+            Mockito.when(mockedCliRunner.runPolarisCli(POLARIS_CLI_NAME, CHANGE_SET_FILE_PATH, POLARIS_ARGUMENTS))
+                    .thenReturn(STATUS_CODE_SUCCESS);
+            Mockito.when(mockedChangeSetFileCreator.createChangeSetFile(EXCLUSION_PATTERNS, INCLUSION_PATTERNS))
+                    .thenReturn(CHANGE_SET_FILE_PATH);
         } catch (Exception e) {
-            fail("An unexpected exception occurred when preparing the test for setup. Please correct the test code.", e);
+            fail(
+                    "An unexpected exception occurred when preparing the test for setup. Please correct the test code.",
+                    e);
         }
 
         waitForIssues.setJobTimeoutInMinutes(null);
 
-        PolarisFreestyleCommands polarisFreestyleCommands = new PolarisFreestyleCommands(logger, mockedBuildService, mockedChangeSetFileCreator, mockedCliRunner, mockedIssueChecker);
-        polarisFreestyleCommands.runPolarisCliAndCheckForIssues(POLARIS_CLI_NAME, POLARIS_ARGUMENTS, createChangeSetFile, waitForIssues);
+        PolarisFreestyleCommands polarisFreestyleCommands = new PolarisFreestyleCommands(
+                logger, mockedBuildService, mockedChangeSetFileCreator, mockedCliRunner, mockedIssueChecker);
+        polarisFreestyleCommands.runPolarisCliAndCheckForIssues(
+                POLARIS_CLI_NAME, POLARIS_ARGUMENTS, createChangeSetFile, waitForIssues);
 
         Mockito.verify(mockedIssueChecker).getPolarisIssueCount(null);
     }
@@ -73,15 +77,22 @@ public class PolarisFreestyleCommandsTest {
     @Test
     public void testRunPolarisCliAndCheckForIssuesSuccess() {
         try {
-            Mockito.when(mockedCliRunner.runPolarisCli(POLARIS_CLI_NAME, CHANGE_SET_FILE_PATH, POLARIS_ARGUMENTS)).thenReturn(STATUS_CODE_SUCCESS);
-            Mockito.when(mockedIssueChecker.getPolarisIssueCount(JOB_TIMEOUT_IN_MINUTES)).thenReturn(NO_ISSUES);
-            Mockito.when(mockedChangeSetFileCreator.createChangeSetFile(EXCLUSION_PATTERNS, INCLUSION_PATTERNS)).thenReturn(CHANGE_SET_FILE_PATH);
+            Mockito.when(mockedCliRunner.runPolarisCli(POLARIS_CLI_NAME, CHANGE_SET_FILE_PATH, POLARIS_ARGUMENTS))
+                    .thenReturn(STATUS_CODE_SUCCESS);
+            Mockito.when(mockedIssueChecker.getPolarisIssueCount(JOB_TIMEOUT_IN_MINUTES))
+                    .thenReturn(NO_ISSUES);
+            Mockito.when(mockedChangeSetFileCreator.createChangeSetFile(EXCLUSION_PATTERNS, INCLUSION_PATTERNS))
+                    .thenReturn(CHANGE_SET_FILE_PATH);
         } catch (Exception e) {
-            fail("An unexpected exception occurred when preparing the test for setup. Please correct the test code.", e);
+            fail(
+                    "An unexpected exception occurred when preparing the test for setup. Please correct the test code.",
+                    e);
         }
 
-        PolarisFreestyleCommands polarisFreestyleCommands = new PolarisFreestyleCommands(logger, mockedBuildService, mockedChangeSetFileCreator, mockedCliRunner, mockedIssueChecker);
-        polarisFreestyleCommands.runPolarisCliAndCheckForIssues(POLARIS_CLI_NAME, POLARIS_ARGUMENTS, createChangeSetFile, waitForIssues);
+        PolarisFreestyleCommands polarisFreestyleCommands = new PolarisFreestyleCommands(
+                logger, mockedBuildService, mockedChangeSetFileCreator, mockedCliRunner, mockedIssueChecker);
+        polarisFreestyleCommands.runPolarisCliAndCheckForIssues(
+                POLARIS_CLI_NAME, POLARIS_ARGUMENTS, createChangeSetFile, waitForIssues);
 
         Mockito.verify(mockedBuildService, Mockito.never()).markBuildInterrupted();
         Mockito.verify(mockedBuildService, Mockito.never()).markBuildUnstable(Mockito.any());
@@ -93,15 +104,22 @@ public class PolarisFreestyleCommandsTest {
     @Test
     public void testRunPolarisCliAndCheckForIssuesCliFailure() {
         try {
-            Mockito.when(mockedCliRunner.runPolarisCli(POLARIS_CLI_NAME, CHANGE_SET_FILE_PATH, POLARIS_ARGUMENTS)).thenReturn(STATUS_CODE_FAILURE);
-            Mockito.when(mockedIssueChecker.getPolarisIssueCount(JOB_TIMEOUT_IN_MINUTES)).thenReturn(NO_ISSUES);
-            Mockito.when(mockedChangeSetFileCreator.createChangeSetFile(EXCLUSION_PATTERNS, INCLUSION_PATTERNS)).thenReturn(CHANGE_SET_FILE_PATH);
+            Mockito.when(mockedCliRunner.runPolarisCli(POLARIS_CLI_NAME, CHANGE_SET_FILE_PATH, POLARIS_ARGUMENTS))
+                    .thenReturn(STATUS_CODE_FAILURE);
+            Mockito.when(mockedIssueChecker.getPolarisIssueCount(JOB_TIMEOUT_IN_MINUTES))
+                    .thenReturn(NO_ISSUES);
+            Mockito.when(mockedChangeSetFileCreator.createChangeSetFile(EXCLUSION_PATTERNS, INCLUSION_PATTERNS))
+                    .thenReturn(CHANGE_SET_FILE_PATH);
         } catch (Exception e) {
-            fail("An unexpected exception occurred when preparing the test for setup. Please correct the test code.", e);
+            fail(
+                    "An unexpected exception occurred when preparing the test for setup. Please correct the test code.",
+                    e);
         }
 
-        PolarisFreestyleCommands polarisFreestyleCommands = new PolarisFreestyleCommands(logger, mockedBuildService, mockedChangeSetFileCreator, mockedCliRunner, mockedIssueChecker);
-        polarisFreestyleCommands.runPolarisCliAndCheckForIssues(POLARIS_CLI_NAME, POLARIS_ARGUMENTS, createChangeSetFile, waitForIssues);
+        PolarisFreestyleCommands polarisFreestyleCommands = new PolarisFreestyleCommands(
+                logger, mockedBuildService, mockedChangeSetFileCreator, mockedCliRunner, mockedIssueChecker);
+        polarisFreestyleCommands.runPolarisCliAndCheckForIssues(
+                POLARIS_CLI_NAME, POLARIS_ARGUMENTS, createChangeSetFile, waitForIssues);
 
         Mockito.verify(mockedBuildService).markBuildFailed(Mockito.anyString());
 
@@ -114,15 +132,22 @@ public class PolarisFreestyleCommandsTest {
     @Test
     public void testRunPolarisCliAndCheckForIssuesCliFailureIssues() {
         try {
-            Mockito.when(mockedCliRunner.runPolarisCli(POLARIS_CLI_NAME, CHANGE_SET_FILE_PATH, POLARIS_ARGUMENTS)).thenReturn(STATUS_CODE_SUCCESS);
-            Mockito.when(mockedIssueChecker.getPolarisIssueCount(JOB_TIMEOUT_IN_MINUTES)).thenReturn(SOME_ISSUES);
-            Mockito.when(mockedChangeSetFileCreator.createChangeSetFile(EXCLUSION_PATTERNS, INCLUSION_PATTERNS)).thenReturn(CHANGE_SET_FILE_PATH);
+            Mockito.when(mockedCliRunner.runPolarisCli(POLARIS_CLI_NAME, CHANGE_SET_FILE_PATH, POLARIS_ARGUMENTS))
+                    .thenReturn(STATUS_CODE_SUCCESS);
+            Mockito.when(mockedIssueChecker.getPolarisIssueCount(JOB_TIMEOUT_IN_MINUTES))
+                    .thenReturn(SOME_ISSUES);
+            Mockito.when(mockedChangeSetFileCreator.createChangeSetFile(EXCLUSION_PATTERNS, INCLUSION_PATTERNS))
+                    .thenReturn(CHANGE_SET_FILE_PATH);
         } catch (Exception e) {
-            fail("An unexpected exception occurred when preparing the test for setup. Please correct the test code.", e);
+            fail(
+                    "An unexpected exception occurred when preparing the test for setup. Please correct the test code.",
+                    e);
         }
 
-        PolarisFreestyleCommands polarisFreestyleCommands = new PolarisFreestyleCommands(logger, mockedBuildService, mockedChangeSetFileCreator, mockedCliRunner, mockedIssueChecker);
-        polarisFreestyleCommands.runPolarisCliAndCheckForIssues(POLARIS_CLI_NAME, POLARIS_ARGUMENTS, createChangeSetFile, waitForIssues);
+        PolarisFreestyleCommands polarisFreestyleCommands = new PolarisFreestyleCommands(
+                logger, mockedBuildService, mockedChangeSetFileCreator, mockedCliRunner, mockedIssueChecker);
+        polarisFreestyleCommands.runPolarisCliAndCheckForIssues(
+                POLARIS_CLI_NAME, POLARIS_ARGUMENTS, createChangeSetFile, waitForIssues);
 
         Mockito.verify(mockedBuildService).markBuildAs(waitForIssues.getBuildStatusForIssues());
 
@@ -135,15 +160,22 @@ public class PolarisFreestyleCommandsTest {
     @Test
     public void testRunPolarisCliAndCheckForIssuesCliInterrupted() {
         try {
-            Mockito.when(mockedCliRunner.runPolarisCli(POLARIS_CLI_NAME, CHANGE_SET_FILE_PATH, POLARIS_ARGUMENTS)).thenThrow(new InterruptedException());
-            Mockito.when(mockedIssueChecker.getPolarisIssueCount(JOB_TIMEOUT_IN_MINUTES)).thenReturn(NO_ISSUES);
-            Mockito.when(mockedChangeSetFileCreator.createChangeSetFile(EXCLUSION_PATTERNS, INCLUSION_PATTERNS)).thenReturn(CHANGE_SET_FILE_PATH);
+            Mockito.when(mockedCliRunner.runPolarisCli(POLARIS_CLI_NAME, CHANGE_SET_FILE_PATH, POLARIS_ARGUMENTS))
+                    .thenThrow(new InterruptedException());
+            Mockito.when(mockedIssueChecker.getPolarisIssueCount(JOB_TIMEOUT_IN_MINUTES))
+                    .thenReturn(NO_ISSUES);
+            Mockito.when(mockedChangeSetFileCreator.createChangeSetFile(EXCLUSION_PATTERNS, INCLUSION_PATTERNS))
+                    .thenReturn(CHANGE_SET_FILE_PATH);
         } catch (Exception e) {
-            fail("An unexpected exception occurred when preparing the test for setup. Please correct the test code.", e);
+            fail(
+                    "An unexpected exception occurred when preparing the test for setup. Please correct the test code.",
+                    e);
         }
 
-        PolarisFreestyleCommands polarisFreestyleCommands = new PolarisFreestyleCommands(logger, mockedBuildService, mockedChangeSetFileCreator, mockedCliRunner, mockedIssueChecker);
-        polarisFreestyleCommands.runPolarisCliAndCheckForIssues(POLARIS_CLI_NAME, POLARIS_ARGUMENTS, createChangeSetFile, waitForIssues);
+        PolarisFreestyleCommands polarisFreestyleCommands = new PolarisFreestyleCommands(
+                logger, mockedBuildService, mockedChangeSetFileCreator, mockedCliRunner, mockedIssueChecker);
+        polarisFreestyleCommands.runPolarisCliAndCheckForIssues(
+                POLARIS_CLI_NAME, POLARIS_ARGUMENTS, createChangeSetFile, waitForIssues);
 
         Mockito.verify(mockedBuildService).markBuildInterrupted();
 
@@ -156,15 +188,22 @@ public class PolarisFreestyleCommandsTest {
     @Test
     public void testRunPolarisCliAndCheckForIssuesCliUnexpectedException() {
         try {
-            Mockito.when(mockedCliRunner.runPolarisCli(POLARIS_CLI_NAME, CHANGE_SET_FILE_PATH, POLARIS_ARGUMENTS)).thenThrow(new IOException());
-            Mockito.when(mockedIssueChecker.getPolarisIssueCount(JOB_TIMEOUT_IN_MINUTES)).thenReturn(NO_ISSUES);
-            Mockito.when(mockedChangeSetFileCreator.createChangeSetFile(EXCLUSION_PATTERNS, INCLUSION_PATTERNS)).thenReturn(CHANGE_SET_FILE_PATH);
+            Mockito.when(mockedCliRunner.runPolarisCli(POLARIS_CLI_NAME, CHANGE_SET_FILE_PATH, POLARIS_ARGUMENTS))
+                    .thenThrow(new IOException());
+            Mockito.when(mockedIssueChecker.getPolarisIssueCount(JOB_TIMEOUT_IN_MINUTES))
+                    .thenReturn(NO_ISSUES);
+            Mockito.when(mockedChangeSetFileCreator.createChangeSetFile(EXCLUSION_PATTERNS, INCLUSION_PATTERNS))
+                    .thenReturn(CHANGE_SET_FILE_PATH);
         } catch (Exception e) {
-            fail("An unexpected exception occurred when preparing the test for setup. Please correct the test code.", e);
+            fail(
+                    "An unexpected exception occurred when preparing the test for setup. Please correct the test code.",
+                    e);
         }
 
-        PolarisFreestyleCommands polarisFreestyleCommands = new PolarisFreestyleCommands(logger, mockedBuildService, mockedChangeSetFileCreator, mockedCliRunner, mockedIssueChecker);
-        polarisFreestyleCommands.runPolarisCliAndCheckForIssues(POLARIS_CLI_NAME, POLARIS_ARGUMENTS, createChangeSetFile, waitForIssues);
+        PolarisFreestyleCommands polarisFreestyleCommands = new PolarisFreestyleCommands(
+                logger, mockedBuildService, mockedChangeSetFileCreator, mockedCliRunner, mockedIssueChecker);
+        polarisFreestyleCommands.runPolarisCliAndCheckForIssues(
+                POLARIS_CLI_NAME, POLARIS_ARGUMENTS, createChangeSetFile, waitForIssues);
 
         Mockito.verify(mockedBuildService).markBuildUnstable(Mockito.any(IOException.class));
 
@@ -177,15 +216,22 @@ public class PolarisFreestyleCommandsTest {
     @Test
     public void testRunPolarisCliAndCheckForIssuesCliIntegrationException() {
         try {
-            Mockito.when(mockedCliRunner.runPolarisCli(POLARIS_CLI_NAME, CHANGE_SET_FILE_PATH, POLARIS_ARGUMENTS)).thenThrow(new IntegrationException());
-            Mockito.when(mockedIssueChecker.getPolarisIssueCount(JOB_TIMEOUT_IN_MINUTES)).thenReturn(NO_ISSUES);
-            Mockito.when(mockedChangeSetFileCreator.createChangeSetFile(EXCLUSION_PATTERNS, INCLUSION_PATTERNS)).thenReturn(CHANGE_SET_FILE_PATH);
+            Mockito.when(mockedCliRunner.runPolarisCli(POLARIS_CLI_NAME, CHANGE_SET_FILE_PATH, POLARIS_ARGUMENTS))
+                    .thenThrow(new IntegrationException());
+            Mockito.when(mockedIssueChecker.getPolarisIssueCount(JOB_TIMEOUT_IN_MINUTES))
+                    .thenReturn(NO_ISSUES);
+            Mockito.when(mockedChangeSetFileCreator.createChangeSetFile(EXCLUSION_PATTERNS, INCLUSION_PATTERNS))
+                    .thenReturn(CHANGE_SET_FILE_PATH);
         } catch (Exception e) {
-            fail("An unexpected exception occurred when preparing the test for setup. Please correct the test code.", e);
+            fail(
+                    "An unexpected exception occurred when preparing the test for setup. Please correct the test code.",
+                    e);
         }
 
-        PolarisFreestyleCommands polarisFreestyleCommands = new PolarisFreestyleCommands(logger, mockedBuildService, mockedChangeSetFileCreator, mockedCliRunner, mockedIssueChecker);
-        polarisFreestyleCommands.runPolarisCliAndCheckForIssues(POLARIS_CLI_NAME, POLARIS_ARGUMENTS, createChangeSetFile, waitForIssues);
+        PolarisFreestyleCommands polarisFreestyleCommands = new PolarisFreestyleCommands(
+                logger, mockedBuildService, mockedChangeSetFileCreator, mockedCliRunner, mockedIssueChecker);
+        polarisFreestyleCommands.runPolarisCliAndCheckForIssues(
+                POLARIS_CLI_NAME, POLARIS_ARGUMENTS, createChangeSetFile, waitForIssues);
 
         Mockito.verify(mockedBuildService).markBuildFailed(Mockito.any(IntegrationException.class));
 
@@ -198,22 +244,31 @@ public class PolarisFreestyleCommandsTest {
     @Test
     public void testRunPolarisCliAndCheckForIssuesCliSkipForEmptyChangeSet() {
         try {
-            Mockito.when(mockedCliRunner.runPolarisCli(POLARIS_CLI_NAME, CHANGE_SET_FILE_PATH, POLARIS_ARGUMENTS)).thenThrow(new IntegrationException());
-            Mockito.when(mockedIssueChecker.getPolarisIssueCount(JOB_TIMEOUT_IN_MINUTES)).thenReturn(NO_ISSUES);
-            Mockito.when(mockedChangeSetFileCreator.createChangeSetFile(EXCLUSION_PATTERNS, INCLUSION_PATTERNS)).thenReturn(null);
+            Mockito.when(mockedCliRunner.runPolarisCli(POLARIS_CLI_NAME, CHANGE_SET_FILE_PATH, POLARIS_ARGUMENTS))
+                    .thenThrow(new IntegrationException());
+            Mockito.when(mockedIssueChecker.getPolarisIssueCount(JOB_TIMEOUT_IN_MINUTES))
+                    .thenReturn(NO_ISSUES);
+            Mockito.when(mockedChangeSetFileCreator.createChangeSetFile(EXCLUSION_PATTERNS, INCLUSION_PATTERNS))
+                    .thenReturn(null);
         } catch (Exception e) {
-            fail("An unexpected exception occurred when preparing the test for setup. Please correct the test code.", e);
+            fail(
+                    "An unexpected exception occurred when preparing the test for setup. Please correct the test code.",
+                    e);
         }
 
-        PolarisFreestyleCommands polarisFreestyleCommands = new PolarisFreestyleCommands(logger, mockedBuildService, mockedChangeSetFileCreator, mockedCliRunner, mockedIssueChecker);
-        polarisFreestyleCommands.runPolarisCliAndCheckForIssues(POLARIS_CLI_NAME, POLARIS_ARGUMENTS, createChangeSetFile, waitForIssues);
+        PolarisFreestyleCommands polarisFreestyleCommands = new PolarisFreestyleCommands(
+                logger, mockedBuildService, mockedChangeSetFileCreator, mockedCliRunner, mockedIssueChecker);
+        polarisFreestyleCommands.runPolarisCliAndCheckForIssues(
+                POLARIS_CLI_NAME, POLARIS_ARGUMENTS, createChangeSetFile, waitForIssues);
 
         Mockito.verify(mockedBuildService).markBuildAs(Mockito.any(ChangeBuildStatusTo.class));
         try {
             Mockito.verify(mockedCliRunner, Mockito.never()).runPolarisCli(Mockito.any(), Mockito.any(), Mockito.any());
             Mockito.verify(mockedIssueChecker, Mockito.never()).getPolarisIssueCount(Mockito.any());
         } catch (Exception e) {
-            fail("An unexpected exception occurred when preparing the test for setup. Please correct the test code.", e);
+            fail(
+                    "An unexpected exception occurred when preparing the test for setup. Please correct the test code.",
+                    e);
         }
 
         Mockito.verify(mockedBuildService, Mockito.never()).markBuildInterrupted();
@@ -221,5 +276,4 @@ public class PolarisFreestyleCommandsTest {
         Mockito.verify(mockedBuildService, Mockito.never()).markBuildFailed(Mockito.anyString());
         Mockito.verify(mockedBuildService, Mockito.never()).markBuildFailed(Mockito.any(IntegrationException.class));
     }
-
 }

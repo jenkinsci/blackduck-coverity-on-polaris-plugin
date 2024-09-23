@@ -11,5 +11,4 @@ public class ProjectInfoV1 {
     public String projectId;
     public String branchId;
     public String revisionId;
-
 }

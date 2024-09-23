@@ -7,9 +7,8 @@
  */
 package com.synopsys.integration.polaris.common.api;
 
-import java.io.Serializable;
-
 import com.synopsys.integration.util.Stringable;
+import java.io.Serializable;
 
 public class PolarisResponse extends Stringable implements Serializable {
     private static final long serialVersionUID = 1968298547235080384L;
@@ -30,5 +29,4 @@ public class PolarisResponse extends Stringable implements Serializable {
     public void setJson(String json) {
         this.json = json;
     }
-
 }

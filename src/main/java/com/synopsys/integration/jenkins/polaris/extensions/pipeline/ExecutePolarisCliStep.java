@@ -7,30 +7,9 @@
  */
 package com.synopsys.integration.jenkins.polaris.extensions.pipeline;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.jenkinsci.Symbol;
-import org.jenkinsci.plugins.workflow.steps.Step;
-import org.jenkinsci.plugins.workflow.steps.StepContext;
-import org.jenkinsci.plugins.workflow.steps.StepDescriptor;
-import org.jenkinsci.plugins.workflow.steps.StepExecution;
-import org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution;
-import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.DataBoundSetter;
-
 import com.synopsys.integration.jenkins.annotations.HelpMarkdown;
 import com.synopsys.integration.jenkins.polaris.extensions.tools.PolarisCli;
 import com.synopsys.integration.jenkins.polaris.service.PolarisCommandsFactory;
-
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.FilePath;
@@ -40,6 +19,23 @@ import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.tools.ToolInstallation;
 import hudson.util.ListBoxModel;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import org.jenkinsci.Symbol;
+import org.jenkinsci.plugins.workflow.steps.Step;
+import org.jenkinsci.plugins.workflow.steps.StepContext;
+import org.jenkinsci.plugins.workflow.steps.StepDescriptor;
+import org.jenkinsci.plugins.workflow.steps.StepExecution;
+import org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution;
+import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 
 public class ExecutePolarisCliStep extends Step implements Serializable {
     public static final String DISPLAY_NAME = "Execute Coverity on Polaris CLI";
@@ -54,12 +50,14 @@ public class ExecutePolarisCliStep extends Step implements Serializable {
     private String polarisCli;
 
     @Nullable
-    @HelpMarkdown("If true (checked), returns the status code of the Coverity on Polaris CLI run instead of throwing an exception")
+    @HelpMarkdown(
+            "If true (checked), returns the status code of the Coverity on Polaris CLI run instead of throwing an exception")
     private Boolean returnStatus;
 
     @Nullable
-    @HelpMarkdown("Creates a file at $CHANGE_SET_FILE_PATH (by default, the workspace directory) containing a list of files generated from the Jenkins-provided SCM changeset.  \r\n"
-                      + "Used for Incremental analysis (--incremental) as the file containing the list of changed files for analysis.")
+    @HelpMarkdown(
+            "Creates a file at $CHANGE_SET_FILE_PATH (by default, the workspace directory) containing a list of files generated from the Jenkins-provided SCM changeset.  \r\n"
+                    + "Used for Incremental analysis (--incremental) as the file containing the list of changed files for analysis.")
     private PipelineCreateChangeSetFile createChangeSetFile;
 
     @DataBoundConstructor
@@ -113,26 +111,29 @@ public class ExecutePolarisCliStep extends Step implements Serializable {
     @Extension(optional = true)
     public static final class DescriptorImpl extends StepDescriptor {
         public DescriptorImpl() {
-            // Nothing to do here, but we must provide an explicit default constructor or else some versions of the Pipeline syntax generator will break
+            // Nothing to do here, but we must provide an explicit default constructor or else some versions of the
+            // Pipeline syntax generator will break
             // -rotte JAN 2020
         }
 
         public ListBoxModel doFillPolarisCliItems() {
-            PolarisCli.DescriptorImpl polarisCliToolInstallationDescriptor = ToolInstallation.all().get(PolarisCli.DescriptorImpl.class);
+            PolarisCli.DescriptorImpl polarisCliToolInstallationDescriptor =
+                    ToolInstallation.all().get(PolarisCli.DescriptorImpl.class);
 
             if (polarisCliToolInstallationDescriptor == null) {
                 return new ListBoxModel();
             }
 
             return Stream.of(polarisCliToolInstallationDescriptor.getInstallations())
-                       .map(PolarisCli::getName)
-                       .map(ListBoxModel.Option::new)
-                       .collect(Collectors.toCollection(ListBoxModel::new));
+                    .map(PolarisCli::getName)
+                    .map(ListBoxModel.Option::new)
+                    .collect(Collectors.toCollection(ListBoxModel::new));
         }
 
         @Override
         public Set<? extends Class<?>> getRequiredContext() {
-            return new HashSet<>(Arrays.asList(TaskListener.class, EnvVars.class, FilePath.class, Launcher.class, Node.class, Run.class));
+            return new HashSet<>(Arrays.asList(
+                    TaskListener.class, EnvVars.class, FilePath.class, Launcher.class, Node.class, Run.class));
         }
 
         @Override
@@ -145,7 +146,6 @@ public class ExecutePolarisCliStep extends Step implements Serializable {
         public String getDisplayName() {
             return DISPLAY_NAME;
         }
-
     }
 
     public class Execution extends SynchronousNonBlockingStepExecution<Integer> {
@@ -170,7 +170,7 @@ public class ExecutePolarisCliStep extends Step implements Serializable {
         @Override
         protected Integer run() throws Exception {
             return PolarisCommandsFactory.fromPipeline(listener, envVars, launcher, node, run, workspace)
-                       .runPolarisCli(polarisCli, arguments, returnStatus, createChangeSetFile);
+                    .runPolarisCli(polarisCli, arguments, returnStatus, createChangeSetFile);
         }
     }
 }

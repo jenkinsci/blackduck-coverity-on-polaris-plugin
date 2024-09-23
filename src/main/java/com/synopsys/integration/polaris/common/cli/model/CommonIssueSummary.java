@@ -7,9 +7,8 @@
  */
 package com.synopsys.integration.polaris.common.cli.model;
 
-import java.util.Map;
-
 import com.synopsys.integration.rest.HttpUrl;
+import java.util.Map;
 
 public class CommonIssueSummary {
     private Map<String, Integer> issuesBySeverity;
@@ -39,5 +38,4 @@ public class CommonIssueSummary {
     public void setTotalIssueCount(Integer totalIssueCount) {
         this.totalIssueCount = totalIssueCount;
     }
-
 }

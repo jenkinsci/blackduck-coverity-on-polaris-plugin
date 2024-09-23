@@ -11,7 +11,6 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -39,7 +38,8 @@ public class PolarisServerConfigBuilderTest {
 
         assertTrue(polarisServerConfigBuilder.isValid());
         Assertions.assertEquals("fake but valid (not blank) access token", polarisServerConfigBuilder.getAccessToken());
-        Assertions.assertEquals("http://www.google.com/fake_but_valid_not_blank_url", polarisServerConfigBuilder.getUrl());
+        Assertions.assertEquals(
+                "http://www.google.com/fake_but_valid_not_blank_url", polarisServerConfigBuilder.getUrl());
         Assertions.assertEquals(120, polarisServerConfigBuilder.getTimeoutInSeconds());
     }
 
@@ -51,7 +51,8 @@ public class PolarisServerConfigBuilderTest {
         fakeEnvironment.put("polaris.timeout.in.seconds", "invalid - not numeric");
         polarisServerConfigBuilder.setProperties(fakeEnvironment.entrySet());
 
-        Assertions.assertEquals(PolarisServerConfigBuilder.DEFAULT_TIMEOUT_SECONDS, polarisServerConfigBuilder.getTimeoutInSeconds());
+        Assertions.assertEquals(
+                PolarisServerConfigBuilder.DEFAULT_TIMEOUT_SECONDS, polarisServerConfigBuilder.getTimeoutInSeconds());
     }
 
     @Test
@@ -119,7 +120,8 @@ public class PolarisServerConfigBuilderTest {
     public void testResolveAccessTokenFromFilePath() throws IOException {
         Path testAccessToken = Files.createTempFile("polarisBuilder_access_token", null);
 
-        FileUtils.writeStringToFile(testAccessToken.toFile(), "fake but valid not blank access token", StandardCharsets.UTF_8);
+        FileUtils.writeStringToFile(
+                testAccessToken.toFile(), "fake but valid not blank access token", StandardCharsets.UTF_8);
         Map<String, String> properties = new HashMap<>();
         properties.put("polaris.access.token.file", testAccessToken.toString());
 
@@ -163,7 +165,8 @@ public class PolarisServerConfigBuilderTest {
         }
 
         PolarisServerConfig polarisServerConfig = polarisServerConfigBuilder.build();
-        Assertions.assertEquals("http://www.google.com", polarisServerConfig.getPolarisUrl().toString());
+        Assertions.assertEquals(
+                "http://www.google.com", polarisServerConfig.getPolarisUrl().toString());
         Assertions.assertEquals("fake but valid not blank access token", polarisServerConfig.getAccessToken());
     }
 
@@ -175,5 +178,4 @@ public class PolarisServerConfigBuilderTest {
 
         return polarisServerConfigBuilder;
     }
-
 }

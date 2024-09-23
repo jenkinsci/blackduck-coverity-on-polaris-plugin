@@ -60,5 +60,4 @@ public class PolarisServicesFactory {
             this.defaultPageSize = defaultPageSize;
         }
     }
-
 }

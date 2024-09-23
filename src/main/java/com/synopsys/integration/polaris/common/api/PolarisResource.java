@@ -11,10 +11,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class PolarisResource<A extends PolarisAttributes> extends PolarisResponse {
     private static final long serialVersionUID = 7914255365770861000L;
+
     @SerializedName("type")
     private String type;
+
     @SerializedName("id")
     private String id;
+
     @SerializedName("attributes")
     private A attributes = null;
 
@@ -41,5 +44,4 @@ public class PolarisResource<A extends PolarisAttributes> extends PolarisRespons
     public void setAttributes(A attributes) {
         this.attributes = attributes;
     }
-
 }
