@@ -1,9 +1,9 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.jenkins.polaris.service;
 
@@ -193,7 +193,7 @@ public class PolarisCommandsFactory {
                 .getGlobalConfiguration(PolarisGlobalConfig.class)
                 .orElseThrow(
                         () -> new AbortException(
-                                "Polaris Software Integrity Platform for Jenkins cannot be executed: No Polaris Software Integrity Platform global configuration detected in the Jenkins system configuration."));
+                                "Coverity on Polaris Platform for Jenkins cannot be executed: No Coverity on Polaris Platform global configuration detected in the Jenkins system configuration."));
 
         JenkinsIntLogger jenkinsIntLogger = getOrCreateLogger();
         JenkinsWrapper jenkinsWrapper = validatedJenkinsWrapper.get();
@@ -208,6 +208,6 @@ public class PolarisCommandsFactory {
         }
 
         throw new AbortException(
-                "Polaris Software Integrity Platform for Jenkins cannot be executed: The Jenkins instance was not started, was already shut down, or is not reachable from this JVM.");
+                "Coverity on Polaris Platform for Jenkins cannot be executed: The Jenkins instance was not started, was already shut down, or is not reachable from this JVM.");
     }
 }

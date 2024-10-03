@@ -1,9 +1,9 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.jenkins.polaris.extensions.tools;
 
@@ -111,7 +111,7 @@ public class FindOrInstallPolarisCli extends MasterToSlaveCallable<String, Integ
             return polarisDownloadUtility
                     .getOrDownloadPolarisCliHome()
                     .orElseThrow(() -> new PolarisIntegrationException(
-                            "The Polaris CLI could not be found or installed correctly."));
+                            "The Coverity on Polaris CLI could not be found or installed correctly."));
         } catch (IOException | IllegalArgumentException ex) {
             throw new PolarisIntegrationException(ex);
         }

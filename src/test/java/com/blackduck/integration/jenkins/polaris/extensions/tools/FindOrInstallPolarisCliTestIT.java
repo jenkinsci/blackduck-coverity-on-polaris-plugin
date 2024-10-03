@@ -18,7 +18,7 @@ import org.junit.Test;
 import org.junit.platform.commons.util.StringUtils;
 import org.mockito.Mockito;
 
-// If env var TEST_POLARIS_URL is set, testInstall() downloads the Polaris CLI from that Polaris server
+// If env var TEST_POLARIS_URL is set, testInstall() downloads the Coverity on Polaris CLI from that Polaris server
 public class FindOrInstallPolarisCliTestIT {
     public static final String POLARIS_URL_ENVVAR_NAME = "TEST_POLARIS_URL";
     private static final int POLARIS_CLI_DOWNLOAD_TIMEOUT_SECONDS = 90;
@@ -34,7 +34,7 @@ public class FindOrInstallPolarisCliTestIT {
                 "Environment variable TEST_POLARIS_URL is not set. Skipping FindOrInstallPolarisCliTest.testInstall().",
                 StringUtils.isNotBlank(polarisServerUrl));
 
-        System.out.printf("Attempting to download Polaris CLI from %s\n", polarisServerUrl);
+        System.out.printf("Attempting to download Coverity on Polaris CLI from %s\n", polarisServerUrl);
         JenkinsIntLogger jenkinsIntLogger = Mockito.mock(JenkinsIntLogger.class);
         File requestedInstallationDirParent = new File(INSTALLATION_DIR_PARENT_PATH);
         FileUtils.deleteQuietly(requestedInstallationDirParent); // Force a new download

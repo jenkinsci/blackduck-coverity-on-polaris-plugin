@@ -1,9 +1,9 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.jenkins.polaris;
 
@@ -69,10 +69,10 @@ public class PolarisCliRunner {
 
         try {
             String logMessage = versionHelper
-                    .getPluginVersion("synopsys-polaris")
+                    .getPluginVersion("blackduck-coverity-on-polaris")
                     .map(version -> String.format(
-                            "Running Polaris Software Integrity Platform for Jenkins version %s", version))
-                    .orElse("Running Polaris Software Integrity Platform for Jenkins");
+                            "Running Coverity on Polaris Platform for Jenkins version %s", version))
+                    .orElse("Running Coverity on Polaris Platform for Jenkins");
             logger.info(logMessage);
 
             Optional<PolarisCli> polarisCliWithName = jenkinsConfigService.getInstallationForNodeAndEnvironment(
@@ -80,7 +80,7 @@ public class PolarisCliRunner {
 
             if (!polarisCliWithName.isPresent()) {
                 throw new JenkinsUserFriendlyException(
-                        "[ERROR] Polaris Software Integrity Platform cannot be executed: No Polaris CLI Installation with the name "
+                        "[ERROR] Coverity on Polaris Platform cannot be executed: No Coverity on Polaris CLI Installation with the name "
                                 + polarisCliName + " could be found in the global tool configuration.");
             }
 
@@ -90,7 +90,7 @@ public class PolarisCliRunner {
                     .getGlobalConfiguration(PolarisGlobalConfig.class)
                     .orElseThrow(
                             () -> new PolarisIntegrationException(
-                                    "No Polaris Software Integrity Platform for Jenkins system configuration could be found, please check your system configuration."));
+                                    "No Coverity on Polaris Platform for Jenkins system configuration could be found, please check your system configuration."));
 
             PolarisServerConfigBuilder polarisServerConfigBuilder =
                     polarisGlobalConfig.getPolarisServerConfigBuilder(credentialsHelper, proxyHelper);
@@ -102,7 +102,7 @@ public class PolarisCliRunner {
 
             if (StringUtils.isBlank(polarisCliHome)) {
                 throw new JenkinsUserFriendlyException(
-                        "[ERROR] Polaris Software Integrity Platform cannot be executed: The Polaris CLI installation home could not be determined for the configured Polaris CLI. Please ensure that this installation is correctly configured in the global tool configuration.");
+                        "[ERROR] Coverity on Polaris Platform cannot be executed: The Coverity on Polaris CLI installation home could not be determined for the configured Coverity on Polaris CLI. Please ensure that this installation is correctly configured in the global tool configuration.");
             }
 
             String pathToPolarisCli = jenkinsRemotingService.call(new GetPathToPolarisCli(polarisCliHome));

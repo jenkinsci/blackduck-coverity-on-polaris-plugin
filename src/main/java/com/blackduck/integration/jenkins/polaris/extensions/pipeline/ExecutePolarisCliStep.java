@@ -1,9 +1,9 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.jenkins.polaris.extensions.pipeline;
 
@@ -43,7 +43,7 @@ public class ExecutePolarisCliStep extends Step implements Serializable {
     public static final String PIPELINE_NAME = "polaris";
     private static final long serialVersionUID = -2698425344634481146L;
 
-    @HelpMarkdown("The command line arguments to pass to the Polaris CLI")
+    @HelpMarkdown("The command line arguments to pass to the Coverity on Polaris CLI")
     private final String arguments;
 
     @Nullable

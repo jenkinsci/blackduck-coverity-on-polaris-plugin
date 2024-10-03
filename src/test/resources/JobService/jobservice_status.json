@@ -315,7 +315,7 @@
         }
       },
       "analysis_runtime_info": {
-        "analysisCommand": "cov-analyze --dir /tmp/WorkDir/data/coverity/2020.03-1/idir --jobs 8 --skip-webapp-sanity-check --skip-android-app-sanity-check --strip-path=/var/lib/jr_slave/workspace/synopsys-polaris-freestyle-linux --webapp-security --android-security --security-file /tmp/WorkDir/license.dat"
+        "analysisCommand": "cov-analyze --dir /tmp/WorkDir/data/coverity/2020.03-1/idir --jobs 8 --skip-webapp-sanity-check --skip-android-app-sanity-check --strip-path=/var/lib/jr_slave/workspace/blackduck-coverity-on-polaris-freestyle-linux --webapp-security --android-security --security-file /tmp/WorkDir/license.dat"
       },
       "projectName": "blackducksoftware/integration-common",
       "jobType": "nomad",

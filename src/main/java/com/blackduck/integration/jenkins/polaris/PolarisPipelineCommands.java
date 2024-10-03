@@ -1,9 +1,9 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.jenkins.polaris;
 
@@ -43,7 +43,7 @@ public class PolarisPipelineCommands {
                     createChangeSetFile.getExcluding(), createChangeSetFile.getIncluding());
             if (changeSetFilePath == null) {
                 String skipMessage =
-                        "The changeset contained no files to analyze. Skipping Polaris Software Integrity Platform static analysis.";
+                        "The changeset contained no files to analyze. Skipping Coverity on Polaris Platform static analysis.";
                 if (Boolean.FALSE.equals(createChangeSetFile.getReturnSkipCode())) {
                     throw new JenkinsUserFriendlyException(skipMessage);
                 } else {
@@ -56,7 +56,7 @@ public class PolarisPipelineCommands {
         int exitCode = polarisCliRunner.runPolarisCli(polarisCliName, changeSetFilePath, polarisCliArgumentString);
 
         if (exitCode > 0) {
-            String errorMsg = "Polaris Software Integrity Platform failed with exit code: " + exitCode;
+            String errorMsg = "Coverity on Polaris Platform failed with exit code: " + exitCode;
             if (Boolean.TRUE.equals(returnStatus)) {
                 logger.error(errorMsg);
             } else {

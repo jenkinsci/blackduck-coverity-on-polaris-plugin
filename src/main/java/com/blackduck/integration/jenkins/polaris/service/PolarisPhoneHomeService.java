@@ -1,9 +1,9 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.jenkins.polaris.service;
 
@@ -73,11 +73,11 @@ public class PolarisPhoneHomeService {
         }
 
         PhoneHomeRequestBodyBuilder phoneHomeRequestBodyBuilder = PhoneHomeRequestBodyBuilder.createForPolaris(
-                "synopsys-polaris-plugin",
+                "blackduck-coverity-on-polaris-plugin",
                 organizationName,
                 accessTokenPolarisHttpClient.getPolarisServerUrl().string(),
                 jenkinsVersionHelper
-                        .getPluginVersion("synopsys-polaris")
+                        .getPluginVersion("blackduck-coverity-on-polaris")
                         .orElse(PhoneHomeRequestBody.UNKNOWN_FIELD_VALUE),
                 PhoneHomeRequestBody.UNKNOWN_FIELD_VALUE);
 

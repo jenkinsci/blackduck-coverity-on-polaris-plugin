@@ -1,9 +1,9 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.polaris.common.cli;
 
@@ -64,7 +64,7 @@ public class PolarisCliResponseUtility {
             return getPolarisCliResponseModelFromJsonObject(gson.fromJson(reader, JsonObject.class));
         } catch (IOException | IntegrationException e) {
             throw new PolarisIntegrationException(
-                    "There was a problem parsing the Polaris CLI response json at " + pathToJson.toString(), e);
+                    "There was a problem parsing the Coverity on Polaris CLI response json at " + pathToJson.toString(), e);
         }
     }
 

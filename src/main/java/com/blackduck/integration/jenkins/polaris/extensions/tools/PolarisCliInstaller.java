@@ -1,9 +1,9 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.jenkins.polaris.extensions.tools;
 
@@ -52,7 +52,7 @@ public class PolarisCliInstaller extends ToolInstaller {
         if (!possiblePolarisGlobalConfig.isPresent()) {
             throw new AbortPolarisCliInstallException(
                     tool,
-                    "No Polaris Software Integrity Platform global configuration was found. Please check your system config.");
+                    "No Coverity on Polaris Platform global configuration was found. Please check your system config.");
         }
 
         PolarisGlobalConfig polarisGlobalConfig = possiblePolarisGlobalConfig.get();
@@ -78,7 +78,7 @@ public class PolarisCliInstaller extends ToolInstaller {
             String polarisCliRemotePath = virtualChannel.call(findOrInstallPolarisCli);
             return new FilePath(virtualChannel, polarisCliRemotePath);
         } catch (IntegrationException ex) {
-            throw new IOException("Polaris CLI was not correctly installed.", ex);
+            throw new IOException("Coverity on Polaris CLI was not correctly installed.", ex);
         }
     }
 

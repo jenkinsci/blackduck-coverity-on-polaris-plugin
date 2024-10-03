@@ -1,9 +1,9 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.jenkins.polaris;
 
@@ -52,7 +52,7 @@ public class PolarisFreestyleCommands {
                             ? createChangeSetFile.getBuildStatusOnSkip()
                             : createChangeSetFile.getDescriptor().getDefaultBuildStatusOnSkip();
                     logger.warn(
-                            "The changeset contained no files to analyze. Skipping Polaris Software Integrity Platform static analysis.");
+                            "The changeset contained no files to analyze. Skipping Coverity on Polaris Platform static analysis.");
                     logger.warn("Performing configured skip action: " + changeBuildStatusTo.getDisplayName());
                     jenkinsBuildService.markBuildAs(changeBuildStatusTo);
                     return;
@@ -61,7 +61,7 @@ public class PolarisFreestyleCommands {
 
             int exitCode = polarisCliRunner.runPolarisCli(polarisCliName, changeSetFilePath, polarisArgumentString);
             if (exitCode > 0) {
-                jenkinsBuildService.markBuildFailed("Polaris CLI failed with exit code: " + exitCode);
+                jenkinsBuildService.markBuildFailed("Coverity on Polaris CLI failed with exit code: " + exitCode);
             }
 
             if (waitForIssues != null) {
@@ -70,7 +70,7 @@ public class PolarisFreestyleCommands {
 
                 int issueCount = polarisIssueCounter.getPolarisIssueCount(waitForIssues.getJobTimeoutInMinutes());
 
-                logger.alwaysLog("Polaris Software Integrity Platform Issue Check");
+                logger.alwaysLog("Coverity on Polaris Platform Issue Check");
                 logger.alwaysLog("Build state for issues: " + buildStatusToSet.getDisplayName());
                 logger.alwaysLog(String.format("Found %s issues", issueCount));
                 if (issueCount > 0) {

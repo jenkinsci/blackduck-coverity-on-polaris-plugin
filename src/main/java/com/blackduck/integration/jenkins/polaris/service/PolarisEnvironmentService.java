@@ -1,9 +1,9 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.jenkins.polaris.service;
 
@@ -41,7 +41,7 @@ public class PolarisEnvironmentService {
         try {
             polarisServerConfigBuilder.build().populateEnvironmentVariables(intEnvironmentVariables::put);
         } catch (IllegalArgumentException ex) {
-            throw new PolarisIntegrationException("There is a problem with your Polaris system configuration", ex);
+            throw new PolarisIntegrationException("There is a problem with your Coverity on Polaris system configuration", ex);
         }
 
         return intEnvironmentVariables;

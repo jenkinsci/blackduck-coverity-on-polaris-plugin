@@ -1,9 +1,9 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.jenkins.polaris.extensions.global;
 
@@ -197,7 +197,7 @@ public class PolarisGlobalConfig extends GlobalConfiguration implements Serializ
     }
 
     // EX:
-    // http://localhost:8080/descriptorByName/com.synopsys.integration.jenkins.polaris.extensions.global.PolarisGlobalConfig/config.xml
+    // http://localhost:8080/descriptorByName/com.blackduck.integration.jenkins.polaris.extensions.global.PolarisGlobalConfig/config.xml
     @WebMethod(name = "config.xml")
     public void doConfigDotXml(StaplerRequest req, StaplerResponse rsp)
             throws IOException, ServletException, ParserConfigurationException {

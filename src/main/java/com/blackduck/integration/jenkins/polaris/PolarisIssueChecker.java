@@ -1,9 +1,9 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.jenkins.polaris;
 
@@ -37,10 +37,10 @@ public class PolarisIssueChecker {
     public int getPolarisIssueCount(Integer jobTimeoutInMinutes)
             throws IOException, InterruptedException, IntegrationException {
         String logMessage = versionHelper
-                .getPluginVersion("synopsys-polaris")
+                .getPluginVersion("blackduck-coverity-on-polaris")
                 .map(version ->
-                        String.format("Running Polaris Software Integrity Platform for Jenkins version %s", version))
-                .orElse("Running Polaris Software Integrity Platform for Jenkins");
+                        String.format("Running Coverity on Polaris Platform for Jenkins version %s", version))
+                .orElse("Running Coverity on Polaris Platform for Jenkins");
         logger.info(logMessage);
 
         Long jobTimeoutInSeconds = Optional.ofNullable(jobTimeoutInMinutes)

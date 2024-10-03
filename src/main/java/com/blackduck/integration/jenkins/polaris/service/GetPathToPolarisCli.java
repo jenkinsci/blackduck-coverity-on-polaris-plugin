@@ -1,9 +1,9 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.jenkins.polaris.service;
 
@@ -40,7 +40,7 @@ public class GetPathToPolarisCli extends MasterToSlaveCallable<String, JenkinsUs
             return swipCli.get();
         }
 
-        throw new JenkinsUserFriendlyException("The Polaris CLI could not be found in " + binPath.toString()
+        throw new JenkinsUserFriendlyException("The Coverity on Polaris CLI could not be found in " + binPath.toString()
                 + " on this node. Please verify the cli exists there and is executable.");
     }
 

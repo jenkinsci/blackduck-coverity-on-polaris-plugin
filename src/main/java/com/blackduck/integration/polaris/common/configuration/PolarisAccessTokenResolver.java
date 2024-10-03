@@ -1,9 +1,9 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.polaris.common.configuration;
 
@@ -57,7 +57,7 @@ public class PolarisAccessTokenResolver {
         }
 
         logger.warn(
-                "The access token file was not set explicitly, so it must be configured in a Polaris Software Integrity Platform home directory.");
+                "The access token file was not set explicitly, so it must be configured in a Coverity on Polaris Platform home directory.");
         File polarisHomeDirectory = null;
         if (StringUtils.isNotBlank(polarisHome)) {
             polarisHomeDirectory = new File(polarisHome);
@@ -70,7 +70,7 @@ public class PolarisAccessTokenResolver {
         }
 
         if (null == polarisHomeDirectory || !polarisHomeDirectory.exists() || !polarisHomeDirectory.isDirectory()) {
-            String errorMessage = "A valid Polaris Software Integrity Platform home directory could not be found.";
+            String errorMessage = "A valid Coverity on Polaris Platform home directory could not be found.";
             logger.error(errorMessage);
             builderStatus.addErrorMessage(errorMessage);
             return Optional.empty();

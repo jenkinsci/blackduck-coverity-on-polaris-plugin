@@ -1,15 +1,15 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.polaris.common.configuration;
 /**
  * polaris-common
  *
- * Copyright (c) 2020 Synopsys, Inc.
+ * Copyright (c) 2020 Black Duck Software, Inc.
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements. See the NOTICE file
@@ -130,14 +130,14 @@ public class PolarisServerConfigBuilder extends IntegrationBuilder<PolarisServer
     @Override
     protected void validate(BuilderStatus builderStatus) {
         if (StringUtils.isBlank(getUrl())) {
-            builderStatus.addErrorMessage("The Polaris Software Integrity Platform url must be specified.");
+            builderStatus.addErrorMessage("The Coverity on Polaris Platform url must be specified.");
         } else {
             try {
                 URL blackDuckURL = new URL(getUrl());
                 blackDuckURL.toURI();
             } catch (MalformedURLException | URISyntaxException e) {
                 builderStatus.addErrorMessage(String.format(
-                        "The provided Polaris Software Integrity Platform url (%s) is not a valid URL.", getUrl()));
+                        "The provided Coverity on Polaris Platform url (%s) is not a valid URL.", getUrl()));
             }
         }
 

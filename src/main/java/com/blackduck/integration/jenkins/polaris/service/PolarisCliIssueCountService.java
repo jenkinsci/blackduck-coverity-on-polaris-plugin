@@ -1,9 +1,9 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.jenkins.polaris.service;
 
@@ -22,7 +22,7 @@ import java.util.Optional;
 
 public class PolarisCliIssueCountService {
     public static final String STEP_EXCEPTION_PREFIX =
-            "Issue count for most recent Polaris Software Integrity Platform analysis could not be determined: ";
+            "Issue count for most recent Coverity on Polaris Platform analysis could not be determined: ";
     private final JenkinsIntLogger logger;
     private final CountService countService;
     private final JobService jobService;
@@ -54,14 +54,14 @@ public class PolarisCliIssueCountService {
 
         if (jobTimeoutInSeconds < 1) {
             throw new JenkinsUserFriendlyException(STEP_EXCEPTION_PREFIX
-                    + "Job timeout must be a positive integer if the Polaris CLI is being run without -w");
+                    + "Job timeout must be a positive integer if the Coverity on Polaris CLI is being run without -w");
         }
 
         HttpUrl issueApiUrl = Optional.ofNullable(scanInfo)
                 .map(CommonScanInfo::getIssueApiUrl)
                 .orElseThrow(
                         () -> new JenkinsUserFriendlyException(
-                                "Polaris Software Integrity Platform for Jenkins cannot find the total issue count or issue api url in the cli-scan.json. Please ensure that you are using a supported version of the Polaris CLI."));
+                                "Coverity on Polaris Platform for Jenkins cannot find the total issue count or issue api url in the cli-scan.json. Please ensure that you are using a supported version of the Coverity on Polaris CLI."));
 
         logger.debug("Found issue api url, polling for job status");
 

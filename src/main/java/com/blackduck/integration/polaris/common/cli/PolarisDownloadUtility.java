@@ -1,9 +1,9 @@
 /*
- * synopsys-polaris
+ * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Synopsys, Inc.
+ * Copyright (c) 2024 Black Duck Software, Inc.
  *
- * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
 package com.blackduck.integration.polaris.common.cli;
 
@@ -93,7 +93,7 @@ public class PolarisDownloadUtility {
     }
 
     /**
-     * The Polaris CLI will be downloaded if it has not previously been downloaded or
+     * The Coverity on Polaris CLI will be downloaded if it has not previously been downloaded or
      * if it has been updated on the server. The absolute path to the swip_cli
      * executable will be returned if it was downloaded or found successfully,
      * otherwise an Optional.empty will be returned and the log will contain
@@ -105,10 +105,10 @@ public class PolarisDownloadUtility {
         if (binDirectory != null && binDirectory.exists() && binDirectory.isDirectory()) {
             try {
                 File polarisCliExecutable = getPolarisCli(binDirectory);
-                logger.info("Polaris CLI downloaded/found successfully: " + polarisCliExecutable.getCanonicalPath());
+                logger.info("Coverity on Polaris CLI downloaded/found successfully: " + polarisCliExecutable.getCanonicalPath());
                 return Optional.of(polarisCliExecutable.getCanonicalPath());
             } catch (Exception e) {
-                logger.error("The Polaris CLI executable could not be found: " + e.getMessage());
+                logger.error("The Coverity on Polaris CLI executable could not be found: " + e.getMessage());
             }
         }
 
@@ -133,7 +133,7 @@ public class PolarisDownloadUtility {
         try {
             binDirectory = downloadIfModified(versionFile, downloadUrlFormat);
         } catch (Exception e) {
-            logger.error("The Polaris CLI could not be downloaded successfully: " + e.getMessage());
+            logger.error("The Coverity on Polaris CLI could not be downloaded successfully: " + e.getMessage());
         }
 
         return Optional.ofNullable(binDirectory);
@@ -146,7 +146,7 @@ public class PolarisDownloadUtility {
             try {
                 pathToPolarisCliHome = file.getCanonicalPath();
             } catch (IOException e) {
-                logger.error("The Polaris CLI home could not be found: " + e.getMessage());
+                logger.error("The Coverity on Polaris CLI home could not be found: " + e.getMessage());
             }
 
             return Optional.ofNullable(pathToPolarisCliHome);
@@ -236,10 +236,10 @@ public class PolarisDownloadUtility {
             throws IOException, IntegrationException, ArchiveException {
         long lastModifiedOnServer = response.getLastModified();
         if (lastModifiedOnServer == lastTimeDownloaded) {
-            logger.debug("The Polaris CLI has not been modified since it was last downloaded - skipping download.");
+            logger.debug("The Coverity on Polaris CLI has not been modified since it was last downloaded - skipping download.");
             return getBinDirectory();
         } else {
-            logger.info("Downloading the Polaris CLI.");
+            logger.info("Downloading the Coverity on Polaris CLI.");
             try (InputStream responseStream = response.getContent()) {
                 cleanupZipExpander.expand(responseStream, installDirectory);
             }
@@ -252,7 +252,7 @@ public class PolarisDownloadUtility {
             File binDirectory = getBinDirectory();
             makeBinFilesExecutable(binDirectory);
 
-            logger.info("Polaris CLI downloaded successfully.");
+            logger.info("Coverity on Polaris CLI downloaded successfully.");
 
             return binDirectory;
         }
@@ -264,7 +264,7 @@ public class PolarisDownloadUtility {
         File[] directories = installDirectory.listFiles(File::isDirectory);
         if (directories == null || directories.length == 0) {
             throw new IntegrationException(String.format(
-                    "The %s directory is empty, so the Polaris CLI can not be run.",
+                    "The %s directory is empty, so the Coverity on Polaris CLI can not be run.",
                     PolarisDownloadUtility.POLARIS_CLI_INSTALL_DIRECTORY));
         }
 
@@ -295,7 +295,7 @@ public class PolarisDownloadUtility {
         }
 
         throw new IntegrationException(
-                "The Polaris CLI does not appear to have been downloaded correctly - be sure to download it first.");
+                "The Coverity on Polaris CLI does not appear to have been downloaded correctly - be sure to download it first.");
     }
 
     private Optional<File> checkFile(File binDirectory, String filePrefix) {
