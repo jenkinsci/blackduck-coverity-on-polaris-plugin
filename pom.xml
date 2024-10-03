@@ -262,52 +262,6 @@
           </execution>
         </executions>
       </plugin>
-      <!-- Plugin for generating docs -->
-      <!--            <plugin>-->
-      <!--                <groupId>org.codehaus.mojo</groupId>-->
-      <!--                <artifactId>exec-maven-plugin</artifactId>-->
-      <!--                <version>3.0.0</version>-->
-      <!--                <executions>-->
-      <!--                    <execution>-->
-      <!--                        <id>generate-docs</id>-->
-      <!--                        <phase>compile</phase>-->
-      <!--                        <goals>-->
-      <!--                            <goal>java</goal>-->
-      <!--                        </goals>-->
-      <!--                        <configuration>-->
-      <!--                            <mainClass>com.synopsys.integration.jenkins.polaris.docs.GenerateDocsTask</mainClass>-->
-      <!--                        </configuration>-->
-      <!--                    </execution>-->
-      <!--                    <execution>-->
-      <!--                        <id>build-mkdocs</id>-->
-      <!--                        <phase>prepare-package</phase>-->
-      <!--                        <goals>-->
-      <!--                            <goal>exec</goal>-->
-      <!--                        </goals>-->
-      <!--                        <configuration>-->
-      <!--                            <executable>mkdocs</executable>-->
-      <!--                            <arguments>-->
-      <!--                                <argument>build</argument>-->
-      <!--                            </arguments>-->
-      <!--                            <workingDirectory>${project.basedir}/docs</workingDirectory>-->
-      <!--                        </configuration>-->
-      <!--                    </execution>-->
-      <!--                    <execution>-->
-      <!--                        <id>serve-mkdocs</id>-->
-      <!--                        <phase>pre-integration-test</phase> &lt;!&ndash; you can bind to a phase where you want to serve the docs &ndash;&gt;-->
-      <!--                        <goals>-->
-      <!--                            <goal>exec</goal>-->
-      <!--                        </goals>-->
-      <!--                        <configuration>-->
-      <!--                            <executable>mkdocs</executable>-->
-      <!--                            <arguments>-->
-      <!--                                <argument>serve</argument>-->
-      <!--                            </arguments>-->
-      <!--                            <workingDirectory>${project.basedir}/docs</workingDirectory>-->
-      <!--                        </configuration>-->
-      <!--                    </execution>-->
-      <!--                </executions>-->
-      <!--            </plugin>-->
     </plugins>
   </build>
 

@@ -1,8 +1,0 @@
-# operating system
-.DS_Store
-
-# ide
-.settings/
-.classpath
-.project
-bin/
