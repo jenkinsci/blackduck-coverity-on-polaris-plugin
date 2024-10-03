@@ -43,11 +43,11 @@ public class PolarisGlobalConfigTest {
     private static final String POLARIS_TIMEOUT_STRING = "30";
     private static final int POLARIS_TIMEOUT_INT = 30;
     private static final String CONFIG_XML_CONTENTS = "<?xml version='1.1' encoding='UTF-8'?>\n"
-            + "<com.synopsys.integration.jenkins.polaris.extensions.global.PolarisGlobalConfig>\n"
-            + "  <polarisUrl>https://dev01.dev.polaris.synopsys.com</polarisUrl>\n"
+            + "<com.blackduck.integration.jenkins.polaris.extensions.global.PolarisGlobalConfig>\n"
+            + "  <polarisUrl>https://dev01.dev.polaris.blackduck.com</polarisUrl>\n"
             + "  <polarisCredentialsId>0424ba25-4607-4a81-a809-0220c44d0fc1</polarisCredentialsId>\n"
             + "  <polarisTimeout>120</polarisTimeout>\n"
-            + "</com.synopsys.integration.jenkins.polaris.extensions.global.PolarisGlobalConfig>";
+            + "</com.blackduck.integration.jenkins.polaris.extensions.global.PolarisGlobalConfig>";
 
     @Rule
     public JenkinsRule jenkinsRule = new JenkinsRule();
