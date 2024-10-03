@@ -12,6 +12,7 @@ import hudson.tools.ToolInstallation;
 
 public class AbortPolarisCliInstallException extends AbortException {
     public AbortPolarisCliInstallException(ToolInstallation toolInstallation, String reason) {
-        super("Cannot install Coverity on Polaris CLI Installation " + toolInstallation.getName() + " because: " + reason);
+        super("Cannot install Coverity on Polaris CLI Installation " + toolInstallation.getName() + " because: "
+                + reason);
     }
 }

@@ -41,7 +41,8 @@ public class PolarisEnvironmentService {
         try {
             polarisServerConfigBuilder.build().populateEnvironmentVariables(intEnvironmentVariables::put);
         } catch (IllegalArgumentException ex) {
-            throw new PolarisIntegrationException("There is a problem with your Coverity on Polaris system configuration", ex);
+            throw new PolarisIntegrationException(
+                    "There is a problem with your Coverity on Polaris system configuration", ex);
         }
 
         return intEnvironmentVariables;

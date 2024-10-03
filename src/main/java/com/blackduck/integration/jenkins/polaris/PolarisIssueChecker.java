@@ -38,8 +38,7 @@ public class PolarisIssueChecker {
             throws IOException, InterruptedException, IntegrationException {
         String logMessage = versionHelper
                 .getPluginVersion("blackduck-coverity-on-polaris")
-                .map(version ->
-                        String.format("Running Coverity on Polaris Platform for Jenkins version %s", version))
+                .map(version -> String.format("Running Coverity on Polaris Platform for Jenkins version %s", version))
                 .orElse("Running Coverity on Polaris Platform for Jenkins");
         logger.info(logMessage);
 

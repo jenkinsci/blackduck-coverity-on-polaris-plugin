@@ -105,7 +105,8 @@ public class PolarisDownloadUtility {
         if (binDirectory != null && binDirectory.exists() && binDirectory.isDirectory()) {
             try {
                 File polarisCliExecutable = getPolarisCli(binDirectory);
-                logger.info("Coverity on Polaris CLI downloaded/found successfully: " + polarisCliExecutable.getCanonicalPath());
+                logger.info("Coverity on Polaris CLI downloaded/found successfully: "
+                        + polarisCliExecutable.getCanonicalPath());
                 return Optional.of(polarisCliExecutable.getCanonicalPath());
             } catch (Exception e) {
                 logger.error("The Coverity on Polaris CLI executable could not be found: " + e.getMessage());
@@ -236,7 +237,8 @@ public class PolarisDownloadUtility {
             throws IOException, IntegrationException, ArchiveException {
         long lastModifiedOnServer = response.getLastModified();
         if (lastModifiedOnServer == lastTimeDownloaded) {
-            logger.debug("The Coverity on Polaris CLI has not been modified since it was last downloaded - skipping download.");
+            logger.debug(
+                    "The Coverity on Polaris CLI has not been modified since it was last downloaded - skipping download.");
             return getBinDirectory();
         } else {
             logger.info("Downloading the Coverity on Polaris CLI.");

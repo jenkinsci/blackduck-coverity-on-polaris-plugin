@@ -64,7 +64,8 @@ public class PolarisCliResponseUtility {
             return getPolarisCliResponseModelFromJsonObject(gson.fromJson(reader, JsonObject.class));
         } catch (IOException | IntegrationException e) {
             throw new PolarisIntegrationException(
-                    "There was a problem parsing the Coverity on Polaris CLI response json at " + pathToJson.toString(), e);
+                    "There was a problem parsing the Coverity on Polaris CLI response json at " + pathToJson.toString(),
+                    e);
         }
     }
 

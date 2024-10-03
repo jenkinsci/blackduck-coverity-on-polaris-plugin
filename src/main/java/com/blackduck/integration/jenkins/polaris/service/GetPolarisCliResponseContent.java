@@ -28,7 +28,8 @@ public class GetPolarisCliResponseContent extends MasterToSlaveCallable<String, 
             byte[] bytes = Files.readAllBytes(PolarisCliResponseUtility.getDefaultPathToJson(workspaceRemotePath));
             return new String(bytes, StandardCharsets.UTF_8);
         } catch (IOException e) {
-            throw new PolarisIntegrationException("There was an error getting the Coverity on Polaris CLI response.", e);
+            throw new PolarisIntegrationException(
+                    "There was an error getting the Coverity on Polaris CLI response.", e);
         }
     }
 }
