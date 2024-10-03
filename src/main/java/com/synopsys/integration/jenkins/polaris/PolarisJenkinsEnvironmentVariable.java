@@ -19,5 +19,4 @@ public enum PolarisJenkinsEnvironmentVariable {
     public String stringValue() {
         return environmentVariable;
     }
-
 }

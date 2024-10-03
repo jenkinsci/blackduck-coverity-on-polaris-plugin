@@ -5,7 +5,8 @@
  *
  * Use subject to the terms and conditions of the Synopsys End User Software License and Maintenance Agreement. All rights reserved worldwide.
  */
-package com.synopsys.integration.polaris.common.configuration; /**
+package com.synopsys.integration.polaris.common.configuration;
+/**
  * polaris-common
  *
  * Copyright (c) 2020 Synopsys, Inc.
@@ -27,18 +28,6 @@ package com.synopsys.integration.polaris.common.configuration; /**
  * specific language governing permissions and limitations
  * under the License.
  */
-
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
-
 import com.google.gson.Gson;
 import com.synopsys.integration.builder.BuilderProperties;
 import com.synopsys.integration.builder.BuilderPropertyKey;
@@ -54,6 +43,15 @@ import com.synopsys.integration.rest.credentials.CredentialsBuilder;
 import com.synopsys.integration.rest.proxy.ProxyInfo;
 import com.synopsys.integration.rest.proxy.ProxyInfoBuilder;
 import com.synopsys.integration.rest.support.AuthenticationSupport;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 public class PolarisServerConfigBuilder extends IntegrationBuilder<PolarisServerConfig> {
     public static final String SWIP_CONFIG_DIRECTORY_DEFAULT = ".swip";
@@ -64,14 +62,16 @@ public class PolarisServerConfigBuilder extends IntegrationBuilder<PolarisServer
     public static final BuilderPropertyKey ACCESS_TOKEN_KEY = new BuilderPropertyKey("POLARIS_ACCESS_TOKEN");
     public static final BuilderPropertyKey TIMEOUT_KEY = new BuilderPropertyKey("POLARIS_TIMEOUT");
     public static final BuilderPropertyKey POLARIS_HOME_KEY = new BuilderPropertyKey("POLARIS_HOME");
-    public static final BuilderPropertyKey ACCESS_TOKEN_FILE_PATH_KEY = new BuilderPropertyKey("POLARIS_ACCESS_TOKEN_FILE");
+    public static final BuilderPropertyKey ACCESS_TOKEN_FILE_PATH_KEY =
+            new BuilderPropertyKey("POLARIS_ACCESS_TOKEN_FILE");
     public static final BuilderPropertyKey USER_HOME_KEY = new BuilderPropertyKey("USER_HOME");
     public static final BuilderPropertyKey PROXY_HOST_KEY = new BuilderPropertyKey("POLARIS_PROXY_HOST");
     public static final BuilderPropertyKey PROXY_PORT_KEY = new BuilderPropertyKey("POLARIS_PROXY_PORT");
     public static final BuilderPropertyKey PROXY_USERNAME_KEY = new BuilderPropertyKey("POLARIS_PROXY_USERNAME");
     public static final BuilderPropertyKey PROXY_PASSWORD_KEY = new BuilderPropertyKey("POLARIS_PROXY_PASSWORD");
     public static final BuilderPropertyKey PROXY_NTLM_DOMAIN_KEY = new BuilderPropertyKey("POLARIS_PROXY_NTLM_DOMAIN");
-    public static final BuilderPropertyKey PROXY_NTLM_WORKSTATION_KEY = new BuilderPropertyKey("POLARIS_PROXY_NTLM_WORKSTATION");
+    public static final BuilderPropertyKey PROXY_NTLM_WORKSTATION_KEY =
+            new BuilderPropertyKey("POLARIS_PROXY_NTLM_WORKSTATION");
 
     public static final int DEFAULT_TIMEOUT_SECONDS = 120;
 
@@ -104,7 +104,8 @@ public class PolarisServerConfigBuilder extends IntegrationBuilder<PolarisServer
         } catch (IntegrationException e) {
         }
 
-        return new PolarisServerConfig(polarisURL, getTimeoutInSeconds(), getAccessToken(), getProxyInfo(), gson, authenticationSupport);
+        return new PolarisServerConfig(
+                polarisURL, getTimeoutInSeconds(), getAccessToken(), getProxyInfo(), gson, authenticationSupport);
     }
 
     private ProxyInfo getProxyInfo() {
@@ -135,18 +136,23 @@ public class PolarisServerConfigBuilder extends IntegrationBuilder<PolarisServer
                 URL blackDuckURL = new URL(getUrl());
                 blackDuckURL.toURI();
             } catch (MalformedURLException | URISyntaxException e) {
-                builderStatus.addErrorMessage(String.format("The provided Polaris Software Integrity Platform url (%s) is not a valid URL.", getUrl()));
+                builderStatus.addErrorMessage(String.format(
+                        "The provided Polaris Software Integrity Platform url (%s) is not a valid URL.", getUrl()));
             }
         }
 
-        PolarisAccessTokenResolver accessTokenResolver = new PolarisAccessTokenResolver(logger, builderStatus, getAccessToken(), getPolarisHome(), getAccessTokenFilePath(), getUserHome());
+        PolarisAccessTokenResolver accessTokenResolver = new PolarisAccessTokenResolver(
+                logger, builderStatus, getAccessToken(), getPolarisHome(), getAccessTokenFilePath(), getUserHome());
         Optional<String> optionalAccessToken = accessTokenResolver.resolveAccessToken();
         if (!optionalAccessToken.isPresent()) {
-            builderStatus.addErrorMessage("An access token must be resolvable from one of the following (this is also the order of precedence):");
+            builderStatus.addErrorMessage(
+                    "An access token must be resolvable from one of the following (this is also the order of precedence):");
             builderStatus.addErrorMessage(" - set explicitly");
             builderStatus.addErrorMessage(" - set from property (POLARIS_ACCESS_TOKEN, SWIP_ACCESS_TOKEN)");
-            builderStatus.addErrorMessage(" - found in a provided file path (POLARIS_ACCESS_TOKEN_FILE, SWIP_ACCESS_TOKEN_FILE)");
-            builderStatus.addErrorMessage(" - found in the '.access_token' file in a Polaris home directory (POLARIS_HOME, SWIP_HOME, or defaults to USER_HOME/.swip or USER_HOME/.polaris, depending on your Polaris version.)");
+            builderStatus.addErrorMessage(
+                    " - found in a provided file path (POLARIS_ACCESS_TOKEN_FILE, SWIP_ACCESS_TOKEN_FILE)");
+            builderStatus.addErrorMessage(
+                    " - found in the '.access_token' file in a Polaris home directory (POLARIS_HOME, SWIP_HOME, or defaults to USER_HOME/.swip or USER_HOME/.polaris, depending on your Polaris version.)");
         } else {
             setAccessToken(optionalAccessToken.get());
         }
@@ -269,7 +275,8 @@ public class PolarisServerConfigBuilder extends IntegrationBuilder<PolarisServer
     }
 
     public int getTimeoutInSeconds() {
-        return NumberUtils.toInt(builderProperties.get(TIMEOUT_KEY), PolarisServerConfigBuilder.DEFAULT_TIMEOUT_SECONDS);
+        return NumberUtils.toInt(
+                builderProperties.get(TIMEOUT_KEY), PolarisServerConfigBuilder.DEFAULT_TIMEOUT_SECONDS);
     }
 
     public PolarisServerConfigBuilder setTimeoutInSeconds(String timeout) {
@@ -367,5 +374,4 @@ public class PolarisServerConfigBuilder extends IntegrationBuilder<PolarisServer
         builderProperties.set(PROXY_NTLM_WORKSTATION_KEY, proxyNtlmWorkstation);
         return this;
     }
-
 }

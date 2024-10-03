@@ -7,15 +7,6 @@
  */
 package com.synopsys.integration.jenkins.polaris.extensions.tools;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import org.jenkinsci.Symbol;
-import org.kohsuke.stapler.DataBoundConstructor;
-
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.Util;
@@ -27,6 +18,12 @@ import hudson.tools.ToolDescriptor;
 import hudson.tools.ToolInstallation;
 import hudson.tools.ToolInstaller;
 import hudson.tools.ToolProperty;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import javax.annotation.Nonnull;
+import org.jenkinsci.Symbol;
+import org.kohsuke.stapler.DataBoundConstructor;
 
 public class PolarisCli extends ToolInstallation implements NodeSpecific<PolarisCli>, EnvironmentSpecific<PolarisCli> {
     private static final long serialVersionUID = -3838254855454518440L;
@@ -38,12 +35,14 @@ public class PolarisCli extends ToolInstallation implements NodeSpecific<Polaris
 
     @Override
     public PolarisCli forNode(@Nonnull Node node, TaskListener log) throws IOException, InterruptedException {
-        return new PolarisCli(getName(), translateFor(node, log), getProperties().toList());
+        return new PolarisCli(
+                getName(), translateFor(node, log), getProperties().toList());
     }
 
     @Override
     public PolarisCli forEnvironment(EnvVars environment) {
-        return new PolarisCli(getName(), environment.expand(getHome()), getProperties().toList());
+        return new PolarisCli(
+                getName(), environment.expand(getHome()), getProperties().toList());
     }
 
     @Override
@@ -77,5 +76,4 @@ public class PolarisCli extends ToolInstallation implements NodeSpecific<Polaris
             return Collections.singletonList(new PolarisCliInstaller(null));
         }
     }
-
 }

@@ -31,5 +31,4 @@ public class CliScanUnsupportedParser extends CliScanParser<UnsupportedVersionCl
     public CliCommonResponseModel fromCliScan(JsonObject versionlessModel) throws PolarisIntegrationException {
         throw new PolarisIntegrationException("Version " + versionString + " of the cli-scan.json is not supported.");
     }
-
 }

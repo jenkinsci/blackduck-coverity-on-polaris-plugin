@@ -37,5 +37,4 @@ public class CommonScanInfo {
     public void setIssueApiUrl(HttpUrl issueApiUrl) {
         this.issueApiUrl = issueApiUrl;
     }
-
 }

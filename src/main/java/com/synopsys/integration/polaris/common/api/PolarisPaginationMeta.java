@@ -7,9 +7,8 @@
  */
 package com.synopsys.integration.polaris.common.api;
 
-import java.math.BigDecimal;
-
 import com.google.gson.annotations.SerializedName;
+import java.math.BigDecimal;
 
 public class PolarisPaginationMeta extends PolarisResponse {
     @SerializedName("offset")
@@ -57,5 +56,13 @@ public class PolarisPaginationMeta extends PolarisResponse {
         this.total = total;
     }
 
-}
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+}

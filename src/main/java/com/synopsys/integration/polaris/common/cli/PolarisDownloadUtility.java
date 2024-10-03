@@ -7,18 +7,9 @@
  */
 package com.synopsys.integration.polaris.common.cli;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Optional;
-
-import com.synopsys.integration.polaris.common.configuration.OSArchTask;
-import hudson.FilePath;
-import org.apache.commons.compress.archivers.ArchiveException;
-
 import com.synopsys.integration.exception.IntegrationException;
 import com.synopsys.integration.log.IntLogger;
+import com.synopsys.integration.polaris.common.configuration.OSArchTask;
 import com.synopsys.integration.rest.HttpUrl;
 import com.synopsys.integration.rest.client.IntHttpClient;
 import com.synopsys.integration.rest.proxy.ProxyInfo;
@@ -26,7 +17,13 @@ import com.synopsys.integration.rest.request.Request;
 import com.synopsys.integration.rest.response.Response;
 import com.synopsys.integration.util.CleanupZipExpander;
 import com.synopsys.integration.util.OperatingSystemType;
-import org.apache.commons.lang3.SystemUtils;
+import hudson.FilePath;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Optional;
+import org.apache.commons.compress.archivers.ArchiveException;
 
 public class PolarisDownloadUtility {
     public static final Integer DEFAULT_POLARIS_TIMEOUT = 120;
@@ -46,7 +43,13 @@ public class PolarisDownloadUtility {
     private final HttpUrl polarisServerUrl;
     private final File installDirectory;
 
-    public PolarisDownloadUtility(IntLogger logger, OperatingSystemType operatingSystemType, IntHttpClient intHttpClient, CleanupZipExpander cleanupZipExpander, HttpUrl polarisServerUrl, File downloadTargetDirectory) {
+    public PolarisDownloadUtility(
+            IntLogger logger,
+            OperatingSystemType operatingSystemType,
+            IntHttpClient intHttpClient,
+            CleanupZipExpander cleanupZipExpander,
+            HttpUrl polarisServerUrl,
+            File downloadTargetDirectory) {
         if (null == polarisServerUrl) {
             throw new IllegalArgumentException("A Polaris server url must be provided.");
         }
@@ -58,20 +61,34 @@ public class PolarisDownloadUtility {
         this.polarisServerUrl = polarisServerUrl;
         installDirectory = new File(downloadTargetDirectory, PolarisDownloadUtility.POLARIS_CLI_INSTALL_DIRECTORY);
 
-        installDirectory.mkdirs();
+        boolean dirCreated = installDirectory.mkdirs();
+        if (!dirCreated && !installDirectory.exists()) {
+            throw new IllegalArgumentException(
+                    "Failed to create the install directory: " + installDirectory.getAbsolutePath());
+        }
+
         if (!installDirectory.exists() || !installDirectory.isDirectory() || !installDirectory.canWrite()) {
             throw new IllegalArgumentException("The provided directory must exist and be writable.");
         }
     }
 
-    public static PolarisDownloadUtility defaultUtility(IntLogger logger, HttpUrl polarisServerUrl, ProxyInfo proxyInfo, File downloadTargetDirectory) {
+    public static PolarisDownloadUtility defaultUtility(
+            IntLogger logger, HttpUrl polarisServerUrl, ProxyInfo proxyInfo, File downloadTargetDirectory) {
         OperatingSystemType operatingSystemType = OperatingSystemType.determineFromSystem();
-        IntHttpClient intHttpClient = new IntHttpClient(logger, PolarisDownloadUtility.DEFAULT_POLARIS_TIMEOUT, false, proxyInfo);
+        IntHttpClient intHttpClient =
+                new IntHttpClient(logger, PolarisDownloadUtility.DEFAULT_POLARIS_TIMEOUT, false, proxyInfo);
         CleanupZipExpander cleanupZipExpander = new CleanupZipExpander(logger);
-        return new PolarisDownloadUtility(logger, operatingSystemType, intHttpClient, cleanupZipExpander, polarisServerUrl, downloadTargetDirectory);
+        return new PolarisDownloadUtility(
+                logger,
+                operatingSystemType,
+                intHttpClient,
+                cleanupZipExpander,
+                polarisServerUrl,
+                downloadTargetDirectory);
     }
 
-    public static PolarisDownloadUtility defaultUtilityNoProxy(IntLogger logger, HttpUrl polarisServerUrl, File downloadTargetDirectory) {
+    public static PolarisDownloadUtility defaultUtilityNoProxy(
+            IntLogger logger, HttpUrl polarisServerUrl, File downloadTargetDirectory) {
         return defaultUtility(logger, polarisServerUrl, ProxyInfo.NO_PROXY_INFO, downloadTargetDirectory);
     }
 
@@ -123,27 +140,33 @@ public class PolarisDownloadUtility {
     }
 
     public Optional<String> getOrDownloadPolarisCliHome() {
-        return getOrDownloadPolarisCliBin()
-                   .map(File::getParentFile)
-                   .flatMap(file -> {
-                       String pathToPolarisCliHome = null;
+        return getOrDownloadPolarisCliBin().map(File::getParentFile).flatMap(file -> {
+            String pathToPolarisCliHome = null;
 
-                       try {
-                           pathToPolarisCliHome = file.getCanonicalPath();
-                       } catch (IOException e) {
-                           logger.error("The Polaris CLI home could not be found: " + e.getMessage());
-                       }
+            try {
+                pathToPolarisCliHome = file.getCanonicalPath();
+            } catch (IOException e) {
+                logger.error("The Polaris CLI home could not be found: " + e.getMessage());
+            }
 
-                       return Optional.ofNullable(pathToPolarisCliHome);
-                   });
+            return Optional.ofNullable(pathToPolarisCliHome);
+        });
     }
 
     public File getOrCreateVersionFile() throws IOException {
         File versionFile = new File(installDirectory, PolarisDownloadUtility.VERSION_FILENAME);
         if (!versionFile.exists()) {
             logger.info("The version file has not been created yet so creating it now.");
-            versionFile.createNewFile();
-            versionFile.setLastModified(0L);
+
+            boolean fileCreated = versionFile.createNewFile();
+            if (!fileCreated) {
+                throw new IOException("Failed to create the version file: " + versionFile.getAbsolutePath());
+            }
+
+            boolean lastModified = versionFile.setLastModified(0L);
+            if (!lastModified) {
+                throw new IOException("Failed to set last modified: " + versionFile.getAbsolutePath());
+            }
         }
 
         return versionFile;
@@ -185,7 +208,8 @@ public class PolarisDownloadUtility {
         return arch;
     }
 
-    private File downloadIfModified(File versionFile, String downloadUrlFormat) throws IOException, IntegrationException, ArchiveException {
+    private File downloadIfModified(File versionFile, String downloadUrlFormat)
+            throws IOException, IntegrationException, ArchiveException {
         long lastTimeDownloaded = versionFile.lastModified();
         logger.debug(String.format("last time downloaded: %d", lastTimeDownloaded));
 
@@ -208,7 +232,8 @@ public class PolarisDownloadUtility {
         return getBinDirectory();
     }
 
-    private File getBinDirectoryFromResponse(Response response, File versionFile, long lastTimeDownloaded) throws IOException, IntegrationException, ArchiveException {
+    private File getBinDirectoryFromResponse(Response response, File versionFile, long lastTimeDownloaded)
+            throws IOException, IntegrationException, ArchiveException {
         long lastModifiedOnServer = response.getLastModified();
         if (lastModifiedOnServer == lastTimeDownloaded) {
             logger.debug("The Polaris CLI has not been modified since it was last downloaded - skipping download.");
@@ -218,7 +243,11 @@ public class PolarisDownloadUtility {
             try (InputStream responseStream = response.getContent()) {
                 cleanupZipExpander.expand(responseStream, installDirectory);
             }
-            versionFile.setLastModified(lastModifiedOnServer);
+
+            boolean lastModified = versionFile.setLastModified(lastModifiedOnServer);
+            if (!lastModified) {
+                throw new IOException("Failed to set last modified: " + versionFile.getAbsolutePath());
+            }
 
             File binDirectory = getBinDirectory();
             makeBinFilesExecutable(binDirectory);
@@ -234,11 +263,15 @@ public class PolarisDownloadUtility {
     private File getBinDirectory() throws IntegrationException {
         File[] directories = installDirectory.listFiles(File::isDirectory);
         if (directories == null || directories.length == 0) {
-            throw new IntegrationException(String.format("The %s directory is empty, so the Polaris CLI can not be run.", PolarisDownloadUtility.POLARIS_CLI_INSTALL_DIRECTORY));
+            throw new IntegrationException(String.format(
+                    "The %s directory is empty, so the Polaris CLI can not be run.",
+                    PolarisDownloadUtility.POLARIS_CLI_INSTALL_DIRECTORY));
         }
 
         if (directories.length > 1) {
-            throw new IntegrationException(String.format("The %s directory should only be modified by polaris-common. Please delete all files from that directory and try again.", PolarisDownloadUtility.POLARIS_CLI_INSTALL_DIRECTORY));
+            throw new IntegrationException(String.format(
+                    "The %s directory should only be modified by polaris-common. Please delete all files from that directory and try again.",
+                    PolarisDownloadUtility.POLARIS_CLI_INSTALL_DIRECTORY));
         }
 
         File polarisCliDirectory = directories[0];
@@ -261,7 +294,8 @@ public class PolarisDownloadUtility {
             return swipCli.get();
         }
 
-        throw new IntegrationException("The Polaris CLI does not appear to have been downloaded correctly - be sure to download it first.");
+        throw new IntegrationException(
+                "The Polaris CLI does not appear to have been downloaded correctly - be sure to download it first.");
     }
 
     private Optional<File> checkFile(File binDirectory, String filePrefix) {
@@ -277,5 +311,4 @@ public class PolarisDownloadUtility {
             return Optional.empty();
         }
     }
-
 }

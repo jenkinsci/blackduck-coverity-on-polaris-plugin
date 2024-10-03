@@ -7,13 +7,13 @@
  */
 package com.synopsys.integration.polaris.common.api.model;
 
-import java.io.Serializable;
-
 import com.google.gson.annotations.SerializedName;
 import com.synopsys.integration.util.Stringable;
+import java.io.Serializable;
 
 public class FailureInfo extends Stringable implements Serializable {
     private static final long serialVersionUID = 9118125719091019152L;
+
     @SerializedName("userFriendlyFailureReason")
     private String userFriendlyFailureReason;
 
@@ -28,4 +28,13 @@ public class FailureInfo extends Stringable implements Serializable {
         return exception;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

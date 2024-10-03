@@ -7,9 +7,6 @@
  */
 package com.synopsys.integration.polaris.common.service;
 
-import java.lang.reflect.Type;
-import java.util.Map;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -18,6 +15,8 @@ import com.synopsys.integration.exception.IntegrationException;
 import com.synopsys.integration.log.IntLogger;
 import com.synopsys.integration.polaris.common.api.PolarisResponse;
 import com.synopsys.integration.rest.response.Response;
+import java.lang.reflect.Type;
+import java.util.Map;
 
 public class PolarisJsonTransformer {
     private static final String FIELD_NAME_POLARIS_COMPONENT_JSON = "json";
@@ -40,18 +39,21 @@ public class PolarisJsonTransformer {
             JsonObject jsonElement = gson.fromJson(json, JsonObject.class);
             return getResponseAs(jsonElement, responseType);
         } catch (JsonSyntaxException e) {
-            logger.error(String.format("Could not parse the provided json with Gson:%s%s", System.lineSeparator(), json));
+            logger.error(
+                    String.format("Could not parse the provided json with Gson:%s%s", System.lineSeparator(), json));
             throw new IntegrationException(e.getMessage(), e);
         }
     }
 
-    public <C extends PolarisResponse> C getResponseAs(JsonObject jsonObject, Type responseType) throws IntegrationException {
+    public <C extends PolarisResponse> C getResponseAs(JsonObject jsonObject, Type responseType)
+            throws IntegrationException {
         String json = gson.toJson(jsonObject);
         try {
             addJsonAsField(jsonObject);
             return gson.fromJson(jsonObject, responseType);
         } catch (JsonSyntaxException e) {
-            logger.error(String.format("Could not parse the provided jsonElement with Gson:%s%s", System.lineSeparator(), json));
+            logger.error(String.format(
+                    "Could not parse the provided jsonElement with Gson:%s%s", System.lineSeparator(), json));
             throw new IntegrationException(e.getMessage(), e);
         }
     }
@@ -69,5 +71,4 @@ public class PolarisJsonTransformer {
             }
         }
     }
-
 }

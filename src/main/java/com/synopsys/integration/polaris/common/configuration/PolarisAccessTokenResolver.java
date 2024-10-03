@@ -11,16 +11,14 @@ import static com.synopsys.integration.polaris.common.configuration.PolarisServe
 import static com.synopsys.integration.polaris.common.configuration.PolarisServerConfigBuilder.POLARIS_CONFIG_DIRECTORY_DEFAULT;
 import static com.synopsys.integration.polaris.common.configuration.PolarisServerConfigBuilder.SWIP_CONFIG_DIRECTORY_DEFAULT;
 
+import com.synopsys.integration.builder.BuilderStatus;
+import com.synopsys.integration.log.IntLogger;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-
-import com.synopsys.integration.builder.BuilderStatus;
-import com.synopsys.integration.log.IntLogger;
 
 public class PolarisAccessTokenResolver {
     private final IntLogger logger;
@@ -30,7 +28,13 @@ public class PolarisAccessTokenResolver {
     private final String accessTokenFilePath;
     private final String userHomePath;
 
-    public PolarisAccessTokenResolver(IntLogger logger, BuilderStatus builderStatus, String accessToken, String polarisHome, String accessTokenFilePath, String userHomePath) {
+    public PolarisAccessTokenResolver(
+            IntLogger logger,
+            BuilderStatus builderStatus,
+            String accessToken,
+            String polarisHome,
+            String accessTokenFilePath,
+            String userHomePath) {
         this.logger = logger;
         this.builderStatus = builderStatus;
         this.accessToken = accessToken;
@@ -52,7 +56,8 @@ public class PolarisAccessTokenResolver {
             }
         }
 
-        logger.warn("The access token file was not set explicitly, so it must be configured in a Polaris Software Integrity Platform home directory.");
+        logger.warn(
+                "The access token file was not set explicitly, so it must be configured in a Polaris Software Integrity Platform home directory.");
         File polarisHomeDirectory = null;
         if (StringUtils.isNotBlank(polarisHome)) {
             polarisHomeDirectory = new File(polarisHome);
@@ -81,22 +86,26 @@ public class PolarisAccessTokenResolver {
     }
 
     private boolean validAccessTokenFile(File accessTokenFile) {
-        return accessTokenFile.exists() && accessTokenFile.isFile() && accessTokenFile.length() > 0 && accessTokenFile.length() < 1000;
+        return accessTokenFile.exists()
+                && accessTokenFile.isFile()
+                && accessTokenFile.length() > 0
+                && accessTokenFile.length() < 1000;
     }
 
     private Optional<String> extractAccessToken(File accessTokenFile) {
         try {
-            String accessToken = StringUtils.trimToEmpty(FileUtils.readFileToString(accessTokenFile, StandardCharsets.UTF_8));
+            String accessToken =
+                    StringUtils.trimToEmpty(FileUtils.readFileToString(accessTokenFile, StandardCharsets.UTF_8));
 
             logger.info(String.format("Using access token from %s file.", accessTokenFile.getAbsolutePath()));
             return Optional.of(accessToken);
         } catch (IOException e) {
-            String errorMessage = String.format("Could not read the access token file %s: %s", accessTokenFile.getAbsolutePath(), e.getMessage());
+            String errorMessage = String.format(
+                    "Could not read the access token file %s: %s", accessTokenFile.getAbsolutePath(), e.getMessage());
             logger.error(errorMessage);
             builderStatus.addErrorMessage(errorMessage);
         }
 
         return Optional.empty();
     }
-
 }

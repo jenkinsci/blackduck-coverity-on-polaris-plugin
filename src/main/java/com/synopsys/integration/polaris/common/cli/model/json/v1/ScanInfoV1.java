@@ -7,9 +7,15 @@
  */
 package com.synopsys.integration.polaris.common.cli.model.json.v1;
 
-public class ScanInfoV1 {
-    public String cliVersion;
-    public String scanTime;
-    public String issueApiUrl;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+public class ScanInfoV1 {
+    @SuppressFBWarnings(value = "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD")
+    public String cliVersion;
+
+    @SuppressFBWarnings(value = "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD")
+    public String scanTime;
+
+    @SuppressFBWarnings(value = "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD")
+    public String issueApiUrl;
 }

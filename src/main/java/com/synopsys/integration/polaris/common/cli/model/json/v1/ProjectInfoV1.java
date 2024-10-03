@@ -7,9 +7,15 @@
  */
 package com.synopsys.integration.polaris.common.cli.model.json.v1;
 
-public class ProjectInfoV1 {
-    public String projectId;
-    public String branchId;
-    public String revisionId;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+public class ProjectInfoV1 {
+    @SuppressFBWarnings(value = "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD")
+    public String projectId;
+
+    @SuppressFBWarnings(value = "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD")
+    public String branchId;
+
+    @SuppressFBWarnings(value = "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD")
+    public String revisionId;
 }

@@ -9,7 +9,6 @@ package com.synopsys.integration.polaris.common.cli;
 
 import java.io.Serializable;
 import java.util.Optional;
-
 import org.apache.commons.lang3.StringUtils;
 
 /**

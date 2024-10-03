@@ -7,22 +7,19 @@
  */
 package com.synopsys.integration.jenkins.polaris;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.synopsys.integration.jenkins.ChangeSetFilter;
 import com.synopsys.integration.jenkins.extensions.JenkinsIntLogger;
 import com.synopsys.integration.jenkins.polaris.service.PolarisEnvironmentService;
 import com.synopsys.integration.jenkins.service.JenkinsRemotingService;
 import com.synopsys.integration.jenkins.service.JenkinsScmService;
 import com.synopsys.integration.util.IntEnvironmentVariables;
-
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import jenkins.security.MasterToSlaveCallable;
+import org.apache.commons.lang3.StringUtils;
 
 public class ChangeSetFileCreator {
     private final JenkinsIntLogger logger;
@@ -30,15 +27,23 @@ public class ChangeSetFileCreator {
     private final JenkinsScmService jenkinsScmService;
     private final PolarisEnvironmentService polarisEnvironmentService;
 
-    public ChangeSetFileCreator(JenkinsIntLogger logger, JenkinsRemotingService jenkinsRemotingService, JenkinsScmService jenkinsScmService, PolarisEnvironmentService polarisEnvironmentService) {
+    public ChangeSetFileCreator(
+            JenkinsIntLogger logger,
+            JenkinsRemotingService jenkinsRemotingService,
+            JenkinsScmService jenkinsScmService,
+            PolarisEnvironmentService polarisEnvironmentService) {
         this.logger = logger;
         this.jenkinsRemotingService = jenkinsRemotingService;
         this.jenkinsScmService = jenkinsScmService;
         this.polarisEnvironmentService = polarisEnvironmentService;
     }
 
-    public String createChangeSetFile(String exclusionPatterns, String inclusionPatterns) throws IOException, InterruptedException {
-        ChangeSetFilter changeSetFilter = jenkinsScmService.newChangeSetFilter().excludeMatching(exclusionPatterns).includeMatching(inclusionPatterns);
+    public String createChangeSetFile(String exclusionPatterns, String inclusionPatterns)
+            throws IOException, InterruptedException {
+        ChangeSetFilter changeSetFilter = jenkinsScmService
+                .newChangeSetFilter()
+                .excludeMatching(exclusionPatterns)
+                .includeMatching(inclusionPatterns);
 
         // ArrayLists are serializable, Lists are not. -- rotte SEP 2020
         ArrayList<String> changedFiles = new ArrayList<>();
@@ -52,13 +57,16 @@ public class ChangeSetFileCreator {
 
         String changeSetFilePath;
         if (changedFiles.size() == 0) {
-            logger.info("The changeset file could not be created because the Jenkins-provided SCM changeset contained no files to analyze.");
+            logger.info(
+                    "The changeset file could not be created because the Jenkins-provided SCM changeset contained no files to analyze.");
             changeSetFilePath = null;
         } else {
             IntEnvironmentVariables environment = polarisEnvironmentService.getInitialEnvironment();
-            String valueOfChangeSetFilePath = environment.getValue(PolarisJenkinsEnvironmentVariable.CHANGE_SET_FILE_PATH.stringValue());
+            String valueOfChangeSetFilePath =
+                    environment.getValue(PolarisJenkinsEnvironmentVariable.CHANGE_SET_FILE_PATH.stringValue());
 
-            changeSetFilePath = jenkinsRemotingService.call(new CreateChangeSetFileAndGetRemotePath(valueOfChangeSetFilePath, remoteWorkspacePath, changedFiles));
+            changeSetFilePath = jenkinsRemotingService.call(new CreateChangeSetFileAndGetRemotePath(
+                    valueOfChangeSetFilePath, remoteWorkspacePath, changedFiles));
         }
 
         return changeSetFilePath;
@@ -70,7 +78,8 @@ public class ChangeSetFileCreator {
         private final String changeSetFilePath;
         private final String valueOfChangeSetFilePath;
 
-        public CreateChangeSetFileAndGetRemotePath(String valueOfChangeSetFilePath, String remoteWorkspacePath, ArrayList<String> changedFiles) {
+        public CreateChangeSetFileAndGetRemotePath(
+                String valueOfChangeSetFilePath, String remoteWorkspacePath, ArrayList<String> changedFiles) {
             this.valueOfChangeSetFilePath = valueOfChangeSetFilePath;
             this.changeSetFilePath = remoteWorkspacePath;
             this.changedFiles = changedFiles;
@@ -83,11 +92,17 @@ public class ChangeSetFileCreator {
                 changeSetFile = Paths.get(valueOfChangeSetFilePath);
             } else {
                 changeSetFile = Paths.get(changeSetFilePath)
-                                    .resolve(".synopsys")
-                                    .resolve("polaris")
-                                    .resolve("changeSetFiles.txt");
+                        .resolve(".synopsys")
+                        .resolve("polaris")
+                        .resolve("changeSetFiles.txt");
             }
-            Files.createDirectories(changeSetFile.getParent());
+
+            Path parentDir = changeSetFile.getParent();
+            if (parentDir != null) {
+                Files.createDirectories(parentDir);
+            } else {
+                throw new IOException("The change set file has no parent directory: " + changeSetFile);
+            }
             Files.write(changeSetFile, changedFiles);
 
             return changeSetFile.toRealPath().toString();

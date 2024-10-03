@@ -47,5 +47,4 @@ public class CliCommonResponseModel {
     public void setTools(List<CommonToolInfo> tools) {
         this.tools = tools;
     }
-
 }

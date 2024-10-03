@@ -7,15 +7,13 @@
  */
 package com.synopsys.integration.jenkins.polaris.service;
 
-import java.util.Map;
-import java.util.function.BiConsumer;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.synopsys.integration.jenkins.polaris.PolarisJenkinsEnvironmentVariable;
 import com.synopsys.integration.polaris.common.configuration.PolarisServerConfigBuilder;
 import com.synopsys.integration.polaris.common.exception.PolarisIntegrationException;
 import com.synopsys.integration.util.IntEnvironmentVariables;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import org.apache.commons.lang3.StringUtils;
 
 public class PolarisEnvironmentService {
     private final Map<String, String> environmentVariables;
@@ -24,16 +22,21 @@ public class PolarisEnvironmentService {
         this.environmentVariables = environmentVariables;
     }
 
-    public IntEnvironmentVariables createPolarisEnvironment(String changeSetFileRemotePath, PolarisServerConfigBuilder polarisServerConfigBuilder) throws PolarisIntegrationException {
+    public IntEnvironmentVariables createPolarisEnvironment(
+            String changeSetFileRemotePath, PolarisServerConfigBuilder polarisServerConfigBuilder)
+            throws PolarisIntegrationException {
         IntEnvironmentVariables intEnvironmentVariables = IntEnvironmentVariables.empty();
         intEnvironmentVariables.putAll(environmentVariables);
 
         if (StringUtils.isNotBlank(changeSetFileRemotePath)) {
-            intEnvironmentVariables.put(PolarisJenkinsEnvironmentVariable.CHANGE_SET_FILE_PATH.stringValue(), changeSetFileRemotePath);
+            intEnvironmentVariables.put(
+                    PolarisJenkinsEnvironmentVariable.CHANGE_SET_FILE_PATH.stringValue(), changeSetFileRemotePath);
         }
 
-        polarisServerConfigBuilder.getProperties()
-            .forEach((builderPropertyKey, propertyValue) -> acceptIfNotNull(intEnvironmentVariables::put, builderPropertyKey.getKey(), propertyValue));
+        polarisServerConfigBuilder
+                .getProperties()
+                .forEach((builderPropertyKey, propertyValue) ->
+                        acceptIfNotNull(intEnvironmentVariables::put, builderPropertyKey.getKey(), propertyValue));
 
         try {
             polarisServerConfigBuilder.build().populateEnvironmentVariables(intEnvironmentVariables::put);

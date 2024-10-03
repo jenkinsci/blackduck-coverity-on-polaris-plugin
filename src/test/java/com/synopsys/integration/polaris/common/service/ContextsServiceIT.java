@@ -4,12 +4,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
-import java.util.Optional;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.util.StringUtils;
-
 import com.google.gson.Gson;
 import com.synopsys.integration.exception.IntegrationException;
 import com.synopsys.integration.log.IntLogger;
@@ -19,6 +13,10 @@ import com.synopsys.integration.polaris.common.api.PolarisResource;
 import com.synopsys.integration.polaris.common.api.model.ContextAttributes;
 import com.synopsys.integration.polaris.common.configuration.PolarisServerConfig;
 import com.synopsys.integration.polaris.common.configuration.PolarisServerConfigBuilder;
+import java.util.Optional;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.StringUtils;
 
 public class ContextsServiceIT {
     private ContextsService contextsService;
@@ -45,15 +43,15 @@ public class ContextsServiceIT {
         try {
             Optional<PolarisResource<ContextAttributes>> currentContext = contextsService.getCurrentContext();
             if (currentContext.isPresent()) {
-                assertTrue(currentContext.map(PolarisResource::getAttributes)
-                               .map(ContextAttributes::getCurrent)
-                               .orElse(Boolean.FALSE));
+                assertTrue(currentContext
+                        .map(PolarisResource::getAttributes)
+                        .map(ContextAttributes::getCurrent)
+                        .orElse(Boolean.FALSE));
             } else {
-                assertTrue(contextsService.getAllContexts()
-                               .stream()
-                               .map(PolarisResource::getAttributes)
-                               .map(ContextAttributes::getCurrent)
-                               .noneMatch(Boolean.TRUE::equals));
+                assertTrue(contextsService.getAllContexts().stream()
+                        .map(PolarisResource::getAttributes)
+                        .map(ContextAttributes::getCurrent)
+                        .noneMatch(Boolean.TRUE::equals));
             }
         } catch (IntegrationException e) {
             fail("ContextsService encountered an unexpected exception when retrieving all contexts:", e);

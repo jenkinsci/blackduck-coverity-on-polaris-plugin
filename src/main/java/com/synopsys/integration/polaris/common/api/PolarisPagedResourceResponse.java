@@ -7,13 +7,13 @@
  */
 package com.synopsys.integration.polaris.common.api;
 
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
+import java.util.List;
 
 public class PolarisPagedResourceResponse<R extends PolarisResource> extends PolarisResponse {
     @SerializedName("data")
     private List<R> data = null;
+
     @SerializedName("meta")
     private PolarisPaginationMeta meta = null;
 
@@ -33,4 +33,13 @@ public class PolarisPagedResourceResponse<R extends PolarisResource> extends Pol
         this.meta = meta;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

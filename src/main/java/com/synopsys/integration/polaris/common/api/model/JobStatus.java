@@ -7,21 +7,23 @@
  */
 package com.synopsys.integration.polaris.common.api.model;
 
-import java.io.IOException;
-
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.synopsys.integration.polaris.common.api.PolarisResponse;
+import java.io.IOException;
 
-// this file should not be edited - if changes are necessary, the generator should be updated, then this file should be re-created
+// this file should not be edited - if changes are necessary, the generator should be updated, then this file should be
+// re-created
 
 public class JobStatus extends PolarisResponse {
     private static final long serialVersionUID = 3583443188791241547L;
+
     @SerializedName("state")
     private StateEnum state;
+
     @SerializedName("progress")
     private Integer progress;
 
@@ -37,6 +39,16 @@ public class JobStatus extends PolarisResponse {
      */
     public Integer getProgress() {
         return progress;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
     @JsonAdapter(StateEnum.Adapter.class)
@@ -86,5 +98,4 @@ public class JobStatus extends PolarisResponse {
             }
         }
     }
-
 }

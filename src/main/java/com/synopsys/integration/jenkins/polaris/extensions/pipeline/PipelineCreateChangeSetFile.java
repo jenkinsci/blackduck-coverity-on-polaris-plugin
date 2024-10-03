@@ -7,55 +7,56 @@
  */
 package com.synopsys.integration.jenkins.polaris.extensions.pipeline;
 
+import com.synopsys.integration.jenkins.annotations.HelpMarkdown;
+import hudson.Extension;
+import hudson.model.AbstractDescribableImpl;
+import hudson.model.Descriptor;
 import java.io.Serializable;
-
 import javax.annotation.Nullable;
-
+import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.StaplerRequest;
 
-import com.synopsys.integration.jenkins.annotations.HelpMarkdown;
-
-import hudson.Extension;
-import hudson.model.AbstractDescribableImpl;
-import hudson.model.Descriptor;
-import net.sf.json.JSONObject;
-
-public class PipelineCreateChangeSetFile extends AbstractDescribableImpl<PipelineCreateChangeSetFile> implements Serializable {
+public class PipelineCreateChangeSetFile extends AbstractDescribableImpl<PipelineCreateChangeSetFile>
+        implements Serializable {
     private static final long serialVersionUID = 3487021835917084100L;
+
     @Nullable
-    @HelpMarkdown("Specify a comma separated list of filename patterns that you would like to explicitly excluded from the Jenkins-provided SCM changeset.  \r\n"
-                      + "The pattern is applied to determine which files will be populated in the changeset file, stored at $CHANGE_SET_FILE_PATH.  \r\n"
-                      + "If blank, will exclude none.  \r\n"
-                      + "Examples:\r\n"
-                      + "\r\n"
-                      + "| File Name | Pattern    | Will be excluded |\r\n"
-                      + "| --------- | ---------- | ---------------- |\r\n"
-                      + "| test.java | *.java     | Yes              |\r\n"
-                      + "| test.java | *.jpg      | No               |\r\n"
-                      + "| test.java | test.*     | Yes              |\r\n"
-                      + "| test.java | test.????  | Yes              |\r\n"
-                      + "| test.java | test.????? | No               |")
+    @HelpMarkdown(
+            "Specify a comma separated list of filename patterns that you would like to explicitly excluded from the Jenkins-provided SCM changeset.  \r\n"
+                    + "The pattern is applied to determine which files will be populated in the changeset file, stored at $CHANGE_SET_FILE_PATH.  \r\n"
+                    + "If blank, will exclude none.  \r\n"
+                    + "Examples:\r\n"
+                    + "\r\n"
+                    + "| File Name | Pattern    | Will be excluded |\r\n"
+                    + "| --------- | ---------- | ---------------- |\r\n"
+                    + "| test.java | *.java     | Yes              |\r\n"
+                    + "| test.java | *.jpg      | No               |\r\n"
+                    + "| test.java | test.*     | Yes              |\r\n"
+                    + "| test.java | test.????  | Yes              |\r\n"
+                    + "| test.java | test.????? | No               |")
     private String excluding;
 
     @Nullable
-    @HelpMarkdown("Specify a comma separated list of filename patterns that you would like to explicitly included from the Jenkins-provided SCM changeset.  \r\n"
-                      + "The pattern is applied to determine which files will be populated in the changeset file, stored at $CHANGE_SET_FILE_PATH.  \r\n"
-                      + "If blank, will include all. \r\n"
-                      + "Examples:\r\n"
-                      + "\r\n"
-                      + "| File Name | Pattern    | Will be included |\r\n"
-                      + "| --------- | ---------- | ---------------- |\r\n"
-                      + "| test.java | *.java     | Yes              |\r\n"
-                      + "| test.java | *.jpg      | No               |\r\n"
-                      + "| test.java | test.*     | Yes              |\r\n"
-                      + "| test.java | test.????  | Yes              |\r\n"
-                      + "| test.java | test.????? | No               |")
+    @HelpMarkdown(
+            "Specify a comma separated list of filename patterns that you would like to explicitly included from the Jenkins-provided SCM changeset.  \r\n"
+                    + "The pattern is applied to determine which files will be populated in the changeset file, stored at $CHANGE_SET_FILE_PATH.  \r\n"
+                    + "If blank, will include all. \r\n"
+                    + "Examples:\r\n"
+                    + "\r\n"
+                    + "| File Name | Pattern    | Will be included |\r\n"
+                    + "| --------- | ---------- | ---------------- |\r\n"
+                    + "| test.java | *.java     | Yes              |\r\n"
+                    + "| test.java | *.jpg      | No               |\r\n"
+                    + "| test.java | test.*     | Yes              |\r\n"
+                    + "| test.java | test.????  | Yes              |\r\n"
+                    + "| test.java | test.????? | No               |")
     private String including;
 
     @Nullable
-    @HelpMarkdown("If true (checked), returns -1 instead of throwing a IntegrationAbortException when static analysis is skipped because the changeset contained no files to analyze.")
+    @HelpMarkdown(
+            "If true (checked), returns -1 instead of throwing a IntegrationAbortException when static analysis is skipped because the changeset contained no files to analyze.")
     private Boolean returnSkipCode;
 
     @DataBoundConstructor
@@ -114,7 +115,5 @@ public class PipelineCreateChangeSetFile extends AbstractDescribableImpl<Pipelin
             save();
             return super.configure(req, formData);
         }
-
     }
-
 }

@@ -7,14 +7,13 @@
  */
 package com.synopsys.integration.polaris.common.request;
 
+import com.synopsys.integration.rest.HttpMethod;
+import com.synopsys.integration.rest.HttpUrl;
+import com.synopsys.integration.rest.request.Request;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-import com.synopsys.integration.rest.HttpMethod;
-import com.synopsys.integration.rest.HttpUrl;
-import com.synopsys.integration.rest.request.Request;
 
 public class PolarisRequestFactory {
     public static final String DEFAULT_MIME_TYPE = "application/vnd.api+json";
@@ -26,9 +25,7 @@ public class PolarisRequestFactory {
     public static final int DEFAULT_OFFSET = 0;
 
     public static Request createDefaultGetRequest(HttpUrl requestHttpUrl) {
-        return createDefaultBuilder()
-                   .url(requestHttpUrl)
-                   .build();
+        return createDefaultBuilder().url(requestHttpUrl).build();
     }
 
     public static Request createDefaultPagedGetRequest(HttpUrl requestHttpUrl) {
@@ -41,8 +38,8 @@ public class PolarisRequestFactory {
 
     public static Request createDefaultPagedGetRequest(HttpUrl requestHttpUrl, int limit, int offset) {
         return createDefaultPagedRequestBuilder(limit, offset)
-                   .url(requestHttpUrl)
-                   .build();
+                .url(requestHttpUrl)
+                .build();
     }
 
     public static Request.Builder createDefaultPagedRequestBuilder(int limit, int offset) {
@@ -61,9 +58,6 @@ public class PolarisRequestFactory {
     }
 
     public static Request.Builder createDefaultBuilder() {
-        return new Request.Builder()
-                   .acceptMimeType(DEFAULT_MIME_TYPE)
-                   .method(HttpMethod.GET);
+        return new Request.Builder().acceptMimeType(DEFAULT_MIME_TYPE).method(HttpMethod.GET);
     }
-
 }

@@ -7,9 +7,8 @@
  */
 package com.synopsys.integration.polaris.common.cli.model;
 
-import java.util.Optional;
-
 import com.synopsys.integration.rest.HttpUrl;
+import java.util.Optional;
 
 public class CommonToolInfo {
     private String toolName;
@@ -66,5 +65,4 @@ public class CommonToolInfo {
     public void setIssueApiUrl(HttpUrl issueApiUrl) {
         this.issueApiUrl = issueApiUrl;
     }
-
 }
