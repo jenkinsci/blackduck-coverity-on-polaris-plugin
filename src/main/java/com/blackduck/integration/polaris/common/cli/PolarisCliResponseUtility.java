@@ -38,7 +38,7 @@ public class PolarisCliResponseUtility {
 
     public static Path getDefaultPathToJson(String projectRootDirectory) {
         return Paths.get(projectRootDirectory)
-                .resolve(".synopsys")
+                .resolve(".blackduck")
                 .resolve("polaris")
                 .resolve("cli-scan.json");
     }
