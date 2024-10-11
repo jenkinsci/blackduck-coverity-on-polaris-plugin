@@ -1,0 +1,2 @@
+_extends: .github
+tag-template: blackduck-coverity-on-polaris-plugin-$NEXT_MINOR_VERSION
