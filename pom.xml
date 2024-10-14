@@ -185,32 +185,12 @@
 
   <repositories>
     <repository>
-      <id>synopsys-artifactory-snapshot</id>
-      <url>https://sig-artifactory.internal.synopsys.com/artifactory/ngp-snapshot-local</url>
-    </repository>
-    <repository>
-      <id>synopsys-artifactory-releases</id>
-      <url>https://sig-artifactory.internal.synopsys.com/artifactory/plugins-releases</url>
-    </repository>
-    <repository>
-      <id>talend-repo</id>
-      <url>https://artifacts-oss.talend.com/nexus/content/repositories/TalendOpenSourceRelease/</url>
-    </repository>
-    <repository>
-      <id>mulesoft-repo</id>
-      <url>https://repository.mulesoft.org/nexus/content/repositories/public/</url>
-    </repository>
-    <repository>
       <id>repo.jenkins-ci.org</id>
       <url>https://repo.jenkins-ci.org/public/</url>
     </repository>
     <repository>
       <id>blackduck-release</id>
       <url>https://repo.blackduck.com/bds-integrations-release</url>
-    </repository>
-    <repository>
-      <id>jfrog-jars</id>
-      <url>https://jfrog.bintray.com/jfrog-jars</url>
     </repository>
     <repository>
       <id>bds-artifactory</id>
