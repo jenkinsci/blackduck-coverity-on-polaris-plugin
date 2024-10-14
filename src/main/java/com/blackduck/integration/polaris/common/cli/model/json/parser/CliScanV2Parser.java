@@ -1,9 +1,8 @@
 /*
  * blackduck-coverity-on-polaris
  *
- * Copyright (c) 2024 Black Duck Software, Inc.
- *
- * Use subject to the terms and conditions of the Black Duck End User Software License and Maintenance Agreement. All rights reserved worldwide.
+ * Copyright ©2024 Black Duck Software, Inc. All rights reserved. 
+ * Black Duck® is a trademark of Black Duck Software, Inc. in the United States and other countries.
  */
 package com.blackduck.integration.polaris.common.cli.model.json.parser;
 
