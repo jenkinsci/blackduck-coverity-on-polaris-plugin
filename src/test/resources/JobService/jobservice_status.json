@@ -6,15 +6,15 @@
       "swip_spi_metadata": {
         "artifactSize": 74230350,
         "org_id": "kvtkg83gcl6m15s026q315b8ac",
-        "swip_root_domain": "qa.dev.polaris.synopsys.com",
+        "swip_root_domain": "qa.dev.polaris.blackduck.com",
         "toolversion": "2020.03-1",
         "tool": "cov_analysis",
         "job_type": "small",
-        "server_url": "https://qa.dev.polaris.synopsys.com/api/jobsControls",
-        "tds_upload_url": "https://qa.dev.polaris.synopsys.com",
+        "server_url": "https://qa.dev.polaris.blackduck.com/api/jobsControls",
+        "tds_upload_url": "https://qa.dev.polaris.blackduck.com",
         "decoded_swip_job_id": "f2ad3341-7c43-44c0-92e7-e65838968c8d",
         "os": "linux64",
-        "config_service_url": "https://qa.dev.polaris.synopsys.com/api/configs",
+        "config_service_url": "https://qa.dev.polaris.blackduck.com/api/configs",
         "toolMeta": {
           "captureSize": 196776756,
           "sourceLanguages": [
@@ -270,7 +270,7 @@
       "intermediateDirectoryUploadDescriptor": {
         "type": "CustomMultipart",
         "key": "job/uamj6gbs8d2c14n7spc3h5kchk/coverity-caas-idir.zip",
-        "url": "https://qa.dev.polaris.synopsys.com/upload",
+        "url": "https://qa.dev.polaris.blackduck.com/upload",
         "bucket": "qa-uploads-bucket",
         "pathStyleAccess": true,
         "region": "us-west-2",
@@ -315,7 +315,7 @@
         }
       },
       "analysis_runtime_info": {
-        "analysisCommand": "cov-analyze --dir /tmp/WorkDir/data/coverity/2020.03-1/idir --jobs 8 --skip-webapp-sanity-check --skip-android-app-sanity-check --strip-path=/var/lib/jr_slave/workspace/synopsys-polaris-freestyle-linux --webapp-security --android-security --security-file /tmp/WorkDir/license.dat"
+        "analysisCommand": "cov-analyze --dir /tmp/WorkDir/data/coverity/2020.03-1/idir --jobs 8 --skip-webapp-sanity-check --skip-android-app-sanity-check --strip-path=/var/lib/jr_slave/workspace/blackduck-coverity-on-polaris-freestyle-linux --webapp-security --android-security --security-file /tmp/WorkDir/license.dat"
       },
       "projectName": "blackducksoftware/integration-common",
       "jobType": "nomad",
@@ -329,8 +329,8 @@
     "relationships": {
       "organization": {
         "links": {
-          "self": "https://qa.dev.polaris.synopsys.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/relationships/organization",
-          "related": "https://qa.dev.polaris.synopsys.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/organization"
+          "self": "https://qa.dev.polaris.blackduck.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/relationships/organization",
+          "related": "https://qa.dev.polaris.blackduck.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/organization"
         },
         "data": {
           "type": "organizations",
@@ -339,8 +339,8 @@
       },
       "branch": {
         "links": {
-          "self": "https://qa.dev.polaris.synopsys.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/relationships/branch",
-          "related": "https://qa.dev.polaris.synopsys.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/branch"
+          "self": "https://qa.dev.polaris.blackduck.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/relationships/branch",
+          "related": "https://qa.dev.polaris.blackduck.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/branch"
         },
         "data": {
           "type": "branches",
@@ -349,8 +349,8 @@
       },
       "runs": {
         "links": {
-          "self": "https://qa.dev.polaris.synopsys.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/relationships/runs",
-          "related": "https://qa.dev.polaris.synopsys.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/runs"
+          "self": "https://qa.dev.polaris.blackduck.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/relationships/runs",
+          "related": "https://qa.dev.polaris.blackduck.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/runs"
         },
         "data": {
           "type": "runs",
@@ -359,8 +359,8 @@
       },
       "project": {
         "links": {
-          "self": "https://qa.dev.polaris.synopsys.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/relationships/project",
-          "related": "https://qa.dev.polaris.synopsys.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/project"
+          "self": "https://qa.dev.polaris.blackduck.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/relationships/project",
+          "related": "https://qa.dev.polaris.blackduck.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/project"
         },
         "data": {
           "type": "projects",
@@ -369,8 +369,8 @@
       },
       "owner": {
         "links": {
-          "self": "https://qa.dev.polaris.synopsys.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/relationships/owner",
-          "related": "https://qa.dev.polaris.synopsys.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/owner"
+          "self": "https://qa.dev.polaris.blackduck.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/relationships/owner",
+          "related": "https://qa.dev.polaris.blackduck.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/owner"
         },
         "data": {
           "type": "users",
@@ -379,8 +379,8 @@
       },
       "revision": {
         "links": {
-          "self": "https://qa.dev.polaris.synopsys.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/relationships/revision",
-          "related": "https://qa.dev.polaris.synopsys.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/revision"
+          "self": "https://qa.dev.polaris.blackduck.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/relationships/revision",
+          "related": "https://qa.dev.polaris.blackduck.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk/revision"
         },
         "data": {
           "type": "revisions",
@@ -390,7 +390,7 @@
     },
     "links": {
       "self": {
-        "href": "https://qa.dev.polaris.synopsys.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk",
+        "href": "https://qa.dev.polaris.blackduck.com/api/jobs/jobs/uamj6gbs8d2c14n7spc3h5kchk",
         "meta": {
           "durable": "urn:x-swip:jobs_service/job:uamj6gbs8d2c14n7spc3h5kchk"
         }
