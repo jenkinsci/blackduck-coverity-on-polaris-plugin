@@ -10,7 +10,7 @@ You can download the latest artifact from the [Black Duck Coverity on Polaris pl
 
 Additional releases are available here: https://updates.jenkins-ci.org/download/plugins/blackduck-coverity-on-polaris/
 
-All plugin releases are also available on the [Black Duck public artifactory](https://sig-repo.synopsys.com/webapp/#/artifacts/browse/tree/General/bds-integrations-release/org/jenkins-ci/plugins/synopsys-polaris)
+All plugin releases are also available on the [Black Duck public artifactory](https://repo.blackduck.com/bds-integrations-release/org/jenkins-ci/plugins/blackduck-coverity-on-polaris)
 
 # Documentation
 Documentation for Black Duck Coverity on Polaris plugin for Jenkins can be found at: [Documentation](https://documentation.blackduck.com/bundle/ci-integrations/page/topics/c_pol-plugin-jenkins-overivew.html)
