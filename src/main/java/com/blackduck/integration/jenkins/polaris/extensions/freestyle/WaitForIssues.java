@@ -62,6 +62,7 @@ public class WaitForIssues extends AbstractDescribableImpl<WaitForIssues> {
 
     @Extension
     public static class DescriptorImpl extends Descriptor<WaitForIssues> {
+        @SuppressWarnings({"lgtm[jenkins/no-permission-check]", "lgtm[jenkins/csrf]"})
         public ListBoxModel doFillBuildStatusForIssuesItems() {
             return JenkinsSelectBoxEnum.toListBoxModel(ChangeBuildStatusTo.values());
         }
