@@ -71,10 +71,10 @@ public class PolarisCommandsFactory {
         JenkinsRemotingService jenkinsRemotingService = jenkinsServicesFactory.createJenkinsRemotingService();
         JenkinsConfigService jenkinsConfigService = jenkinsServicesFactory.createJenkinsConfigService();
         JenkinsBuildService jenkinsBuildService = jenkinsServicesFactory.createJenkinsBuildService();
-        JenkinsRunService jenkinsScmService = jenkinsServicesFactory.createJenkinsRunService();
+        JenkinsRunService jenkinsRunService = jenkinsServicesFactory.createJenkinsRunService();
 
         ChangeSetFileCreator changeSetFileCreator =
-                polarisCommandsFactory.createChangeSetFileCreator(jenkinsRemotingService, jenkinsScmService);
+                polarisCommandsFactory.createChangeSetFileCreator(jenkinsRemotingService, jenkinsRunService);
         PolarisCliRunner polarisCliRunner =
                 polarisCommandsFactory.createPolarisCliRunner(jenkinsConfigService, jenkinsRemotingService);
         PolarisIssueChecker polarisIssueCounter =
@@ -98,10 +98,10 @@ public class PolarisCommandsFactory {
 
         JenkinsRemotingService jenkinsRemotingService = jenkinsServicesFactory.createJenkinsRemotingService();
         JenkinsConfigService jenkinsConfigService = jenkinsServicesFactory.createJenkinsConfigService();
-        JenkinsRunService jenkinsScmService = jenkinsServicesFactory.createJenkinsRunService();
+        JenkinsRunService jenkinsRunService = jenkinsServicesFactory.createJenkinsRunService();
 
         ChangeSetFileCreator changeSetFileCreator =
-                polarisCommandsFactory.createChangeSetFileCreator(jenkinsRemotingService, jenkinsScmService);
+                polarisCommandsFactory.createChangeSetFileCreator(jenkinsRemotingService, jenkinsRunService);
         PolarisCliRunner polarisCliRunner =
                 polarisCommandsFactory.createPolarisCliRunner(jenkinsConfigService, jenkinsRemotingService);
         PolarisIssueChecker polarisIssueCounter =
@@ -141,9 +141,9 @@ public class PolarisCommandsFactory {
     }
 
     public ChangeSetFileCreator createChangeSetFileCreator(
-            JenkinsRemotingService jenkinsRemotingService, JenkinsRunService jenkinsScmService) {
+            JenkinsRemotingService jenkinsRemotingService, JenkinsRunService jenkinsRunService) {
         return new ChangeSetFileCreator(
-                initializedLogger.get(), jenkinsRemotingService, jenkinsScmService, createPolarisEnvironmentService());
+                initializedLogger.get(), jenkinsRemotingService, jenkinsRunService, createPolarisEnvironmentService());
     }
 
     private PolarisEnvironmentService createPolarisEnvironmentService() {

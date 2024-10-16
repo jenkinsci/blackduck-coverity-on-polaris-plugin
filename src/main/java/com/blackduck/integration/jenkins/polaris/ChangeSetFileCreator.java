@@ -23,23 +23,23 @@ import org.apache.commons.lang3.StringUtils;
 public class ChangeSetFileCreator {
     private final JenkinsIntLogger logger;
     private final JenkinsRemotingService jenkinsRemotingService;
-    private final JenkinsRunService jenkinsScmService;
+    private final JenkinsRunService jenkinsRunService;
     private final PolarisEnvironmentService polarisEnvironmentService;
 
     public ChangeSetFileCreator(
             JenkinsIntLogger logger,
             JenkinsRemotingService jenkinsRemotingService,
-            JenkinsRunService jenkinsScmService,
+            JenkinsRunService jenkinsRunService,
             PolarisEnvironmentService polarisEnvironmentService) {
         this.logger = logger;
         this.jenkinsRemotingService = jenkinsRemotingService;
-        this.jenkinsScmService = jenkinsScmService;
+        this.jenkinsRunService = jenkinsRunService;
         this.polarisEnvironmentService = polarisEnvironmentService;
     }
 
     public String createChangeSetFile(String exclusionPatterns, String inclusionPatterns)
             throws IOException, InterruptedException {
-        ChangeSetFilter changeSetFilter = jenkinsScmService
+        ChangeSetFilter changeSetFilter = jenkinsRunService
                 .newChangeSetFilter()
                 .excludeMatching(exclusionPatterns)
                 .includeMatching(inclusionPatterns);
@@ -47,7 +47,7 @@ public class ChangeSetFileCreator {
         // ArrayLists are serializable, Lists are not. -- rotte SEP 2020
         ArrayList<String> changedFiles = new ArrayList<>();
         try {
-            changedFiles.addAll(jenkinsScmService.getFilePathsFromChangeSet(changeSetFilter));
+            changedFiles.addAll(jenkinsRunService.getFilePathsFromChangeSet(changeSetFilter));
         } catch (Exception e) {
             logger.error("Could not get the Jenkins-provided SCM changeset: " + e.getMessage());
         }
