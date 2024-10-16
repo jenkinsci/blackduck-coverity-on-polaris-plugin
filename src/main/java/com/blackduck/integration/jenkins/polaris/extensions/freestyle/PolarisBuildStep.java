@@ -124,6 +124,7 @@ public class PolarisBuildStep extends Builder {
             load();
         }
 
+        @SuppressWarnings({"lgtm[jenkins/no-permission-check]", "lgtm[jenkins/csrf]"})
         public ListBoxModel doFillPolarisCliNameItems() {
             PolarisCli.DescriptorImpl polarisCliToolInstallationDescriptor =
                     ToolInstallation.all().get(PolarisCli.DescriptorImpl.class);

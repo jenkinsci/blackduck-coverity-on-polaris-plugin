@@ -118,6 +118,7 @@ public class PolarisGlobalConfig extends GlobalConfiguration implements Serializ
                 credentialsHelper, jenkinsProxyHelper, polarisUrl, polarisCredentialsId, polarisTimeout);
     }
 
+    @SuppressWarnings({"lgtm[jenkins/no-permission-check]", "lgtm[jenkins/csrf]"})
     public ListBoxModel doFillPolarisCredentialsIdItems() {
         // We don't use JenkinsWrapper here because it grants us no benefit-- we are guaranteed to be running on Jenkins
         // Master and Jenkins should be started when UI-bound methods are run.
@@ -197,6 +198,7 @@ public class PolarisGlobalConfig extends GlobalConfiguration implements Serializ
 
     // EX:
     // http://localhost:8080/descriptorByName/com.blackduck.integration.jenkins.polaris.extensions.global.PolarisGlobalConfig/config.xml
+    @SuppressWarnings({"lgtm[jenkins/no-permission-check]", "lgtm[jenkins/csrf]"})
     @WebMethod(name = "config.xml")
     public void doConfigDotXml(StaplerRequest req, StaplerResponse rsp)
             throws IOException, ServletException, ParserConfigurationException {

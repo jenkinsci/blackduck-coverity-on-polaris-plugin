@@ -41,7 +41,10 @@ import java.util.function.BiConsumer;
 public class PolarisServerConfig extends Stringable implements Buildable {
     private final HttpUrl polarisUrl;
     private final int timeoutSeconds;
+
+    @SuppressWarnings("lgtm[jenkins/plaintext-storage]")
     private final String accessToken;
+
     private final ProxyInfo proxyInfo;
     private final Gson gson;
     private final AuthenticationSupport authenticationSupport;

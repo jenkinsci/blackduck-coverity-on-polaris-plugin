@@ -31,7 +31,10 @@ public class FindOrInstallPolarisCli extends MasterToSlaveCallable<String, Integ
     private final String proxyHost;
     private final int proxyPort;
     private final String proxyUsername;
+
+    @SuppressWarnings("lgtm[jenkins/plaintext-storage]")
     private final String proxyPassword;
+
     private final String proxyNtlmDomain;
     private final String proxyNtlmWorkstation;
     private final String installationLocation;
