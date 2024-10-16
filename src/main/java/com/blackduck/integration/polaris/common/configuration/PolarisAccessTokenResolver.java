@@ -10,8 +10,8 @@ import static com.blackduck.integration.polaris.common.configuration.PolarisServ
 import static com.blackduck.integration.polaris.common.configuration.PolarisServerConfigBuilder.POLARIS_CONFIG_DIRECTORY_DEFAULT;
 import static com.blackduck.integration.polaris.common.configuration.PolarisServerConfigBuilder.SWIP_CONFIG_DIRECTORY_DEFAULT;
 
-import com.synopsys.integration.builder.BuilderStatus;
-import com.synopsys.integration.log.IntLogger;
+import com.blackduck.integration.builder.BuilderStatus;
+import com.blackduck.integration.log.IntLogger;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

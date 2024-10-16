@@ -6,11 +6,11 @@
  */
 package com.blackduck.integration.jenkins.polaris;
 
+import com.blackduck.integration.exception.IntegrationException;
+import com.blackduck.integration.jenkins.exception.JenkinsUserFriendlyException;
+import com.blackduck.integration.jenkins.extensions.JenkinsIntLogger;
 import com.blackduck.integration.jenkins.polaris.extensions.pipeline.PipelineCreateChangeSetFile;
 import com.blackduck.integration.polaris.common.exception.PolarisIntegrationException;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.jenkins.exception.JenkinsUserFriendlyException;
-import com.synopsys.integration.jenkins.extensions.JenkinsIntLogger;
 import java.io.IOException;
 
 public class PolarisPipelineCommands {

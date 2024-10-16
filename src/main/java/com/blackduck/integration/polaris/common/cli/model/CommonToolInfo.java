@@ -6,7 +6,7 @@
  */
 package com.blackduck.integration.polaris.common.cli.model;
 
-import com.synopsys.integration.rest.HttpUrl;
+import com.blackduck.integration.rest.HttpUrl;
 import java.util.Optional;
 
 public class CommonToolInfo {

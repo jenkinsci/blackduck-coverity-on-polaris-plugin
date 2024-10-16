@@ -6,8 +6,8 @@
  */
 package com.blackduck.integration.polaris.common.api.model;
 
+import com.blackduck.integration.util.Stringable;
 import com.google.gson.annotations.SerializedName;
-import com.synopsys.integration.util.Stringable;
 import java.io.Serializable;
 
 public class FailureInfo extends Stringable implements Serializable {

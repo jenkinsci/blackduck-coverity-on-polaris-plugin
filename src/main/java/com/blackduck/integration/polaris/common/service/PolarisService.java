@@ -6,6 +6,7 @@
  */
 package com.blackduck.integration.polaris.common.service;
 
+import com.blackduck.integration.exception.IntegrationException;
 import com.blackduck.integration.polaris.common.api.PolarisAttributes;
 import com.blackduck.integration.polaris.common.api.PolarisPagedResourceResponse;
 import com.blackduck.integration.polaris.common.api.PolarisPaginationMeta;
@@ -14,11 +15,10 @@ import com.blackduck.integration.polaris.common.api.PolarisResponse;
 import com.blackduck.integration.polaris.common.api.PolarisSingleResourceResponse;
 import com.blackduck.integration.polaris.common.request.PolarisRequestFactory;
 import com.blackduck.integration.polaris.common.rest.AccessTokenPolarisHttpClient;
+import com.blackduck.integration.rest.HttpUrl;
+import com.blackduck.integration.rest.request.Request;
+import com.blackduck.integration.rest.response.Response;
 import com.google.gson.reflect.TypeToken;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.rest.HttpUrl;
-import com.synopsys.integration.rest.request.Request;
-import com.synopsys.integration.rest.response.Response;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;

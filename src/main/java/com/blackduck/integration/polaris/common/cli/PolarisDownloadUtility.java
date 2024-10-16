@@ -6,16 +6,17 @@
  */
 package com.blackduck.integration.polaris.common.cli;
 
+import com.blackduck.integration.exception.IntegrationException;
+import com.blackduck.integration.log.IntLogger;
 import com.blackduck.integration.polaris.common.configuration.OSArchTask;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.log.IntLogger;
-import com.synopsys.integration.rest.HttpUrl;
-import com.synopsys.integration.rest.client.IntHttpClient;
-import com.synopsys.integration.rest.proxy.ProxyInfo;
-import com.synopsys.integration.rest.request.Request;
-import com.synopsys.integration.rest.response.Response;
-import com.synopsys.integration.util.CleanupZipExpander;
-import com.synopsys.integration.util.OperatingSystemType;
+import com.blackduck.integration.rest.HttpUrl;
+import com.blackduck.integration.rest.client.IntHttpClient;
+import com.blackduck.integration.rest.proxy.ProxyInfo;
+import com.blackduck.integration.rest.request.Request;
+import com.blackduck.integration.rest.response.Response;
+import com.blackduck.integration.util.CleanupZipExpander;
+import com.blackduck.integration.util.OperatingSystemType;
+import com.google.gson.Gson;
 import hudson.FilePath;
 import java.io.File;
 import java.io.IOException;
@@ -75,7 +76,7 @@ public class PolarisDownloadUtility {
             IntLogger logger, HttpUrl polarisServerUrl, ProxyInfo proxyInfo, File downloadTargetDirectory) {
         OperatingSystemType operatingSystemType = OperatingSystemType.determineFromSystem();
         IntHttpClient intHttpClient =
-                new IntHttpClient(logger, PolarisDownloadUtility.DEFAULT_POLARIS_TIMEOUT, false, proxyInfo);
+                new IntHttpClient(logger, new Gson(), PolarisDownloadUtility.DEFAULT_POLARIS_TIMEOUT, false, proxyInfo);
         CleanupZipExpander cleanupZipExpander = new CleanupZipExpander(logger);
         return new PolarisDownloadUtility(
                 logger,

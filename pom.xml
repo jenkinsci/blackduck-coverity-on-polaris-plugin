@@ -50,9 +50,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.synopsys.integration</groupId>
+      <groupId>com.blackduck.integration</groupId>
       <artifactId>jenkins-common</artifactId>
-      <version>0.3.4</version>
+      <version>1.0.0</version>
       <exclusions>
         <exclusion>
           <groupId>com.fasterxml.jackson.core</groupId>
@@ -98,6 +98,16 @@
       <version>1.4.20</version>
     </dependency>
     <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.17.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-compress</artifactId>
+      <version>1.26.1</version>
+    </dependency>
+    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-text</artifactId>
       <version>1.12.0</version>
@@ -137,9 +147,9 @@
       <version>1.31</version>
     </dependency>
     <dependency>
-      <groupId>com.synopsys.integration</groupId>
+      <groupId>com.blackduck.integration</groupId>
       <artifactId>jenkins-annotation-processor</artifactId>
-      <version>0.0.7</version>
+      <version>1.0.0</version>
       <scope>provided</scope>
     </dependency>
     <!-- Test Dependencies -->
@@ -189,8 +199,8 @@
       <url>https://repo.jenkins-ci.org/public/</url>
     </repository>
     <repository>
-      <id>blackduck-release</id>
-      <url>https://repo.blackduck.com/bds-integrations-release</url>
+      <id>com.blackduck.integration</id>
+      <url>https://repo.blackduck.com/bds-integrations-release/</url>
     </repository>
     <repository>
       <id>bds-artifactory</id>

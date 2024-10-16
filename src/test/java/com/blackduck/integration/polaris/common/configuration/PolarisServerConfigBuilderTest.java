@@ -113,7 +113,7 @@ public class PolarisServerConfigBuilderTest {
         Assertions.assertFalse(polarisServerConfigBuilder.isValid());
 
         polarisServerConfigBuilder.setProperties(properties.entrySet());
-        assertTrue(polarisServerConfigBuilder.isValid());
+        Assertions.assertTrue(polarisServerConfigBuilder.isValid());
     }
 
     @Test

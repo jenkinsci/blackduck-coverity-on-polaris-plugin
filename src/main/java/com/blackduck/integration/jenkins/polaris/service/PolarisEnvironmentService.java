@@ -9,7 +9,7 @@ package com.blackduck.integration.jenkins.polaris.service;
 import com.blackduck.integration.jenkins.polaris.PolarisJenkinsEnvironmentVariable;
 import com.blackduck.integration.polaris.common.configuration.PolarisServerConfigBuilder;
 import com.blackduck.integration.polaris.common.exception.PolarisIntegrationException;
-import com.synopsys.integration.util.IntEnvironmentVariables;
+import com.blackduck.integration.util.IntEnvironmentVariables;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import org.apache.commons.lang3.StringUtils;

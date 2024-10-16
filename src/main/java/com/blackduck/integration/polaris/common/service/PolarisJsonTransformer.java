@@ -6,14 +6,14 @@
  */
 package com.blackduck.integration.polaris.common.service;
 
+import com.blackduck.integration.exception.IntegrationException;
+import com.blackduck.integration.log.IntLogger;
 import com.blackduck.integration.polaris.common.api.PolarisResponse;
+import com.blackduck.integration.rest.response.Response;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.log.IntLogger;
-import com.synopsys.integration.rest.response.Response;
 import java.lang.reflect.Type;
 import java.util.Map;
 

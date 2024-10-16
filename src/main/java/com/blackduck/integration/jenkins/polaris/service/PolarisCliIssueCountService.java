@@ -6,6 +6,9 @@
  */
 package com.blackduck.integration.jenkins.polaris.service;
 
+import com.blackduck.integration.exception.IntegrationException;
+import com.blackduck.integration.jenkins.exception.JenkinsUserFriendlyException;
+import com.blackduck.integration.jenkins.extensions.JenkinsIntLogger;
 import com.blackduck.integration.polaris.common.cli.PolarisCliResponseUtility;
 import com.blackduck.integration.polaris.common.cli.model.CliCommonResponseModel;
 import com.blackduck.integration.polaris.common.cli.model.CommonIssueSummary;
@@ -13,10 +16,7 @@ import com.blackduck.integration.polaris.common.cli.model.CommonScanInfo;
 import com.blackduck.integration.polaris.common.cli.model.CommonToolInfo;
 import com.blackduck.integration.polaris.common.service.CountService;
 import com.blackduck.integration.polaris.common.service.JobService;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.jenkins.exception.JenkinsUserFriendlyException;
-import com.synopsys.integration.jenkins.extensions.JenkinsIntLogger;
-import com.synopsys.integration.rest.HttpUrl;
+import com.blackduck.integration.rest.HttpUrl;
 import java.util.Optional;
 
 public class PolarisCliIssueCountService {

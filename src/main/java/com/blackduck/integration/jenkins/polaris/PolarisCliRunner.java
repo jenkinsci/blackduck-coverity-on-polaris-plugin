@@ -6,25 +6,25 @@
  */
 package com.blackduck.integration.jenkins.polaris;
 
+import com.blackduck.integration.exception.IntegrationException;
+import com.blackduck.integration.jenkins.exception.JenkinsUserFriendlyException;
 import com.blackduck.integration.jenkins.polaris.extensions.global.PolarisGlobalConfig;
 import com.blackduck.integration.jenkins.polaris.extensions.tools.PolarisCli;
 import com.blackduck.integration.jenkins.polaris.service.GetPathToPolarisCli;
 import com.blackduck.integration.jenkins.polaris.service.PolarisCliArgumentService;
 import com.blackduck.integration.jenkins.polaris.service.PolarisEnvironmentService;
 import com.blackduck.integration.jenkins.polaris.service.PolarisPhoneHomeService;
+import com.blackduck.integration.jenkins.service.JenkinsConfigService;
+import com.blackduck.integration.jenkins.service.JenkinsRemotingService;
+import com.blackduck.integration.jenkins.wrapper.BlackduckCredentialsHelper;
+import com.blackduck.integration.jenkins.wrapper.JenkinsProxyHelper;
+import com.blackduck.integration.jenkins.wrapper.JenkinsVersionHelper;
+import com.blackduck.integration.log.IntLogger;
+import com.blackduck.integration.phonehome.PhoneHomeResponse;
 import com.blackduck.integration.polaris.common.configuration.PolarisServerConfigBuilder;
 import com.blackduck.integration.polaris.common.exception.PolarisIntegrationException;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.jenkins.exception.JenkinsUserFriendlyException;
-import com.synopsys.integration.jenkins.service.JenkinsConfigService;
-import com.synopsys.integration.jenkins.service.JenkinsRemotingService;
-import com.synopsys.integration.jenkins.wrapper.JenkinsProxyHelper;
-import com.synopsys.integration.jenkins.wrapper.JenkinsVersionHelper;
-import com.synopsys.integration.jenkins.wrapper.SynopsysCredentialsHelper;
-import com.synopsys.integration.log.IntLogger;
-import com.synopsys.integration.phonehome.PhoneHomeResponse;
-import com.synopsys.integration.util.IntEnvironmentVariables;
-import com.synopsys.integration.util.OperatingSystemType;
+import com.blackduck.integration.util.IntEnvironmentVariables;
+import com.blackduck.integration.util.OperatingSystemType;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +37,7 @@ public class PolarisCliRunner {
     private final JenkinsRemotingService jenkinsRemotingService;
     private final JenkinsConfigService jenkinsConfigService;
     private final IntLogger logger;
-    private final SynopsysCredentialsHelper credentialsHelper;
+    private final BlackduckCredentialsHelper credentialsHelper;
     private final JenkinsProxyHelper proxyHelper;
     private final JenkinsVersionHelper versionHelper;
 
@@ -48,7 +48,7 @@ public class PolarisCliRunner {
             PolarisPhoneHomeService polarisPhoneHomeService,
             JenkinsRemotingService jenkinsRemotingService,
             JenkinsConfigService jenkinsConfigService,
-            SynopsysCredentialsHelper credentialsHelper,
+            BlackduckCredentialsHelper credentialsHelper,
             JenkinsProxyHelper proxyHelper,
             JenkinsVersionHelper versionHelper) {
         this.logger = logger;

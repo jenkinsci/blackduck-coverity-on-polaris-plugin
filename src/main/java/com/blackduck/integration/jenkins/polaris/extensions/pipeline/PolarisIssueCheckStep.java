@@ -6,8 +6,8 @@
  */
 package com.blackduck.integration.jenkins.polaris.extensions.pipeline;
 
+import com.blackduck.integration.jenkins.annotations.HelpMarkdown;
 import com.blackduck.integration.jenkins.polaris.service.PolarisCommandsFactory;
-import com.synopsys.integration.jenkins.annotations.HelpMarkdown;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.EnvVars;
 import hudson.Extension;

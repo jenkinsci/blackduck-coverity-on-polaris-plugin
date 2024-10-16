@@ -6,18 +6,18 @@
  */
 package com.blackduck.integration.jenkins.polaris.service;
 
+import com.blackduck.integration.jenkins.extensions.JenkinsIntLogger;
+import com.blackduck.integration.jenkins.wrapper.JenkinsVersionHelper;
+import com.blackduck.integration.phonehome.PhoneHomeClient;
+import com.blackduck.integration.phonehome.PhoneHomeResponse;
+import com.blackduck.integration.phonehome.PhoneHomeService;
+import com.blackduck.integration.phonehome.request.PhoneHomeRequestBody;
+import com.blackduck.integration.phonehome.request.PhoneHomeRequestBodyBuilder;
 import com.blackduck.integration.polaris.common.api.PolarisResource;
 import com.blackduck.integration.polaris.common.api.model.ContextAttributes;
 import com.blackduck.integration.polaris.common.rest.AccessTokenPolarisHttpClient;
 import com.blackduck.integration.polaris.common.service.ContextsService;
 import com.google.gson.Gson;
-import com.synopsys.integration.jenkins.extensions.JenkinsIntLogger;
-import com.synopsys.integration.jenkins.wrapper.JenkinsVersionHelper;
-import com.synopsys.integration.phonehome.PhoneHomeClient;
-import com.synopsys.integration.phonehome.PhoneHomeResponse;
-import com.synopsys.integration.phonehome.PhoneHomeService;
-import com.synopsys.integration.phonehome.request.PhoneHomeRequestBody;
-import com.synopsys.integration.phonehome.request.PhoneHomeRequestBodyBuilder;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -44,7 +44,7 @@ public class PolarisPhoneHomeService {
         try {
             HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
             Gson gson = new Gson();
-            PhoneHomeClient phoneHomeClient = new PhoneHomeClient(logger, httpClientBuilder, gson);
+            PhoneHomeClient phoneHomeClient = new PhoneHomeClient(logger, httpClientBuilder, gson, null, (String) null);
             ExecutorService executor = Executors.newSingleThreadExecutor();
             PhoneHomeService phoneHomeService =
                     PhoneHomeService.createAsynchronousPhoneHomeService(logger, phoneHomeClient, executor);

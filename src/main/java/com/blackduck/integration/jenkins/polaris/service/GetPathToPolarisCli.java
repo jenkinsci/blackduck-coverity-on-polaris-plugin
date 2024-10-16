@@ -6,8 +6,8 @@
  */
 package com.blackduck.integration.jenkins.polaris.service;
 
-import com.synopsys.integration.jenkins.exception.JenkinsUserFriendlyException;
-import com.synopsys.integration.util.OperatingSystemType;
+import com.blackduck.integration.jenkins.exception.JenkinsUserFriendlyException;
+import com.blackduck.integration.util.OperatingSystemType;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

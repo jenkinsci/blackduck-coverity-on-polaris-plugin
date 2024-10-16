@@ -1,7 +1,7 @@
 package com.blackduck.integration.jenkins.polaris.service;
 
-import com.synopsys.integration.jenkins.extensions.JenkinsIntLogger;
-import com.synopsys.integration.util.OperatingSystemType;
+import com.blackduck.integration.jenkins.extensions.JenkinsIntLogger;
+import com.blackduck.integration.util.OperatingSystemType;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

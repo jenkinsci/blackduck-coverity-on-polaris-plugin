@@ -27,15 +27,15 @@ package com.blackduck.integration.polaris.common.configuration;
  * specific language governing permissions and limitations
  * under the License.
  */
+import com.blackduck.integration.builder.Buildable;
+import com.blackduck.integration.log.IntLogger;
 import com.blackduck.integration.polaris.common.rest.AccessTokenPolarisHttpClient;
 import com.blackduck.integration.polaris.common.service.PolarisServicesFactory;
+import com.blackduck.integration.rest.HttpUrl;
+import com.blackduck.integration.rest.proxy.ProxyInfo;
+import com.blackduck.integration.rest.support.AuthenticationSupport;
+import com.blackduck.integration.util.Stringable;
 import com.google.gson.Gson;
-import com.synopsys.integration.builder.Buildable;
-import com.synopsys.integration.log.IntLogger;
-import com.synopsys.integration.rest.HttpUrl;
-import com.synopsys.integration.rest.proxy.ProxyInfo;
-import com.synopsys.integration.rest.support.AuthenticationSupport;
-import com.synopsys.integration.util.Stringable;
 import java.util.function.BiConsumer;
 
 public class PolarisServerConfig extends Stringable implements Buildable {

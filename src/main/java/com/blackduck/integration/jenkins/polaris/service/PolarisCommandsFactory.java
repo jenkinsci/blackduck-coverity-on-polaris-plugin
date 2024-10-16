@@ -6,27 +6,27 @@
  */
 package com.blackduck.integration.jenkins.polaris.service;
 
+import com.blackduck.integration.function.ThrowingSupplier;
+import com.blackduck.integration.jenkins.extensions.JenkinsIntLogger;
 import com.blackduck.integration.jenkins.polaris.ChangeSetFileCreator;
 import com.blackduck.integration.jenkins.polaris.PolarisCliRunner;
 import com.blackduck.integration.jenkins.polaris.PolarisFreestyleCommands;
 import com.blackduck.integration.jenkins.polaris.PolarisIssueChecker;
 import com.blackduck.integration.jenkins.polaris.PolarisPipelineCommands;
 import com.blackduck.integration.jenkins.polaris.extensions.global.PolarisGlobalConfig;
+import com.blackduck.integration.jenkins.service.JenkinsBuildService;
+import com.blackduck.integration.jenkins.service.JenkinsConfigService;
+import com.blackduck.integration.jenkins.service.JenkinsFreestyleServicesFactory;
+import com.blackduck.integration.jenkins.service.JenkinsRemotingService;
+import com.blackduck.integration.jenkins.service.JenkinsRunService;
+import com.blackduck.integration.jenkins.service.JenkinsServicesFactory;
+import com.blackduck.integration.jenkins.wrapper.JenkinsWrapper;
 import com.blackduck.integration.polaris.common.cli.PolarisCliResponseUtility;
 import com.blackduck.integration.polaris.common.configuration.PolarisServerConfig;
 import com.blackduck.integration.polaris.common.service.ContextsService;
 import com.blackduck.integration.polaris.common.service.CountService;
 import com.blackduck.integration.polaris.common.service.JobService;
 import com.blackduck.integration.polaris.common.service.PolarisServicesFactory;
-import com.synopsys.integration.function.ThrowingSupplier;
-import com.synopsys.integration.jenkins.extensions.JenkinsIntLogger;
-import com.synopsys.integration.jenkins.service.JenkinsBuildService;
-import com.synopsys.integration.jenkins.service.JenkinsConfigService;
-import com.synopsys.integration.jenkins.service.JenkinsFreestyleServicesFactory;
-import com.synopsys.integration.jenkins.service.JenkinsRemotingService;
-import com.synopsys.integration.jenkins.service.JenkinsScmService;
-import com.synopsys.integration.jenkins.service.JenkinsServicesFactory;
-import com.synopsys.integration.jenkins.wrapper.JenkinsWrapper;
 import hudson.AbortException;
 import hudson.EnvVars;
 import hudson.FilePath;
@@ -71,7 +71,7 @@ public class PolarisCommandsFactory {
         JenkinsRemotingService jenkinsRemotingService = jenkinsServicesFactory.createJenkinsRemotingService();
         JenkinsConfigService jenkinsConfigService = jenkinsServicesFactory.createJenkinsConfigService();
         JenkinsBuildService jenkinsBuildService = jenkinsServicesFactory.createJenkinsBuildService();
-        JenkinsScmService jenkinsScmService = jenkinsServicesFactory.createJenkinsScmService();
+        JenkinsRunService jenkinsScmService = jenkinsServicesFactory.createJenkinsRunService();
 
         ChangeSetFileCreator changeSetFileCreator =
                 polarisCommandsFactory.createChangeSetFileCreator(jenkinsRemotingService, jenkinsScmService);
@@ -98,7 +98,7 @@ public class PolarisCommandsFactory {
 
         JenkinsRemotingService jenkinsRemotingService = jenkinsServicesFactory.createJenkinsRemotingService();
         JenkinsConfigService jenkinsConfigService = jenkinsServicesFactory.createJenkinsConfigService();
-        JenkinsScmService jenkinsScmService = jenkinsServicesFactory.createJenkinsScmService();
+        JenkinsRunService jenkinsScmService = jenkinsServicesFactory.createJenkinsRunService();
 
         ChangeSetFileCreator changeSetFileCreator =
                 polarisCommandsFactory.createChangeSetFileCreator(jenkinsRemotingService, jenkinsScmService);
@@ -141,7 +141,7 @@ public class PolarisCommandsFactory {
     }
 
     public ChangeSetFileCreator createChangeSetFileCreator(
-            JenkinsRemotingService jenkinsRemotingService, JenkinsScmService jenkinsScmService) {
+            JenkinsRemotingService jenkinsRemotingService, JenkinsRunService jenkinsScmService) {
         return new ChangeSetFileCreator(
                 initializedLogger.get(), jenkinsRemotingService, jenkinsScmService, createPolarisEnvironmentService());
     }

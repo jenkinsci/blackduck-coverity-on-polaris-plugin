@@ -6,10 +6,10 @@
  */
 package com.blackduck.integration.polaris.common.service;
 
+import com.blackduck.integration.exception.IntegrationException;
 import com.blackduck.integration.polaris.common.api.PolarisResource;
 import com.blackduck.integration.polaris.common.api.model.ContextAttributes;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.rest.HttpUrl;
+import com.blackduck.integration.rest.HttpUrl;
 import java.util.List;
 import java.util.Optional;
 

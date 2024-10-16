@@ -6,9 +6,9 @@
  */
 package com.blackduck.integration.polaris.common.request;
 
-import com.synopsys.integration.rest.HttpMethod;
-import com.synopsys.integration.rest.HttpUrl;
-import com.synopsys.integration.rest.request.Request;
+import com.blackduck.integration.rest.HttpMethod;
+import com.blackduck.integration.rest.HttpUrl;
+import com.blackduck.integration.rest.request.Request;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,6 +57,6 @@ public class PolarisRequestFactory {
     }
 
     public static Request.Builder createDefaultBuilder() {
-        return new Request.Builder().acceptMimeType(DEFAULT_MIME_TYPE).method(HttpMethod.GET);
+        return new Request.Builder().method(HttpMethod.GET);
     }
 }

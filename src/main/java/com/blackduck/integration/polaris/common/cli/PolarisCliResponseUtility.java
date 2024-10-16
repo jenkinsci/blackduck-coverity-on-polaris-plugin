@@ -6,13 +6,13 @@
  */
 package com.blackduck.integration.polaris.common.cli;
 
+import com.blackduck.integration.exception.IntegrationException;
+import com.blackduck.integration.log.IntLogger;
 import com.blackduck.integration.polaris.common.cli.model.CliCommonResponseModel;
 import com.blackduck.integration.polaris.common.cli.model.json.CliCommonResponseAdapter;
 import com.blackduck.integration.polaris.common.exception.PolarisIntegrationException;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.log.IntLogger;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;

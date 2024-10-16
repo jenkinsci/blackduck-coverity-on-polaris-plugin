@@ -6,13 +6,13 @@
  */
 package com.blackduck.integration.jenkins.polaris;
 
+import com.blackduck.integration.exception.IntegrationException;
 import com.blackduck.integration.jenkins.polaris.service.GetPolarisCliResponseContent;
 import com.blackduck.integration.jenkins.polaris.service.PolarisCliIssueCountService;
+import com.blackduck.integration.jenkins.service.JenkinsRemotingService;
+import com.blackduck.integration.jenkins.wrapper.JenkinsVersionHelper;
+import com.blackduck.integration.log.IntLogger;
 import com.blackduck.integration.polaris.common.service.JobService;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.jenkins.service.JenkinsRemotingService;
-import com.synopsys.integration.jenkins.wrapper.JenkinsVersionHelper;
-import com.synopsys.integration.log.IntLogger;
 import java.io.IOException;
 import java.util.Optional;
 

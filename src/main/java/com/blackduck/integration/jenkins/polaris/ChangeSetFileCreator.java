@@ -6,12 +6,12 @@
  */
 package com.blackduck.integration.jenkins.polaris;
 
+import com.blackduck.integration.jenkins.ChangeSetFilter;
+import com.blackduck.integration.jenkins.extensions.JenkinsIntLogger;
 import com.blackduck.integration.jenkins.polaris.service.PolarisEnvironmentService;
-import com.synopsys.integration.jenkins.ChangeSetFilter;
-import com.synopsys.integration.jenkins.extensions.JenkinsIntLogger;
-import com.synopsys.integration.jenkins.service.JenkinsRemotingService;
-import com.synopsys.integration.jenkins.service.JenkinsScmService;
-import com.synopsys.integration.util.IntEnvironmentVariables;
+import com.blackduck.integration.jenkins.service.JenkinsRemotingService;
+import com.blackduck.integration.jenkins.service.JenkinsRunService;
+import com.blackduck.integration.util.IntEnvironmentVariables;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,13 +23,13 @@ import org.apache.commons.lang3.StringUtils;
 public class ChangeSetFileCreator {
     private final JenkinsIntLogger logger;
     private final JenkinsRemotingService jenkinsRemotingService;
-    private final JenkinsScmService jenkinsScmService;
+    private final JenkinsRunService jenkinsScmService;
     private final PolarisEnvironmentService polarisEnvironmentService;
 
     public ChangeSetFileCreator(
             JenkinsIntLogger logger,
             JenkinsRemotingService jenkinsRemotingService,
-            JenkinsScmService jenkinsScmService,
+            JenkinsRunService jenkinsScmService,
             PolarisEnvironmentService polarisEnvironmentService) {
         this.logger = logger;
         this.jenkinsRemotingService = jenkinsRemotingService;
