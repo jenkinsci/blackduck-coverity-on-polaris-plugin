@@ -83,6 +83,9 @@ public class PolarisServerConfigBuilder extends IntegrationBuilder<PolarisServer
         Set<BuilderPropertyKey> propertyKeys = new HashSet<>();
         propertyKeys.add(URL_KEY);
         propertyKeys.add(ACCESS_TOKEN_KEY);
+        propertyKeys.add(ACCESS_TOKEN_FILE_PATH_KEY);
+        propertyKeys.add(POLARIS_HOME_KEY);
+        propertyKeys.add(USER_HOME_KEY);
         propertyKeys.add(TIMEOUT_KEY);
         propertyKeys.add(PROXY_HOST_KEY);
         propertyKeys.add(PROXY_PORT_KEY);
