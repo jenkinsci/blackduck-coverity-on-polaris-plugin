@@ -16,15 +16,18 @@ import jenkins.security.MasterToSlaveCallable;
 public class GetPolarisCliResponseContent extends MasterToSlaveCallable<String, PolarisIntegrationException> {
     private static final long serialVersionUID = -5698280934593066898L;
     private final String workspaceRemotePath;
+    private final String polarisCliVersion;
 
-    public GetPolarisCliResponseContent(String workspaceRemotePath) {
+    public GetPolarisCliResponseContent(String workspaceRemotePath, String polarisCliVersion) {
         this.workspaceRemotePath = workspaceRemotePath;
+        this.polarisCliVersion = polarisCliVersion;
     }
 
     @Override
     public String call() throws PolarisIntegrationException {
         try {
-            byte[] bytes = Files.readAllBytes(PolarisCliResponseUtility.getDefaultPathToJson(workspaceRemotePath));
+            byte[] bytes = Files.readAllBytes(
+                    PolarisCliResponseUtility.getDefaultPathToJson(workspaceRemotePath, polarisCliVersion));
             return new String(bytes, StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new PolarisIntegrationException(

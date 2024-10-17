@@ -77,8 +77,8 @@ public class PolarisCommandsFactory {
                 polarisCommandsFactory.createChangeSetFileCreator(jenkinsRemotingService, jenkinsRunService);
         PolarisCliRunner polarisCliRunner =
                 polarisCommandsFactory.createPolarisCliRunner(jenkinsConfigService, jenkinsRemotingService);
-        PolarisIssueChecker polarisIssueCounter =
-                polarisCommandsFactory.createPolarisIssueCounter(jenkinsConfigService, jenkinsRemotingService);
+        PolarisIssueChecker polarisIssueCounter = polarisCommandsFactory.createPolarisIssueCounter(
+                jenkinsConfigService, jenkinsRemotingService, jenkinsRunService);
 
         return new PolarisFreestyleCommands(
                 polarisCommandsFactory.getOrCreateLogger(),
@@ -104,8 +104,8 @@ public class PolarisCommandsFactory {
                 polarisCommandsFactory.createChangeSetFileCreator(jenkinsRemotingService, jenkinsRunService);
         PolarisCliRunner polarisCliRunner =
                 polarisCommandsFactory.createPolarisCliRunner(jenkinsConfigService, jenkinsRemotingService);
-        PolarisIssueChecker polarisIssueCounter =
-                polarisCommandsFactory.createPolarisIssueCounter(jenkinsConfigService, jenkinsRemotingService);
+        PolarisIssueChecker polarisIssueCounter = polarisCommandsFactory.createPolarisIssueCounter(
+                jenkinsConfigService, jenkinsRemotingService, jenkinsRunService);
 
         return new PolarisPipelineCommands(
                 polarisCommandsFactory.getOrCreateLogger(),
@@ -115,12 +115,15 @@ public class PolarisCommandsFactory {
     }
 
     public PolarisIssueChecker createPolarisIssueCounter(
-            JenkinsConfigService jenkinsConfigService, JenkinsRemotingService jenkinsRemotingService)
+            JenkinsConfigService jenkinsConfigService,
+            JenkinsRemotingService jenkinsRemotingService,
+            JenkinsRunService jenkinsRunService)
             throws AbortException {
         return new PolarisIssueChecker(
                 initializedLogger.get(),
                 createPolarisCliIssueCountService(jenkinsConfigService),
                 jenkinsRemotingService,
+                jenkinsRunService,
                 validatedJenkinsWrapper.get().getVersionHelper());
     }
 
