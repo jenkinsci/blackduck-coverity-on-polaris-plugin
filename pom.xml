@@ -59,6 +59,10 @@
           <artifactId>jackson-databind</artifactId>
         </exclusion>
         <exclusion>
+          <groupId>com.google.code.findbugs</groupId>
+          <artifactId>annotations</artifactId>
+        </exclusion>
+        <exclusion>
           <groupId>javax.servlet</groupId>
           <artifactId>javax.servlet-api</artifactId>
         </exclusion>
@@ -85,6 +89,10 @@
         <exclusion>
           <groupId>org.jenkins-ci.plugins.workflow</groupId>
           <artifactId>workflow-support</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jetbrains</groupId>
+          <artifactId>annotations</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
