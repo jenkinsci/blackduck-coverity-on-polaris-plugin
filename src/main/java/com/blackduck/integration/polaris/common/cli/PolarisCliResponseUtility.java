@@ -38,18 +38,18 @@ public class PolarisCliResponseUtility {
     }
 
     public static Path getDefaultPathToJson(String projectRootDirectory, String polarisCliVersion) {
-        String directory;
+        String subDirectory;
         PolarisCliVersionHandler polarisCliVersionHandler = new PolarisCliVersionHandler();
 
         if (polarisCliVersion != null
                 && polarisCliVersionHandler.comparePolarisVersions(polarisCliVersion, OLDER_POLARIS_CLI_VERSION) <= 0) {
-            directory = ".synopsys";
+            subDirectory = ".synopsys";
         } else {
-            directory = ".blackduck";
+            subDirectory = ".blackduck";
         }
 
         return Paths.get(projectRootDirectory)
-                .resolve(directory)
+                .resolve(subDirectory)
                 .resolve("polaris")
                 .resolve("cli-scan.json");
     }
