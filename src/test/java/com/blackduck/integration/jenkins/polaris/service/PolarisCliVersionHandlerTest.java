@@ -12,7 +12,7 @@ public class PolarisCliVersionHandlerTest {
     private final PolarisCliVersionHandler versionHandler = new PolarisCliVersionHandler();
 
     @Test
-    public void testExtractPolarisCliVersion_ValidLog() throws Exception {
+    public void testExtractPolarisCliVersion_ValidLogForOlderCli() throws Exception {
         String log = "Some random log\n"
                 + "[INFO] [b987uryi] Polaris Software Integrity Platform CLI Scan Client version - 2024.6.0\n"
                 + "Some other log";
@@ -21,6 +21,18 @@ public class PolarisCliVersionHandlerTest {
         String extractedVersion = versionHandler.extractPolarisCliVersion(logStream);
 
         assertEquals("2024.6.0", extractedVersion, "Extracted version should match the expected value.");
+    }
+
+    @Test
+    public void testExtractPolarisCliVersion_ValidLogNewCli() throws Exception {
+        String log = "Some random log\n"
+                + "[INFO] [b987uryi] Coverity on Polaris Platform CLI Scan Client version - 2024.9.1\n"
+                + "Some other log";
+
+        InputStream logStream = new ByteArrayInputStream(log.getBytes(StandardCharsets.UTF_8));
+        String extractedVersion = versionHandler.extractPolarisCliVersion(logStream);
+
+        assertEquals("2024.9.1", extractedVersion, "Extracted version should match the expected value.");
     }
 
     @Test
@@ -61,5 +73,15 @@ public class PolarisCliVersionHandlerTest {
         int result = versionHandler.comparePolarisVersions(version1, version2);
 
         assertTrue(result < 0, "Version 2023.5.1 should be less than 2024.6.0.");
+    }
+
+    @Test
+    public void testComparePolarisVersions_PatchVersion() {
+        String version1 = "2023.5.1";
+        String version2 = "2023.5.0";
+
+        int result = versionHandler.comparePolarisVersions(version1, version2);
+
+        assertTrue(result > 0, "Version 2023.5.1 should be greater than 2023.5.0.");
     }
 }

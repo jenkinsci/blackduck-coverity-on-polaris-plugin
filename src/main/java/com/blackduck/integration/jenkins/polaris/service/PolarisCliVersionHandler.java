@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class PolarisCliVersionHandler {
     private static final String POLARIS_VERSION_PATTERN =
-            "Polaris Software Integrity Platform CLI Scan Client version - (\\d+\\.\\d+\\.\\d+)";
+            "(Polaris Software Integrity|Coverity on Polaris) Platform CLI Scan Client version - (\\d+\\.\\d+\\.\\d+)";
 
     public String extractPolarisCliVersion(InputStream logStream) throws IOException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(logStream, StandardCharsets.UTF_8))) {
@@ -20,13 +20,26 @@ public class PolarisCliVersionHandler {
             while ((line = reader.readLine()) != null) {
                 Matcher matcher = pattern.matcher(line);
                 if (matcher.find()) {
-                    return matcher.group(1);
+                    return matcher.group(2);
                 }
             }
         }
         return null;
     }
 
+    /**
+     * Compares two Polaris CLI version strings in the format "X.Y.Z" (e.g., "1.0.1").
+     *
+     * @param version1 the first version string to compare, in the format "X.Y.Z"
+     * @param version2 the second version string to compare, in the format "X.Y.Z"
+     * @return an integer that is:
+     *         - Negative if version1 is less than version2
+     *         - Zero if version1 is equal to version2
+     *         - Positive if version1 is greater than version2
+     *
+     * If either of the versions does not have exactly three components (major, minor, patch),
+     * the method returns 1, implying an invalid version format.
+     */
     public int comparePolarisVersions(String version1, String version2) {
         String[] ver1Parts = version1.split("\\.");
         String[] ver2Parts = version2.split("\\.");
