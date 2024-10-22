@@ -6,12 +6,12 @@
  */
 package com.blackduck.integration.jenkins.polaris;
 
+import com.blackduck.integration.jenkins.ChangeSetFilter;
+import com.blackduck.integration.jenkins.extensions.JenkinsIntLogger;
 import com.blackduck.integration.jenkins.polaris.service.PolarisEnvironmentService;
-import com.synopsys.integration.jenkins.ChangeSetFilter;
-import com.synopsys.integration.jenkins.extensions.JenkinsIntLogger;
-import com.synopsys.integration.jenkins.service.JenkinsRemotingService;
-import com.synopsys.integration.jenkins.service.JenkinsScmService;
-import com.synopsys.integration.util.IntEnvironmentVariables;
+import com.blackduck.integration.jenkins.service.JenkinsRemotingService;
+import com.blackduck.integration.jenkins.service.JenkinsRunService;
+import com.blackduck.integration.util.IntEnvironmentVariables;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,23 +23,23 @@ import org.apache.commons.lang3.StringUtils;
 public class ChangeSetFileCreator {
     private final JenkinsIntLogger logger;
     private final JenkinsRemotingService jenkinsRemotingService;
-    private final JenkinsScmService jenkinsScmService;
+    private final JenkinsRunService jenkinsRunService;
     private final PolarisEnvironmentService polarisEnvironmentService;
 
     public ChangeSetFileCreator(
             JenkinsIntLogger logger,
             JenkinsRemotingService jenkinsRemotingService,
-            JenkinsScmService jenkinsScmService,
+            JenkinsRunService jenkinsRunService,
             PolarisEnvironmentService polarisEnvironmentService) {
         this.logger = logger;
         this.jenkinsRemotingService = jenkinsRemotingService;
-        this.jenkinsScmService = jenkinsScmService;
+        this.jenkinsRunService = jenkinsRunService;
         this.polarisEnvironmentService = polarisEnvironmentService;
     }
 
     public String createChangeSetFile(String exclusionPatterns, String inclusionPatterns)
             throws IOException, InterruptedException {
-        ChangeSetFilter changeSetFilter = jenkinsScmService
+        ChangeSetFilter changeSetFilter = jenkinsRunService
                 .newChangeSetFilter()
                 .excludeMatching(exclusionPatterns)
                 .includeMatching(inclusionPatterns);
@@ -47,7 +47,7 @@ public class ChangeSetFileCreator {
         // ArrayLists are serializable, Lists are not. -- rotte SEP 2020
         ArrayList<String> changedFiles = new ArrayList<>();
         try {
-            changedFiles.addAll(jenkinsScmService.getFilePathsFromChangeSet(changeSetFilter));
+            changedFiles.addAll(jenkinsRunService.getFilePathsFromChangeSet(changeSetFilter));
         } catch (Exception e) {
             logger.error("Could not get the Jenkins-provided SCM changeset: " + e.getMessage());
         }

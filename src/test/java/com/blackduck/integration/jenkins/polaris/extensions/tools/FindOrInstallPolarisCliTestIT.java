@@ -3,9 +3,9 @@ package com.blackduck.integration.jenkins.polaris.extensions.tools;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
+import com.blackduck.integration.exception.IntegrationException;
+import com.blackduck.integration.jenkins.extensions.JenkinsIntLogger;
 import com.blackduck.integration.polaris.common.cli.PolarisDownloadUtility;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.jenkins.extensions.JenkinsIntLogger;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;

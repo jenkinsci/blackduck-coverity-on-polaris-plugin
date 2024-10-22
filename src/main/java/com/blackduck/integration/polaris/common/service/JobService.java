@@ -6,15 +6,15 @@
  */
 package com.blackduck.integration.polaris.common.service;
 
+import com.blackduck.integration.exception.IntegrationException;
+import com.blackduck.integration.log.IntLogger;
 import com.blackduck.integration.polaris.common.api.PolarisResource;
 import com.blackduck.integration.polaris.common.api.model.FailureInfo;
 import com.blackduck.integration.polaris.common.api.model.JobAttributes;
 import com.blackduck.integration.polaris.common.api.model.JobStatus;
 import com.blackduck.integration.polaris.common.exception.PolarisIntegrationException;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.log.IntLogger;
-import com.synopsys.integration.rest.HttpUrl;
-import com.synopsys.integration.wait.WaitJob;
+import com.blackduck.integration.rest.HttpUrl;
+import com.blackduck.integration.wait.WaitJob;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
@@ -36,11 +36,9 @@ public class JobService {
     }
 
     public void waitForJobStateIsCompletedOrDieByUrl(
-            HttpUrl jobApiUrl, long timeoutInSeconds, int waitIntervalInSeconds)
-            throws IntegrationException, InterruptedException {
-        WaitJob waitJob = WaitJob.createUsingSystemTimeWhenInvoked(
-                logger, timeoutInSeconds, waitIntervalInSeconds, () -> hasJobEnded(jobApiUrl));
-        if (!waitJob.waitFor()) {
+            HttpUrl jobApiUrl, long timeoutInSeconds, int waitIntervalInSeconds) throws IntegrationException {
+        WaitJob waitJob = new WaitJob(() -> hasJobEnded(jobApiUrl), null);
+        if (!waitJob.onCompletion()) {
             String maximumDurationString = DurationFormatUtils.formatDurationHMS(timeoutInSeconds * 1000);
             throw new PolarisIntegrationException(String.format(
                     "Job at url %s did not end in the provided timeout of %s", jobApiUrl, maximumDurationString));

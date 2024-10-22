@@ -4,14 +4,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.blackduck.integration.jenkins.wrapper.BlackduckCredentialsHelper;
+import com.blackduck.integration.jenkins.wrapper.JenkinsProxyHelper;
+import com.blackduck.integration.log.IntLogger;
 import com.blackduck.integration.polaris.common.configuration.PolarisServerConfig;
 import com.blackduck.integration.polaris.common.configuration.PolarisServerConfigBuilder;
 import com.blackduck.integration.polaris.common.rest.AccessTokenPolarisHttpClient;
-import com.synopsys.integration.jenkins.wrapper.JenkinsProxyHelper;
-import com.synopsys.integration.jenkins.wrapper.SynopsysCredentialsHelper;
-import com.synopsys.integration.log.IntLogger;
-import com.synopsys.integration.rest.client.ConnectionResult;
-import com.synopsys.integration.rest.proxy.ProxyInfo;
+import com.blackduck.integration.rest.client.ConnectionResult;
+import com.blackduck.integration.rest.proxy.ProxyInfo;
 import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
 import java.io.BufferedReader;
@@ -111,8 +111,8 @@ public class PolarisGlobalConfigTest {
 
     @Test
     public void testCreatePolarisServerConfigBuilder() {
-        SynopsysCredentialsHelper synopsysCredentialsHelper = Mockito.mock(SynopsysCredentialsHelper.class);
-        Mockito.when(synopsysCredentialsHelper.getApiTokenByCredentialsId(POLARIS_CREDENTIALS_ID))
+        BlackduckCredentialsHelper blackduckCredentialsHelper = Mockito.mock(BlackduckCredentialsHelper.class);
+        Mockito.when(blackduckCredentialsHelper.getApiTokenByCredentialsId(POLARIS_CREDENTIALS_ID))
                 .thenReturn(Optional.of(POLARIS_TOKEN));
 
         JenkinsProxyHelper jenkinsProxyHelper = Mockito.mock(JenkinsProxyHelper.class);
@@ -120,7 +120,7 @@ public class PolarisGlobalConfigTest {
 
         PolarisGlobalConfig polarisGlobalConfig = new PolarisGlobalConfig();
         PolarisServerConfigBuilder polarisServerConfigBuilder = polarisGlobalConfig.createPolarisServerConfigBuilder(
-                synopsysCredentialsHelper,
+                blackduckCredentialsHelper,
                 jenkinsProxyHelper,
                 POLARIS_URL,
                 POLARIS_CREDENTIALS_ID,

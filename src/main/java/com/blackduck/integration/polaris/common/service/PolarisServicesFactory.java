@@ -6,10 +6,10 @@
  */
 package com.blackduck.integration.polaris.common.service;
 
+import com.blackduck.integration.log.IntLogger;
 import com.blackduck.integration.polaris.common.request.PolarisRequestFactory;
 import com.blackduck.integration.polaris.common.rest.AccessTokenPolarisHttpClient;
 import com.google.gson.Gson;
-import com.synopsys.integration.log.IntLogger;
 
 public class PolarisServicesFactory {
     private final IntLogger logger;

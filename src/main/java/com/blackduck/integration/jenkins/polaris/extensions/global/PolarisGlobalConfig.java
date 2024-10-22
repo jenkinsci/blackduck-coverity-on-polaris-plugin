@@ -6,19 +6,19 @@
  */
 package com.blackduck.integration.jenkins.polaris.extensions.global;
 
+import com.blackduck.integration.jenkins.annotations.HelpMarkdown;
+import com.blackduck.integration.jenkins.extensions.JenkinsIntLogger;
+import com.blackduck.integration.jenkins.wrapper.BlackduckCredentialsHelper;
+import com.blackduck.integration.jenkins.wrapper.JenkinsProxyHelper;
+import com.blackduck.integration.jenkins.wrapper.JenkinsWrapper;
+import com.blackduck.integration.log.LogLevel;
+import com.blackduck.integration.log.PrintStreamIntLogger;
 import com.blackduck.integration.polaris.common.configuration.PolarisServerConfig;
 import com.blackduck.integration.polaris.common.configuration.PolarisServerConfigBuilder;
+import com.blackduck.integration.rest.client.ConnectionResult;
+import com.blackduck.integration.rest.proxy.ProxyInfo;
 import com.cloudbees.plugins.credentials.common.StandardListBoxModel;
 import com.cloudbees.plugins.credentials.impl.BaseStandardCredentials;
-import com.synopsys.integration.jenkins.annotations.HelpMarkdown;
-import com.synopsys.integration.jenkins.extensions.JenkinsIntLogger;
-import com.synopsys.integration.jenkins.wrapper.JenkinsProxyHelper;
-import com.synopsys.integration.jenkins.wrapper.JenkinsWrapper;
-import com.synopsys.integration.jenkins.wrapper.SynopsysCredentialsHelper;
-import com.synopsys.integration.log.LogLevel;
-import com.synopsys.integration.log.PrintStreamIntLogger;
-import com.synopsys.integration.rest.client.ConnectionResult;
-import com.synopsys.integration.rest.proxy.ProxyInfo;
 import hudson.Extension;
 import hudson.Functions;
 import hudson.Util;
@@ -105,14 +105,14 @@ public class PolarisGlobalConfig extends GlobalConfiguration implements Serializ
     }
 
     public PolarisServerConfig getPolarisServerConfig(
-            SynopsysCredentialsHelper credentialsHelper, JenkinsProxyHelper jenkinsProxyHelper)
+            BlackduckCredentialsHelper credentialsHelper, JenkinsProxyHelper jenkinsProxyHelper)
             throws IllegalArgumentException {
         return getPolarisServerConfigBuilder(credentialsHelper, jenkinsProxyHelper)
                 .build();
     }
 
     public PolarisServerConfigBuilder getPolarisServerConfigBuilder(
-            SynopsysCredentialsHelper credentialsHelper, JenkinsProxyHelper jenkinsProxyHelper)
+            BlackduckCredentialsHelper credentialsHelper, JenkinsProxyHelper jenkinsProxyHelper)
             throws IllegalArgumentException {
         return createPolarisServerConfigBuilder(
                 credentialsHelper, jenkinsProxyHelper, polarisUrl, polarisCredentialsId, polarisTimeout);
@@ -133,7 +133,7 @@ public class PolarisGlobalConfig extends GlobalConfiguration implements Serializ
                         jenkins,
                         BaseStandardCredentials.class,
                         Collections.emptyList(),
-                        SynopsysCredentialsHelper.API_TOKEN_CREDENTIALS);
+                        BlackduckCredentialsHelper.API_TOKEN_CREDENTIALS);
     }
 
     @POST
@@ -148,12 +148,12 @@ public class PolarisGlobalConfig extends GlobalConfiguration implements Serializ
         }
         jenkinsWrapper.getJenkins().get().checkPermission(Jenkins.ADMINISTER);
 
-        SynopsysCredentialsHelper synopsysCredentialsHelper = jenkinsWrapper.getCredentialsHelper();
+        BlackduckCredentialsHelper blackduckCredentialsHelper = jenkinsWrapper.getCredentialsHelper();
         JenkinsProxyHelper jenkinsProxyHelper = jenkinsWrapper.getProxyHelper();
 
         try {
             PolarisServerConfig polarisServerConfig = createPolarisServerConfigBuilder(
-                            synopsysCredentialsHelper,
+                            blackduckCredentialsHelper,
                             jenkinsProxyHelper,
                             polarisUrl,
                             polarisCredentialsId,
@@ -274,7 +274,7 @@ public class PolarisGlobalConfig extends GlobalConfiguration implements Serializ
     }
 
     public PolarisServerConfigBuilder createPolarisServerConfigBuilder(
-            SynopsysCredentialsHelper synopsysCredentialsHelper,
+            BlackduckCredentialsHelper blackduckCredentialsHelper,
             JenkinsProxyHelper jenkinsProxyHelper,
             String polarisUrl,
             String credentialsId,
@@ -282,7 +282,7 @@ public class PolarisGlobalConfig extends GlobalConfiguration implements Serializ
         PolarisServerConfigBuilder builder =
                 PolarisServerConfig.newBuilder().setUrl(polarisUrl).setTimeoutInSeconds(timeout);
 
-        synopsysCredentialsHelper.getApiTokenByCredentialsId(credentialsId).ifPresent(builder::setAccessToken);
+        blackduckCredentialsHelper.getApiTokenByCredentialsId(credentialsId).ifPresent(builder::setAccessToken);
 
         ProxyInfo proxyInfo = jenkinsProxyHelper.getProxyInfo(polarisUrl);
 

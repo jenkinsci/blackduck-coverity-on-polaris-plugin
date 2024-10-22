@@ -27,21 +27,21 @@ package com.blackduck.integration.polaris.common.configuration;
  * specific language governing permissions and limitations
  * under the License.
  */
+import com.blackduck.integration.builder.BuilderProperties;
+import com.blackduck.integration.builder.BuilderPropertyKey;
+import com.blackduck.integration.builder.BuilderStatus;
+import com.blackduck.integration.builder.IntegrationBuilder;
+import com.blackduck.integration.exception.IntegrationException;
+import com.blackduck.integration.log.IntLogger;
+import com.blackduck.integration.log.LogLevel;
+import com.blackduck.integration.log.PrintStreamIntLogger;
+import com.blackduck.integration.rest.HttpUrl;
+import com.blackduck.integration.rest.credentials.Credentials;
+import com.blackduck.integration.rest.credentials.CredentialsBuilder;
+import com.blackduck.integration.rest.proxy.ProxyInfo;
+import com.blackduck.integration.rest.proxy.ProxyInfoBuilder;
+import com.blackduck.integration.rest.support.AuthenticationSupport;
 import com.google.gson.Gson;
-import com.synopsys.integration.builder.BuilderProperties;
-import com.synopsys.integration.builder.BuilderPropertyKey;
-import com.synopsys.integration.builder.BuilderStatus;
-import com.synopsys.integration.builder.IntegrationBuilder;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.log.IntLogger;
-import com.synopsys.integration.log.LogLevel;
-import com.synopsys.integration.log.PrintStreamIntLogger;
-import com.synopsys.integration.rest.HttpUrl;
-import com.synopsys.integration.rest.credentials.Credentials;
-import com.synopsys.integration.rest.credentials.CredentialsBuilder;
-import com.synopsys.integration.rest.proxy.ProxyInfo;
-import com.synopsys.integration.rest.proxy.ProxyInfoBuilder;
-import com.synopsys.integration.rest.support.AuthenticationSupport;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -83,6 +83,9 @@ public class PolarisServerConfigBuilder extends IntegrationBuilder<PolarisServer
         Set<BuilderPropertyKey> propertyKeys = new HashSet<>();
         propertyKeys.add(URL_KEY);
         propertyKeys.add(ACCESS_TOKEN_KEY);
+        propertyKeys.add(ACCESS_TOKEN_FILE_PATH_KEY);
+        propertyKeys.add(POLARIS_HOME_KEY);
+        propertyKeys.add(USER_HOME_KEY);
         propertyKeys.add(TIMEOUT_KEY);
         propertyKeys.add(PROXY_HOST_KEY);
         propertyKeys.add(PROXY_PORT_KEY);

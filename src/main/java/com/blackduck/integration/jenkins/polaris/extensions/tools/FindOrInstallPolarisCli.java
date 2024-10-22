@@ -6,18 +6,19 @@
  */
 package com.blackduck.integration.jenkins.polaris.extensions.tools;
 
+import com.blackduck.integration.exception.IntegrationException;
+import com.blackduck.integration.jenkins.extensions.JenkinsIntLogger;
 import com.blackduck.integration.polaris.common.cli.PolarisDownloadUtility;
 import com.blackduck.integration.polaris.common.exception.PolarisIntegrationException;
 import com.blackduck.integration.polaris.common.rest.AccessTokenPolarisHttpClient;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.jenkins.extensions.JenkinsIntLogger;
-import com.synopsys.integration.rest.HttpUrl;
-import com.synopsys.integration.rest.client.IntHttpClient;
-import com.synopsys.integration.rest.credentials.CredentialsBuilder;
-import com.synopsys.integration.rest.proxy.ProxyInfo;
-import com.synopsys.integration.rest.proxy.ProxyInfoBuilder;
-import com.synopsys.integration.util.CleanupZipExpander;
-import com.synopsys.integration.util.OperatingSystemType;
+import com.blackduck.integration.rest.HttpUrl;
+import com.blackduck.integration.rest.client.IntHttpClient;
+import com.blackduck.integration.rest.credentials.CredentialsBuilder;
+import com.blackduck.integration.rest.proxy.ProxyInfo;
+import com.blackduck.integration.rest.proxy.ProxyInfoBuilder;
+import com.blackduck.integration.util.CleanupZipExpander;
+import com.blackduck.integration.util.OperatingSystemType;
+import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -97,7 +98,8 @@ public class FindOrInstallPolarisCli extends MasterToSlaveCallable<String, Integ
             proxyInfoBuilder.setNtlmDomain(proxyNtlmDomain);
             proxyInfoBuilder.setNtlmDomain(proxyNtlmWorkstation);
 
-            IntHttpClient intHttpClient = new IntHttpClient(jenkinsIntLogger, timeout, false, proxyInfoBuilder.build());
+            IntHttpClient intHttpClient =
+                    new IntHttpClient(jenkinsIntLogger, new Gson(), timeout, false, proxyInfoBuilder.build());
             CleanupZipExpander cleanupZipExpander = new CleanupZipExpander(jenkinsIntLogger);
 
             Files.createDirectories(installLocation.toPath());

@@ -3,21 +3,21 @@ package com.blackduck.integration.jenkins.polaris;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import com.blackduck.integration.jenkins.exception.JenkinsUserFriendlyException;
+import com.blackduck.integration.jenkins.extensions.JenkinsIntLogger;
 import com.blackduck.integration.jenkins.polaris.extensions.global.PolarisGlobalConfig;
 import com.blackduck.integration.jenkins.polaris.extensions.tools.PolarisCli;
 import com.blackduck.integration.jenkins.polaris.service.GetPathToPolarisCli;
 import com.blackduck.integration.jenkins.polaris.service.PolarisCliArgumentService;
 import com.blackduck.integration.jenkins.polaris.service.PolarisEnvironmentService;
 import com.blackduck.integration.jenkins.polaris.service.PolarisPhoneHomeService;
+import com.blackduck.integration.jenkins.service.JenkinsConfigService;
+import com.blackduck.integration.jenkins.service.JenkinsRemotingService;
+import com.blackduck.integration.jenkins.wrapper.BlackduckCredentialsHelper;
+import com.blackduck.integration.jenkins.wrapper.JenkinsProxyHelper;
+import com.blackduck.integration.jenkins.wrapper.JenkinsVersionHelper;
+import com.blackduck.integration.log.IntLogger;
 import com.blackduck.integration.polaris.common.configuration.PolarisServerConfigBuilder;
-import com.synopsys.integration.jenkins.exception.JenkinsUserFriendlyException;
-import com.synopsys.integration.jenkins.extensions.JenkinsIntLogger;
-import com.synopsys.integration.jenkins.service.JenkinsConfigService;
-import com.synopsys.integration.jenkins.service.JenkinsRemotingService;
-import com.synopsys.integration.jenkins.wrapper.JenkinsProxyHelper;
-import com.synopsys.integration.jenkins.wrapper.JenkinsVersionHelper;
-import com.synopsys.integration.jenkins.wrapper.SynopsysCredentialsHelper;
-import com.synopsys.integration.log.IntLogger;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Optional;
@@ -42,7 +42,7 @@ public class PolarisCliRunnerTest {
     private PolarisPhoneHomeService polarisPhoneHomeService;
     private JenkinsRemotingService jenkinsRemotingService;
     private JenkinsConfigService jenkinsConfigService;
-    private SynopsysCredentialsHelper synopsysCredentialsHelper;
+    private BlackduckCredentialsHelper blackduckCredentialsHelper;
     private JenkinsProxyHelper jenkinsProxyHelper;
     private JenkinsVersionHelper jenkinsVersionHelper;
 
@@ -60,7 +60,7 @@ public class PolarisCliRunnerTest {
                     .thenCallRealMethod();
             Mockito.when(jenkinsRemotingService.call(Mockito.any(GetPathToPolarisCli.class)))
                     .thenReturn("polaris");
-            synopsysCredentialsHelper = Mockito.mock(SynopsysCredentialsHelper.class);
+            blackduckCredentialsHelper = Mockito.mock(BlackduckCredentialsHelper.class);
             jenkinsProxyHelper = Mockito.mock(JenkinsProxyHelper.class);
             jenkinsVersionHelper = Mockito.mock(JenkinsVersionHelper.class);
 
@@ -86,7 +86,7 @@ public class PolarisCliRunnerTest {
                     .setAccessToken("ACCESS-TOKEN")
                     .setUrl("http://example.com/polaris");
             Mockito.when(polarisGlobalConfig.getPolarisServerConfigBuilder(
-                            synopsysCredentialsHelper, jenkinsProxyHelper))
+                            blackduckCredentialsHelper, jenkinsProxyHelper))
                     .thenReturn(polarisServerConfigBuilder);
             Mockito.when(jenkinsConfigService.getGlobalConfiguration(PolarisGlobalConfig.class))
                     .thenReturn(Optional.of(polarisGlobalConfig));
@@ -104,7 +104,7 @@ public class PolarisCliRunnerTest {
                 polarisPhoneHomeService,
                 jenkinsRemotingService,
                 jenkinsConfigService,
-                synopsysCredentialsHelper,
+                blackduckCredentialsHelper,
                 jenkinsProxyHelper,
                 jenkinsVersionHelper);
 
@@ -124,7 +124,7 @@ public class PolarisCliRunnerTest {
                 polarisPhoneHomeService,
                 jenkinsRemotingService,
                 jenkinsConfigService,
-                synopsysCredentialsHelper,
+                blackduckCredentialsHelper,
                 jenkinsProxyHelper,
                 jenkinsVersionHelper);
 
@@ -142,7 +142,7 @@ public class PolarisCliRunnerTest {
                 polarisPhoneHomeService,
                 jenkinsRemotingService,
                 jenkinsConfigService,
-                synopsysCredentialsHelper,
+                blackduckCredentialsHelper,
                 jenkinsProxyHelper,
                 jenkinsVersionHelper);
 
@@ -160,7 +160,7 @@ public class PolarisCliRunnerTest {
                 polarisPhoneHomeService,
                 jenkinsRemotingService,
                 jenkinsConfigService,
-                synopsysCredentialsHelper,
+                blackduckCredentialsHelper,
                 jenkinsProxyHelper,
                 jenkinsVersionHelper);
 

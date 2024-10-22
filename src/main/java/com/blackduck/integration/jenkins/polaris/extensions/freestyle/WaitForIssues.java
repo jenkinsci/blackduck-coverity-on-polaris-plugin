@@ -6,9 +6,9 @@
  */
 package com.blackduck.integration.jenkins.polaris.extensions.freestyle;
 
-import com.synopsys.integration.jenkins.annotations.HelpMarkdown;
-import com.synopsys.integration.jenkins.extensions.ChangeBuildStatusTo;
-import com.synopsys.integration.jenkins.extensions.JenkinsSelectBoxEnum;
+import com.blackduck.integration.jenkins.annotations.HelpMarkdown;
+import com.blackduck.integration.jenkins.extensions.ChangeBuildStatusTo;
+import com.blackduck.integration.jenkins.extensions.JenkinsSelectBoxEnum;
 import hudson.Extension;
 import hudson.model.AbstractDescribableImpl;
 import hudson.model.Descriptor;

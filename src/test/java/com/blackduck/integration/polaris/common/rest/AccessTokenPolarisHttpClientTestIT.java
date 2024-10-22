@@ -3,17 +3,17 @@ package com.blackduck.integration.polaris.common.rest;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+import com.blackduck.integration.exception.IntegrationException;
+import com.blackduck.integration.log.LogLevel;
+import com.blackduck.integration.log.PrintStreamIntLogger;
+import com.blackduck.integration.rest.HttpMethod;
+import com.blackduck.integration.rest.HttpUrl;
+import com.blackduck.integration.rest.client.ConnectionResult;
+import com.blackduck.integration.rest.proxy.ProxyInfo;
+import com.blackduck.integration.rest.request.Request;
+import com.blackduck.integration.rest.response.Response;
+import com.blackduck.integration.rest.support.AuthenticationSupport;
 import com.google.gson.Gson;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.log.LogLevel;
-import com.synopsys.integration.log.PrintStreamIntLogger;
-import com.synopsys.integration.rest.HttpMethod;
-import com.synopsys.integration.rest.HttpUrl;
-import com.synopsys.integration.rest.client.ConnectionResult;
-import com.synopsys.integration.rest.proxy.ProxyInfo;
-import com.synopsys.integration.rest.request.Request;
-import com.synopsys.integration.rest.response.Response;
-import com.synopsys.integration.rest.support.AuthenticationSupport;
 import java.io.IOException;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,11 +56,8 @@ public class AccessTokenPolarisHttpClientTestIT {
                 authenticationSupport);
 
         HttpUrl requestUrl = baseUrl.appendRelativeUrl(AccessTokenPolarisHttpClientTestIT.VALID_SPEC);
-        Request request = new Request.Builder()
-                .method(HttpMethod.GET)
-                .url(requestUrl)
-                .acceptMimeType(AccessTokenPolarisHttpClientTestIT.VALID_MIME_TYPE)
-                .build();
+        Request request =
+                new Request.Builder().method(HttpMethod.GET).url(requestUrl).build();
         try (Response response = httpClient.execute(request)) {
             assertTrue(response.isStatusCodeSuccess(), "Status code was not in the SUCCESS range");
             System.out.println(response.getContentString());
@@ -113,11 +110,8 @@ public class AccessTokenPolarisHttpClientTestIT {
                 authenticationSupport);
 
         HttpUrl requestUrl = baseUrl.appendRelativeUrl(AccessTokenPolarisHttpClientTestIT.VALID_SPEC);
-        Request request = new Request.Builder()
-                .method(HttpMethod.GET)
-                .url(requestUrl)
-                .acceptMimeType(AccessTokenPolarisHttpClientTestIT.INVALID_MIME_TYPE)
-                .build();
+        Request request =
+                new Request.Builder().method(HttpMethod.GET).url(requestUrl).build();
         try (Response response = httpClient.execute(request)) {
             assertTrue(response.isStatusCodeError(), "Status code was not an error");
         }

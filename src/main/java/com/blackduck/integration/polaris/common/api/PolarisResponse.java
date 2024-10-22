@@ -6,7 +6,7 @@
  */
 package com.blackduck.integration.polaris.common.api;
 
-import com.synopsys.integration.util.Stringable;
+import com.blackduck.integration.util.Stringable;
 import java.io.Serializable;
 
 public class PolarisResponse extends Stringable implements Serializable {

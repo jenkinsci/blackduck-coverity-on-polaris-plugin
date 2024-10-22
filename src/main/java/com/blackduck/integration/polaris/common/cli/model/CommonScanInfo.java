@@ -6,7 +6,7 @@
  */
 package com.blackduck.integration.polaris.common.cli.model;
 
-import com.synopsys.integration.rest.HttpUrl;
+import com.blackduck.integration.rest.HttpUrl;
 
 public class CommonScanInfo {
     private String cliVersion;

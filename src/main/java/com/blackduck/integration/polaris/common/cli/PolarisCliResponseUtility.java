@@ -6,13 +6,14 @@
  */
 package com.blackduck.integration.polaris.common.cli;
 
+import com.blackduck.integration.exception.IntegrationException;
+import com.blackduck.integration.jenkins.polaris.service.PolarisCliVersionHandler;
+import com.blackduck.integration.log.IntLogger;
 import com.blackduck.integration.polaris.common.cli.model.CliCommonResponseModel;
 import com.blackduck.integration.polaris.common.cli.model.json.CliCommonResponseAdapter;
 import com.blackduck.integration.polaris.common.exception.PolarisIntegrationException;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.log.IntLogger;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,6 +24,7 @@ public class PolarisCliResponseUtility {
     private final IntLogger logger;
     private final Gson gson;
     private final CliCommonResponseAdapter cliCommonResponseAdapter;
+    private static final String OLDER_POLARIS_CLI_VERSION = "2024.9.0";
 
     public PolarisCliResponseUtility(IntLogger logger, Gson gson, CliCommonResponseAdapter cliCommonResponseAdapter) {
         this.logger = logger;
@@ -35,9 +37,19 @@ public class PolarisCliResponseUtility {
         return new PolarisCliResponseUtility(logger, gson, new CliCommonResponseAdapter(gson));
     }
 
-    public static Path getDefaultPathToJson(String projectRootDirectory) {
+    public static Path getDefaultPathToJson(String projectRootDirectory, String polarisCliVersion) {
+        String subDirectory;
+        PolarisCliVersionHandler polarisCliVersionHandler = new PolarisCliVersionHandler();
+
+        if (polarisCliVersion != null
+                && polarisCliVersionHandler.comparePolarisVersions(polarisCliVersion, OLDER_POLARIS_CLI_VERSION) <= 0) {
+            subDirectory = ".synopsys";
+        } else {
+            subDirectory = ".blackduck";
+        }
+
         return Paths.get(projectRootDirectory)
-                .resolve(".blackduck")
+                .resolve(subDirectory)
                 .resolve("polaris")
                 .resolve("cli-scan.json");
     }
@@ -48,7 +60,7 @@ public class PolarisCliResponseUtility {
 
     public CliCommonResponseModel getPolarisCliResponseModelFromDefaultLocation(String projectRootDirectory)
             throws PolarisIntegrationException {
-        Path pathToJson = getDefaultPathToJson(projectRootDirectory);
+        Path pathToJson = getDefaultPathToJson(projectRootDirectory, null);
         return getPolarisCliResponseModel(pathToJson);
     }
 

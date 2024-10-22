@@ -6,7 +6,7 @@
  */
 package com.blackduck.integration.jenkins.polaris.extensions.pipeline;
 
-import com.synopsys.integration.jenkins.annotations.HelpMarkdown;
+import com.blackduck.integration.jenkins.annotations.HelpMarkdown;
 import hudson.Extension;
 import hudson.model.AbstractDescribableImpl;
 import hudson.model.Descriptor;

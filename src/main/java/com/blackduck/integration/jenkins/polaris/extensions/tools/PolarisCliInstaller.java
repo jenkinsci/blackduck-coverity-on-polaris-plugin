@@ -6,12 +6,12 @@
  */
 package com.blackduck.integration.jenkins.polaris.extensions.tools;
 
+import com.blackduck.integration.exception.IntegrationException;
+import com.blackduck.integration.jenkins.extensions.JenkinsIntLogger;
 import com.blackduck.integration.jenkins.polaris.extensions.global.PolarisGlobalConfig;
+import com.blackduck.integration.jenkins.service.JenkinsConfigService;
+import com.blackduck.integration.jenkins.wrapper.JenkinsWrapper;
 import com.blackduck.integration.polaris.common.rest.AccessTokenPolarisHttpClient;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.jenkins.extensions.JenkinsIntLogger;
-import com.synopsys.integration.jenkins.service.JenkinsConfigService;
-import com.synopsys.integration.jenkins.wrapper.JenkinsWrapper;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.FilePath;

@@ -6,6 +6,7 @@
  */
 package com.blackduck.integration.polaris.common.cli.model.json.parser;
 
+import com.blackduck.integration.exception.IntegrationException;
 import com.blackduck.integration.polaris.common.cli.model.CliCommonResponseModel;
 import com.blackduck.integration.polaris.common.cli.model.CommonToolInfo;
 import com.blackduck.integration.polaris.common.cli.model.json.v1.CliScanV1;
@@ -13,7 +14,6 @@ import com.blackduck.integration.polaris.common.cli.model.json.v1.ToolInfoV1;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.synopsys.integration.exception.IntegrationException;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;

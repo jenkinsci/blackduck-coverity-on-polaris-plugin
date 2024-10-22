@@ -6,6 +6,7 @@
  */
 package com.blackduck.integration.polaris.common.cli.model.json.parser;
 
+import com.blackduck.integration.exception.IntegrationException;
 import com.blackduck.integration.polaris.common.cli.model.CliCommonResponseModel;
 import com.blackduck.integration.polaris.common.cli.model.CommonIssueSummary;
 import com.blackduck.integration.polaris.common.cli.model.CommonProjectInfo;
@@ -16,11 +17,10 @@ import com.blackduck.integration.polaris.common.cli.model.json.v1.IssueSummaryV1
 import com.blackduck.integration.polaris.common.cli.model.json.v1.ProjectInfoV1;
 import com.blackduck.integration.polaris.common.cli.model.json.v1.ScanInfoV1;
 import com.blackduck.integration.polaris.common.cli.model.json.v1.ToolInfoV1;
+import com.blackduck.integration.rest.HttpUrl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.rest.HttpUrl;
 import java.util.function.Consumer;
 
 public abstract class CliScanParser<T extends CliScanResponse> {

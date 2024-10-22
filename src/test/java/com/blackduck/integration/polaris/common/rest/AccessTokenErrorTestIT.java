@@ -1,14 +1,14 @@
 package com.blackduck.integration.polaris.common.rest;
 
+import com.blackduck.integration.exception.IntegrationException;
+import com.blackduck.integration.log.LogLevel;
+import com.blackduck.integration.log.PrintStreamIntLogger;
+import com.blackduck.integration.rest.HttpUrl;
+import com.blackduck.integration.rest.RestConstants;
+import com.blackduck.integration.rest.proxy.ProxyInfo;
+import com.blackduck.integration.rest.response.Response;
+import com.blackduck.integration.rest.support.AuthenticationSupport;
 import com.google.gson.Gson;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.log.LogLevel;
-import com.synopsys.integration.log.PrintStreamIntLogger;
-import com.synopsys.integration.rest.HttpUrl;
-import com.synopsys.integration.rest.RestConstants;
-import com.synopsys.integration.rest.proxy.ProxyInfo;
-import com.synopsys.integration.rest.response.Response;
-import com.synopsys.integration.rest.support.AuthenticationSupport;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

@@ -6,13 +6,13 @@
  */
 package com.blackduck.integration.jenkins.polaris;
 
+import com.blackduck.integration.exception.IntegrationException;
+import com.blackduck.integration.jenkins.exception.JenkinsUserFriendlyException;
+import com.blackduck.integration.jenkins.extensions.ChangeBuildStatusTo;
+import com.blackduck.integration.jenkins.extensions.JenkinsIntLogger;
 import com.blackduck.integration.jenkins.polaris.extensions.freestyle.FreestyleCreateChangeSetFile;
 import com.blackduck.integration.jenkins.polaris.extensions.freestyle.WaitForIssues;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.jenkins.exception.JenkinsUserFriendlyException;
-import com.synopsys.integration.jenkins.extensions.ChangeBuildStatusTo;
-import com.synopsys.integration.jenkins.extensions.JenkinsIntLogger;
-import com.synopsys.integration.jenkins.service.JenkinsBuildService;
+import com.blackduck.integration.jenkins.service.JenkinsBuildService;
 import java.util.Optional;
 
 public class PolarisFreestyleCommands {

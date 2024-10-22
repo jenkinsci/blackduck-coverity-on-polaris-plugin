@@ -6,9 +6,9 @@
  */
 package com.blackduck.integration.jenkins.polaris.extensions.freestyle;
 
+import com.blackduck.integration.jenkins.annotations.HelpMarkdown;
 import com.blackduck.integration.jenkins.polaris.extensions.tools.PolarisCli;
 import com.blackduck.integration.jenkins.polaris.service.PolarisCommandsFactory;
-import com.synopsys.integration.jenkins.annotations.HelpMarkdown;
 import hudson.Extension;
 import hudson.Launcher;
 import hudson.model.AbstractBuild;

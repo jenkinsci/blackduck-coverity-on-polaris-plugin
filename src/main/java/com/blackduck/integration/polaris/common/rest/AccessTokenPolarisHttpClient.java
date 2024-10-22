@@ -6,15 +6,15 @@
  */
 package com.blackduck.integration.polaris.common.rest;
 
+import com.blackduck.integration.exception.IntegrationException;
+import com.blackduck.integration.log.IntLogger;
+import com.blackduck.integration.rest.HttpMethod;
+import com.blackduck.integration.rest.HttpUrl;
+import com.blackduck.integration.rest.client.AuthenticatingIntHttpClient;
+import com.blackduck.integration.rest.proxy.ProxyInfo;
+import com.blackduck.integration.rest.response.Response;
+import com.blackduck.integration.rest.support.AuthenticationSupport;
 import com.google.gson.Gson;
-import com.synopsys.integration.exception.IntegrationException;
-import com.synopsys.integration.log.IntLogger;
-import com.synopsys.integration.rest.HttpMethod;
-import com.synopsys.integration.rest.HttpUrl;
-import com.synopsys.integration.rest.client.AuthenticatingIntHttpClient;
-import com.synopsys.integration.rest.proxy.ProxyInfo;
-import com.synopsys.integration.rest.response.Response;
-import com.synopsys.integration.rest.support.AuthenticationSupport;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +46,7 @@ public class AccessTokenPolarisHttpClient extends AuthenticatingIntHttpClient {
             String accessToken,
             Gson gson,
             AuthenticationSupport authenticationSupport) {
-        super(logger, timeout, false, proxyInfo);
+        super(logger, gson, timeout, false, proxyInfo);
         this.baseUrl = baseUrl;
         this.accessToken = accessToken;
         this.gson = gson;

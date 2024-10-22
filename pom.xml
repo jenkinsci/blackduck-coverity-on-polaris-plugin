@@ -50,9 +50,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.synopsys.integration</groupId>
+      <groupId>com.blackduck.integration</groupId>
       <artifactId>jenkins-common</artifactId>
-      <version>0.3.4</version>
+      <version>1.0.0</version>
       <exclusions>
         <exclusion>
           <groupId>com.fasterxml.jackson.core</groupId>
@@ -145,9 +145,9 @@
       <artifactId>workflow-support</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.synopsys.integration</groupId>
+      <groupId>com.blackduck.integration</groupId>
       <artifactId>jenkins-annotation-processor</artifactId>
-      <version>0.0.7</version>
+      <version>1.0.0</version>
       <scope>provided</scope>
     </dependency>
     <!-- Test Dependencies -->
@@ -197,8 +197,8 @@
       <url>https://repo.jenkins-ci.org/public/</url>
     </repository>
     <repository>
-      <id>blackduck-release</id>
-      <url>https://repo.blackduck.com/bds-integrations-release</url>
+      <id>com.blackduck.integration</id>
+      <url>https://repo.blackduck.com/bds-integrations-release/</url>
     </repository>
     <repository>
       <id>bds-artifactory</id>
