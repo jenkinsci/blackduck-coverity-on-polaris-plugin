@@ -22,9 +22,15 @@ import org.apache.commons.lang3.StringUtils;
 public class PolarisAccessTokenResolver {
     private final IntLogger logger;
     private final BuilderStatus builderStatus;
+
+    @SuppressWarnings("lgtm[jenkins/plaintext-storage]")
     private final String accessToken;
+
     private final String polarisHome;
+
+    @SuppressWarnings("lgtm[jenkins/plaintext-storage]")
     private final String accessTokenFilePath;
+
     private final String userHomePath;
 
     public PolarisAccessTokenResolver(

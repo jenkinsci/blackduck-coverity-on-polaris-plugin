@@ -34,6 +34,8 @@ public class AccessTokenPolarisHttpClient extends AuthenticatingIntHttpClient {
     private final Gson gson;
     private final AuthenticationSupport authenticationSupport;
     private final HttpUrl baseUrl;
+
+    @SuppressWarnings("lgtm[jenkins/plaintext-storage]")
     private final String accessToken;
 
     public AccessTokenPolarisHttpClient(

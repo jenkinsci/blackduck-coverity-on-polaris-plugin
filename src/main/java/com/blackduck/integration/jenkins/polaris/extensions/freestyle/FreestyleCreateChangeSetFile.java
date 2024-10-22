@@ -115,6 +115,7 @@ public class FreestyleCreateChangeSetFile extends AbstractDescribableImpl<Freest
             return ChangeBuildStatusTo.UNSTABLE;
         }
 
+        @SuppressWarnings({"lgtm[jenkins/no-permission-check]", "lgtm[jenkins/csrf]"})
         public ListBoxModel doFillBuildStatusOnSkipItems() {
             return JenkinsSelectBoxEnum.toListBoxModel(ChangeBuildStatusTo.values());
         }

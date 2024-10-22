@@ -116,6 +116,7 @@ public class ExecutePolarisCliStep extends Step implements Serializable {
             // -rotte JAN 2020
         }
 
+        @SuppressWarnings({"lgtm[jenkins/no-permission-check]", "lgtm[jenkins/csrf]"})
         public ListBoxModel doFillPolarisCliItems() {
             PolarisCli.DescriptorImpl polarisCliToolInstallationDescriptor =
                     ToolInstallation.all().get(PolarisCli.DescriptorImpl.class);
