@@ -99,7 +99,7 @@ public class PolarisDownloadUtility {
      * otherwise an Optional.empty will be returned and the log will contain
      * details concerning the failure.
      */
-    public Optional<String> getOrDownloadPolarisCliExecutable() {
+    public Optional<String> getOrDownloadPolarisCliExecutable() throws IntegrationException {
         File binDirectory = getOrDownloadPolarisCliBin().orElse(null);
 
         if (binDirectory != null && binDirectory.exists() && binDirectory.isDirectory()) {
@@ -116,7 +116,7 @@ public class PolarisDownloadUtility {
         return Optional.empty();
     }
 
-    public Optional<File> getOrDownloadPolarisCliBin() {
+    public Optional<File> getOrDownloadPolarisCliBin() throws IntegrationException {
         File versionFile;
         try {
             versionFile = getOrCreateVersionFile();
@@ -140,7 +140,7 @@ public class PolarisDownloadUtility {
         return Optional.ofNullable(binDirectory);
     }
 
-    public Optional<String> getOrDownloadPolarisCliHome() {
+    public Optional<String> getOrDownloadPolarisCliHome() throws IntegrationException {
         return getOrDownloadPolarisCliBin().map(File::getParentFile).flatMap(file -> {
             String pathToPolarisCliHome = null;
 
@@ -173,16 +173,20 @@ public class PolarisDownloadUtility {
         return versionFile;
     }
 
-    public String getDownloadUrlFormat() {
+    public String getDownloadUrlFormat() throws IntegrationException {
         if (OperatingSystemType.MAC == operatingSystemType) {
             // If the OS Architecture is Mac non-ARM, the return tool name as "%s_cli-macosx.zip"
             // If the OS Architecture is Mac ARM architecture, the return tool name as "%s_cli-macos_arm.zip"
             FilePath workspace = new FilePath(new File(installDirectory.getPath()));
             String arch = getAgentOsArch(workspace);
-            if (arch.startsWith("arm") || arch.startsWith("aarch")) {
-                return polarisServerUrl + PolarisDownloadUtility.MAC_ARM_DOWNLOAD_URL_FORMAT;
+            if (arch != null) {
+                if (arch.startsWith("arm") || arch.startsWith("aarch")) {
+                    return polarisServerUrl + PolarisDownloadUtility.MAC_ARM_DOWNLOAD_URL_FORMAT;
+                } else {
+                    return polarisServerUrl + PolarisDownloadUtility.MAC_DOWNLOAD_URL_FORMAT;
+                }
             } else {
-                return polarisServerUrl + PolarisDownloadUtility.MAC_DOWNLOAD_URL_FORMAT;
+                throw new IntegrationException("OS architecture of MAC could not be determined. 'arch' is null.");
             }
         } else if (OperatingSystemType.WINDOWS == operatingSystemType) {
             return polarisServerUrl + PolarisDownloadUtility.WINDOWS_DOWNLOAD_URL_FORMAT;

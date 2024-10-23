@@ -2,7 +2,7 @@
 Black Duck Coverity on Polaris for Jenkins simplifies implementing Coverity on Polaris static analysis in your Jenkins builds.
 
 # Build
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=org.jenkins-ci.plugins%3Asynopsys-polaris&metric=alert_status)](https://sonarcloud.io/dashboard?id=org.jenkins-ci.plugins%3Asynopsys-polaris)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=io.jenkins.plugins%3Ablackduck-coverity-on-polaris&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=io.jenkins.plugins%3Ablackduck-coverity-on-polaris)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 # Where can I get the latest release?

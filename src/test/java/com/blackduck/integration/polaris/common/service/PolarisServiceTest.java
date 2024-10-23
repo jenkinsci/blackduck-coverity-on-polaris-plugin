@@ -46,7 +46,9 @@ public class PolarisServiceTest {
 
     private final HttpUrl BASE_URL = new HttpUrl("https://google.com");
 
-    public PolarisServiceTest() throws IntegrationException {}
+    public PolarisServiceTest() throws IntegrationException {
+        // This constructor is left empty as it's only responsible for handling the HttpUrl exception.
+    }
 
     private static Stream<Arguments> createGetAllMockData() {
         Map<String, String> getAllOnOnePageMap = new HashMap<>();

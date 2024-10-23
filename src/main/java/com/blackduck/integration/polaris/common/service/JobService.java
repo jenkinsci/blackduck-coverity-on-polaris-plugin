@@ -59,10 +59,12 @@ public class JobService {
                     jobApiUrl, jobState, JobStatus.StateEnum.COMPLETED));
             if (JobStatus.StateEnum.FAILED.equals(jobState)) {
                 // Niether Data nor Attributes can be null because they were validated above -- rotte MAR 2020
-                FailureInfo failureInfo = jobResource.getAttributes().getFailureInfo();
-                if (failureInfo != null && StringUtils.isNotBlank(failureInfo.getUserFriendlyFailureReason())) {
-                    errorMessageBuilder.append(
-                            String.format(" because: %s", failureInfo.getUserFriendlyFailureReason()));
+                if (jobResource != null && jobResource.getAttributes() != null) {
+                    FailureInfo failureInfo = jobResource.getAttributes().getFailureInfo();
+                    if (failureInfo != null && StringUtils.isNotBlank(failureInfo.getUserFriendlyFailureReason())) {
+                        errorMessageBuilder.append(
+                                String.format(" because: %s", failureInfo.getUserFriendlyFailureReason()));
+                    }
                 }
             }
             errorMessageBuilder.append(
