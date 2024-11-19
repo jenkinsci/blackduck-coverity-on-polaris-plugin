@@ -23,6 +23,7 @@ import com.blackduck.integration.rest.response.Response;
 import com.blackduck.integration.rest.support.AuthenticationSupport;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
@@ -189,7 +190,11 @@ public class PolarisServiceTest {
     }
 
     private String getPreparedContentStringFrom(String resourceName) throws IOException {
-        return IOUtils.toString(
-                getClass().getResourceAsStream("/PolarisService/" + resourceName), StandardCharsets.UTF_8);
+        try (InputStream inputStream = getClass().getResourceAsStream("/PolarisService/" + resourceName)) {
+            if (inputStream == null) {
+                throw new IOException("Resource not found: " + resourceName);
+            }
+            return IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+        }
     }
 }

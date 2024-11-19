@@ -28,14 +28,14 @@ public class PolarisCliVersionHandler {
     }
 
     /**
-     * Compares two Polaris CLI version strings in the format "X.Y.Z" (e.g., "1.0.1").
+     * Compares two Polaris CLI version strings in the format "YYYY.MM.P" (e.g., "2024.9.0").
      *
-     * @param version1 the first version string to compare, in the format "X.Y.Z"
-     * @param version2 the second version string to compare, in the format "X.Y.Z"
+     * @param version1 the first version string to compare, in the format "YYYY.MM.P"
+     * @param version2 the second version string to compare, in the format "YYYY.MM.P"
      * @return an integer that is:
      *         - Negative if version1 is less than version2
      *         - Zero if version1 is equal to version2
-     *         - Positive if version1 is greater than version2
+     *         - Positive if version1 is greater than version2 or major part of the version2 is less than length of 4
      *
      * If either of the versions does not have exactly three components (major, minor, patch),
      * the method returns 1, implying an invalid version format.
@@ -44,7 +44,8 @@ public class PolarisCliVersionHandler {
         String[] ver1Parts = version1.split("\\.");
         String[] ver2Parts = version2.split("\\.");
 
-        if (ver1Parts.length != 3 && ver2Parts.length != 3) {
+        // ver1Parts[0].length() < 4 check is included to support the CLI dev build versions (example - 1.24.31)
+        if ((ver1Parts.length != 3 && ver2Parts.length != 3) || ver1Parts[0].length() < 4) {
             return 1;
         }
 

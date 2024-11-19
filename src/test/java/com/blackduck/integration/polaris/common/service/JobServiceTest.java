@@ -17,6 +17,7 @@ import com.blackduck.integration.rest.request.Request;
 import com.blackduck.integration.rest.response.Response;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
@@ -81,6 +82,11 @@ public class JobServiceTest {
     }
 
     private String getPreparedContentStringFrom(String resourceName) throws IOException {
-        return IOUtils.toString(getClass().getResourceAsStream("/JobService/" + resourceName), StandardCharsets.UTF_8);
+        try (InputStream inputStream = getClass().getResourceAsStream("/JobService/" + resourceName)) {
+            if (inputStream == null) {
+                throw new IOException("Resource not found: " + resourceName);
+            }
+            return IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+        }
     }
 }
