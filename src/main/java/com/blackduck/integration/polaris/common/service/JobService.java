@@ -14,7 +14,9 @@ import com.blackduck.integration.polaris.common.api.model.JobAttributes;
 import com.blackduck.integration.polaris.common.api.model.JobStatus;
 import com.blackduck.integration.polaris.common.exception.PolarisIntegrationException;
 import com.blackduck.integration.rest.HttpUrl;
+import com.blackduck.integration.wait.ResilientJobConfig;
 import com.blackduck.integration.wait.WaitJob;
+import com.blackduck.integration.wait.tracker.WaitIntervalTrackerConstant;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
@@ -36,9 +38,13 @@ public class JobService {
     }
 
     public void waitForJobStateIsCompletedOrDieByUrl(
-            HttpUrl jobApiUrl, long timeoutInSeconds, int waitIntervalInSeconds) throws IntegrationException {
-        WaitJob waitJob = new WaitJob(() -> hasJobEnded(jobApiUrl), null);
-        if (!waitJob.onCompletion()) {
+            HttpUrl jobApiUrl, long timeoutInSeconds, int waitIntervalInSeconds)
+            throws IntegrationException, InterruptedException {
+        ResilientJobConfig jobConfig = new ResilientJobConfig(
+                logger,
+                ResilientJobConfig.CURRENT_TIME_SUPPLIER,
+                new WaitIntervalTrackerConstant(timeoutInSeconds, waitIntervalInSeconds));
+        if (!WaitJob.waitFor(jobConfig, () -> hasJobEnded(jobApiUrl), "Wait-For-Issues-Job")) {
             String maximumDurationString = DurationFormatUtils.formatDurationHMS(timeoutInSeconds * 1000);
             throw new PolarisIntegrationException(String.format(
                     "Job at url %s did not end in the provided timeout of %s", jobApiUrl, maximumDurationString));
