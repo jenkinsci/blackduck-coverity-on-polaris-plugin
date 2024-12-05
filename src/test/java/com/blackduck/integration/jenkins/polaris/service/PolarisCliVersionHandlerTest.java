@@ -84,4 +84,14 @@ public class PolarisCliVersionHandlerTest {
 
         assertTrue(result > 0, "Version 2023.5.1 should be greater than 2023.5.0.");
     }
+
+    @Test
+    public void testComparePolarisVersions_DevBuildVersion() {
+        String version1 = "1.24.33";
+        String version2 = "2023.9.0";
+
+        int result = versionHandler.comparePolarisVersions(version1, version2);
+
+        assertTrue(result > 0, "Version 1.24.33 should be greater than 2023.5.0.");
+    }
 }
