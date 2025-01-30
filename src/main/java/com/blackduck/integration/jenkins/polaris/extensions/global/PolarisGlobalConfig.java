@@ -17,8 +17,8 @@ import com.blackduck.integration.polaris.common.configuration.PolarisServerConfi
 import com.blackduck.integration.polaris.common.configuration.PolarisServerConfigBuilder;
 import com.blackduck.integration.rest.client.ConnectionResult;
 import com.blackduck.integration.rest.proxy.ProxyInfo;
+import com.cloudbees.plugins.credentials.CredentialsMatchers;
 import com.cloudbees.plugins.credentials.common.StandardListBoxModel;
-import com.cloudbees.plugins.credentials.impl.BaseStandardCredentials;
 import hudson.Extension;
 import hudson.Functions;
 import hudson.Util;
@@ -45,6 +45,7 @@ import jenkins.model.Jenkins;
 import jenkins.util.xml.XMLUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.impl.EnglishReasonPhraseCatalog;
+import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
@@ -129,11 +130,11 @@ public class PolarisGlobalConfig extends GlobalConfiguration implements Serializ
         return new StandardListBoxModel()
                 .includeEmptyValue()
                 .includeMatchingAs(
-                        ACL.SYSTEM,
+                        ACL.SYSTEM2,
                         jenkins,
-                        BaseStandardCredentials.class,
+                        StringCredentials.class,
                         Collections.emptyList(),
-                        BlackduckCredentialsHelper.API_TOKEN_CREDENTIALS);
+                        CredentialsMatchers.always());
     }
 
     @POST
