@@ -27,10 +27,11 @@
     <url>https://github.com/${gitHubRepo}</url>
   </scm>
   <properties>
-    <!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
     <revision>2.1.0</revision>
     <changelist>-SNAPSHOT</changelist>
-    <jenkins.version>2.440.3</jenkins.version>
+    <!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
+    <jenkins.baseline>2.462</jenkins.baseline>
+    <jenkins.version>${jenkins.baseline}.3</jenkins.version>
     <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
     <spotless.check.skip>false</spotless.check.skip>
   </properties>
@@ -40,8 +41,8 @@
       <dependency>
         <!-- Pick up common dependencies for the selected LTS line: https://github.com/jenkinsci/bom#usage -->
         <groupId>io.jenkins.tools.bom</groupId>
-        <artifactId>bom-2.440.x</artifactId>
-        <version>3387.v0f2773fa_3200</version>
+        <artifactId>bom-${jenkins.baseline}.x</artifactId>
+        <version>4023.va_eeb_b_4e45f07</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -99,6 +100,10 @@
           <artifactId>annotations</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>io.jenkins.plugins</groupId>
+      <artifactId>commons-compress-api</artifactId>
     </dependency>
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
